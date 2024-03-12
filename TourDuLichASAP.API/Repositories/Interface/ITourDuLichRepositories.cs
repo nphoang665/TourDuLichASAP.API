@@ -10,5 +10,6 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<TourDuLich?> UpdateAsync(TourDuLich tourDuLich);
         Task<TourDuLich?> DeleteAsync(string id);
         Task<TourDuLich?> GetByIdAsync(string id);
+        Task<IEnumerable<AnhTour>> GetAnhTourByIdAsync(string idTour);
     }
 }

@@ -167,7 +167,8 @@ namespace TourDuLichASAP.API.Controllers
         public async Task<IActionResult> GetTourDuLichById(string id)
         {
             var tourDuLich = await _tourDuLichRepositories.GetByIdAsync(id);
-            if(tourDuLich is null)
+            var anhtour = await _tourDuLichRepositories.GetAnhTourByIdAsync(id);
+            if (tourDuLich is null)
             {
                 return NotFound();
             }
@@ -193,7 +194,8 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = tourDuLich.TinhTrang,
                 TenDoiTac = tourDuLich.DoiTac.TenDoiTac,
                 EmailDoiTac = tourDuLich.DoiTac.Email,
-                SoDienThoaiDoiTac = tourDuLich.DoiTac.SoDienThoai
+                SoDienThoaiDoiTac = tourDuLich.DoiTac.SoDienThoai,
+                AnhTour = anhtour
             };
             return Ok(response);
         }

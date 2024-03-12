@@ -25,5 +25,6 @@ namespace TourDuLichASAP.API.Models.DTO
         public string TenDoiTac { get; set; }
         public string EmailDoiTac { get; set; }
         public string SoDienThoaiDoiTac { get; set; }
+        public IEnumerable<AnhTour> AnhTour { get; set; }
     }
 }

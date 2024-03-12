@@ -38,6 +38,16 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.TOUR_DU_LICH.Include(x => x.DoiTac).ToListAsync();
         }
 
+        public async Task<IEnumerable<AnhTour>> GetAnhTourByIdAsync(string idTour)
+        {
+           var _get_TourDuLich= await _db.ANH_TOUR.Where(s=>s.IdTour ==idTour).ToListAsync();
+            foreach (var item in _get_TourDuLich)
+            {
+                item.TourDuLich = null;
+            }
+            return _get_TourDuLich;
+        }
+
         public async Task<TourDuLich?> GetByIdAsync(string id)
         {
             return await _db.TOUR_DU_LICH.Include(x => x.DoiTac).FirstOrDefaultAsync(x => x.IdTour == id);
@@ -63,5 +73,7 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             await _db.SaveChangesAsync();
             return tourDuLich;
         }
+
+       
     }
 }
