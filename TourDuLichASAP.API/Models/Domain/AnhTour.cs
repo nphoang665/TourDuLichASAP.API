@@ -13,7 +13,7 @@ namespace TourDuLichASAP.API.Models.Domain
         [StringLength(6)]
         public string IdTour { get; set; }
 
-        public string ImgTour { get; set; } // Assuming it stores URL or path to image
+        public string ImgTour { get; set; }
 
         [Column(TypeName = "Date")]
         public DateTime NgayThem { get; set; }

@@ -23,9 +23,10 @@ namespace TourDuLichASAP.API.Repositories.Implementation
         public async Task<TourDuLich?> DeleteAsync(string id)
         {
             var existingTuorDuLich = await _db.TOUR_DU_LICH.FirstOrDefaultAsync(x=>x.IdTour==id);
+            existingTuorDuLich.TinhTrang = "Ngưng hoạt động";
             if(existingTuorDuLich !=null)
             {
-                _db.TOUR_DU_LICH.Remove(existingTuorDuLich);
+                _db.TOUR_DU_LICH.Update(existingTuorDuLich);
                 await _db.SaveChangesAsync();
                 return existingTuorDuLich;
             }
