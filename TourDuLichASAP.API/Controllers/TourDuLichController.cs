@@ -8,22 +8,27 @@ namespace TourDuLichASAP.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+
+   
     public class TourDuLichController : ControllerBase
     {
         private readonly ITourDuLichRepositories _tourDuLichRepositories;
+        private readonly IAnhTourRepositories _anhTourRepositories;
 
-        public TourDuLichController(ITourDuLichRepositories tourDuLichRepositories)
+        public TourDuLichController(ITourDuLichRepositories tourDuLichRepositories, IAnhTourRepositories anhTourRepositories)
         {
             _tourDuLichRepositories = tourDuLichRepositories;
+            _anhTourRepositories  = anhTourRepositories;
         }
 
         [HttpPost]
         public async Task <IActionResult> CreateTourDuLich([FromBody] CreateTourDuLichRequestDto requestDto)
         {
+           
             Random random = new Random();
             int randomValue = random.Next(1000);
             string idTour = "TDL" + randomValue.ToString("D3");
-
+            
             //convert
             var tourDuLich = new TourDuLich
             {
@@ -74,6 +79,47 @@ namespace TourDuLichASAP.API.Controllers
                 EmailDoiTac = doiTac.Email,
                 SoDienThoaiDoiTac = doiTac.SoDienThoai
             };
+            if (requestDto.ImgSelected != null)
+            {
+                // Tạo thư mục 'uploads' nếu nó chưa tồn tại
+                string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+                if (!Directory.Exists(folderPath))
+                {
+                    Directory.CreateDirectory(folderPath);
+                }
+
+                for (int i = 0; i < requestDto.ImgSelected.Length; i++)
+                {
+                    // Tách chuỗi Base64 và loại media
+                    var parts = requestDto.ImgSelected[i].Split(',');
+                    string mediaType = parts[0]; // Ví dụ: "data:image/jpeg;base64"
+                    string base64 = parts[1];
+
+                    // Chuyển đổi chuỗi Base64 thành mảng byte
+                    byte[] imageBytes = Convert.FromBase64String(base64);
+
+                    // Xác định định dạng file từ loại media
+                    var format = mediaType.Split(';')[0].Split('/')[1]; // Ví dụ: "jpeg"
+
+                    // Tạo tên file duy nhất cho mỗi hình ảnh
+                    string fileName = $"image_{i}_{DateTime.Now.Ticks}.{format}";
+
+                    // Tạo đường dẫn đầy đủ cho file
+                    string filePath = Path.Combine(folderPath, fileName);
+
+                    // Ghi mảng byte vào file
+                    System.IO.File.WriteAllBytes(filePath, imageBytes);
+
+                    var anhTour = new AnhTour
+                    {
+                        IdTour = idTour,
+                        ImgTour = fileName,
+                        NgayThem = DateTime.Now
+                    };
+                    await _anhTourRepositories.UploadImg(anhTour);
+                }
+
+            }
 
             return Ok(response);
 

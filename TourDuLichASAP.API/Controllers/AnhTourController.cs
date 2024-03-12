@@ -41,36 +41,36 @@ namespace TourDuLichASAP.API.Controllers
             }
             return Ok(response);
         }
-        [HttpPost]
-        public async Task<IActionResult> UploadImgTour([FromForm] IFormFile imgFile)
-        {
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    var uniqueFileName = DateTime.Now.ToString();
-                    var anhTour = new AnhTour
-                    {
-                        ImgTour = uniqueFileName,
-                        NgayThem = DateTime.Now,
+        //[HttpPost]
+        //public async Task<IActionResult> UploadImgTour([FromForm] IFormFile imgFile)
+        //{
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            var uniqueFileName = DateTime.Now.ToString() + imgFile.FileName;
+        //            var anhTour = new AnhTour
+        //            {
+        //                ImgTour = uniqueFileName,
+        //                NgayThem = DateTime.Now,
                         
-                    };
-                    anhTour = await _anhTourRepositories.UploadImg(imgFile, anhTour);
-                    var response = new AnhTourDto
-                    {
-                        IdTour = anhTour.IdTour,
-                        ImgTour = anhTour.ImgTour,
-                        NgayThem = anhTour.NgayThem
-                    };
-                    return Ok(response);
-                }
-                return BadRequest(ModelState);
-            }
-            catch (Exception ex)
-            {
-                // Ghi log cho ngoại lệ hoặc xử lý một cách phù hợp
-                return StatusCode(500, $"Lỗi Server Nội Bộ: {ex.Message}");
-            }
-        }
+        //            };
+        //            anhTour = await _anhTourRepositories.UploadImg(imgFile, anhTour);
+        //            var response = new AnhTourDto
+        //            {
+        //                IdTour = anhTour.IdTour,
+        //                ImgTour = anhTour.ImgTour,
+        //                NgayThem = anhTour.NgayThem
+        //            };
+        //            return Ok(response);
+        //        }
+        //        return BadRequest(ModelState);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        // Ghi log cho ngoại lệ hoặc xử lý một cách phù hợp
+        //        return StatusCode(500, $"Lỗi Server Nội Bộ: {ex.Message}");
+        //    }
+        //}
     }
 }

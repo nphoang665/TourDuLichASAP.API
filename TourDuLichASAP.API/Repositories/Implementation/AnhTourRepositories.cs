@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using TourDuLichASAP.API.Data;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -31,17 +32,11 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.TOUR_DU_LICH.FindAsync(IdTour);
         }
 
-        public async Task<AnhTour> UploadImg(IFormFile imgFile, AnhTour anhTour)
+        public async Task<AnhTour> UploadImg(AnhTour anhtour)
         {
-            var localPath = Path.Combine(_webHostEnvironment.ContentRootPath, "Uploads",$"{anhTour.ImgTour}");
-
-            using var fileStream = new FileStream(localPath,FileMode.Create);
-            await imgFile.CopyToAsync(fileStream);
-            var httpRequest = _contextAccessor.HttpContext.Request;
-            var urlPath = $"/Uploads/{anhTour.ImgTour}";
-            await _db.ANH_TOUR.AddAsync(anhTour);
-            await _db.SaveChangesAsync();
-            return anhTour;
+            _db.ANH_TOUR.Add(anhtour);
+            _db.SaveChanges();
+            return anhtour;
         }
     }
 }
