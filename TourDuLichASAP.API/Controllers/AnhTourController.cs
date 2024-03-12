@@ -23,13 +23,13 @@ namespace TourDuLichASAP.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllAnhTour()
         {
-            
+
             var anhTours = await _anhTourRepositories.GetAllAsync();
-           
+
             var response = new List<AnhTourDto>();
             foreach (var anhtour in anhTours)
             {
-               
+
                 response.Add(new AnhTourDto
                 {
                     IdAnhTour = anhtour.IdAnhTour,
@@ -42,27 +42,35 @@ namespace TourDuLichASAP.API.Controllers
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> UploadImgTour([FromForm] IFormFile imgFile,string imgTour,string idTour)
+        public async Task<IActionResult> UploadImgTour([FromForm] IFormFile imgFile)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var uniqueFileName = DateTime.Now.ToString();
-                var anhTour = new AnhTour
+                if (ModelState.IsValid)
                 {
-                    IdTour = idTour,
-                    ImgTour = uniqueFileName,
-                    NgayThem=  DateTime.Now
-                };
-                anhTour = await _anhTourRepositories.UploadImg(imgFile,anhTour);
-                var response = new AnhTourDto
-                {
-                    IdTour =anhTour.IdTour,
-                    ImgTour = anhTour.ImgTour,
-                    NgayThem = anhTour.NgayThem
-                };
-                return Ok(response);
+                    var uniqueFileName = DateTime.Now.ToString();
+                    var anhTour = new AnhTour
+                    {
+                        ImgTour = uniqueFileName,
+                        NgayThem = DateTime.Now,
+                        
+                    };
+                    anhTour = await _anhTourRepositories.UploadImg(imgFile, anhTour);
+                    var response = new AnhTourDto
+                    {
+                        IdTour = anhTour.IdTour,
+                        ImgTour = anhTour.ImgTour,
+                        NgayThem = anhTour.NgayThem
+                    };
+                    return Ok(response);
+                }
+                return BadRequest(ModelState);
             }
-            return BadRequest(ModelState);
+            catch (Exception ex)
+            {
+                // Ghi log cho ngoại lệ hoặc xử lý một cách phù hợp
+                return StatusCode(500, $"Lỗi Server Nội Bộ: {ex.Message}");
+            }
         }
     }
 }
