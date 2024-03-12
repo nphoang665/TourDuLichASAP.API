@@ -27,7 +27,39 @@ namespace TourDuLichASAP.API.Controllers
             var khachHang = await _datTourRepositories.GetkhachHangById(request.IdKhachHang);
             var nhanVien = await _datTourRepositories.GetNhanVienById(request.IdNhanVien);
             var tourDuLich = await _datTourRepositories.GetTourDuLichById(request.IdTour);
+            //if (request.ImgSelected != null)
+            //{
+            //    // Tạo thư mục 'uploads' nếu nó chưa tồn tại
+            //    string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "uploads");
+            //    if (!Directory.Exists(folderPath))
+            //    {
+            //        Directory.CreateDirectory(folderPath);
+            //    }
 
+            //    for (int i = 0; i < request.ImgSelected.Length; i++)
+            //    {
+            //        // Tách chuỗi Base64 và loại media
+            //        var parts = request.ImgSelected[i].Split(',');
+            //        string mediaType = parts[0]; // Ví dụ: "data:image/jpeg;base64"
+            //        string base64 = parts[1];
+
+            //        // Chuyển đổi chuỗi Base64 thành mảng byte
+            //        byte[] imageBytes = Convert.FromBase64String(base64);
+
+            //        // Xác định định dạng file từ loại media
+            //        var format = mediaType.Split(';')[0].Split('/')[1]; // Ví dụ: "jpeg"
+
+            //        // Tạo tên file duy nhất cho mỗi hình ảnh
+            //        string fileName = $"image_{i}_{DateTime.Now.Ticks}.{format}";
+
+            //        // Tạo đường dẫn đầy đủ cho file
+            //        string filePath = Path.Combine(folderPath, fileName);
+
+            //        // Ghi mảng byte vào file
+            //        System.IO.File.WriteAllBytes(filePath, imageBytes);
+            //    }
+
+            //}
             var datTour = new DatTour
             {
                 IdDatTour = idDatTour,
