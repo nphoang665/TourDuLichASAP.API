@@ -130,12 +130,14 @@ namespace TourDuLichASAP.API.Controllers
         public async Task<IActionResult> GetAllTourDuLich()
         {
             var tourDuLichs = await _tourDuLichRepositories.GetAllAsync();
-            //get All AnhTour from Db
-            var AnhTour = await _anhTourRepositories.GetAllAsync();
+         
+            
             //convert
             var response = new List<TourDuLichDto>();
             foreach (var tourDuLich in tourDuLichs)
             {
+                //lấy ảnh tour theo id
+                var AnhTour = await _anhTourRepositories.GetImgTourById(tourDuLich.IdTour);
                 response.Add(new TourDuLichDto
                 {
                     IdTour = tourDuLich.IdTour,

@@ -27,6 +27,11 @@ namespace TourDuLichASAP.API.Repositories.Implementation
            return await _db.ANH_TOUR.Include(x=>x.TourDuLich).ToListAsync();
         }
 
+        public async Task<IEnumerable<AnhTour>> GetImgTourById(string IdTour)
+        {
+            return await _db.ANH_TOUR.Where(x => x.IdTour == IdTour).ToListAsync();
+        }
+
         public async Task<TourDuLich> GetTourById(string IdTour)
         {
             return await _db.TOUR_DU_LICH.FindAsync(IdTour);
