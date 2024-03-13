@@ -24,6 +24,8 @@ builder.Services.AddScoped<INhanVienRepositories, NhanVienRepositories>();
 builder.Services.AddScoped<IKhachHangRepositories, KhachHangRepositories>();
 builder.Services.AddScoped<IDatTourRepositories, DatTourRepositories>();
 builder.Services.AddScoped<IAnhTourRepositories, AnhTourRepositories>();
+builder.Services.AddScoped<IDoiTacRepositories, DoiTacRepositories>();
+
 
 var app = builder.Build();
 

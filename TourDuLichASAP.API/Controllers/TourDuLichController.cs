@@ -130,7 +130,8 @@ namespace TourDuLichASAP.API.Controllers
         public async Task<IActionResult> GetAllTourDuLich()
         {
             var tourDuLichs = await _tourDuLichRepositories.GetAllAsync();
-
+            //get All AnhTour from Db
+            var AnhTour = await _anhTourRepositories.GetAllAsync();
             //convert
             var response = new List<TourDuLichDto>();
             foreach (var tourDuLich in tourDuLichs)
@@ -156,7 +157,8 @@ namespace TourDuLichASAP.API.Controllers
                     TinhTrang = tourDuLich.TinhTrang,
                     TenDoiTac = tourDuLich.DoiTac.TenDoiTac,
                     EmailDoiTac = tourDuLich.DoiTac.Email,
-                    SoDienThoaiDoiTac = tourDuLich.DoiTac.SoDienThoai
+                    SoDienThoaiDoiTac = tourDuLich.DoiTac.SoDienThoai,
+                    AnhTour = AnhTour
                 });
             }
             return Ok(response);
