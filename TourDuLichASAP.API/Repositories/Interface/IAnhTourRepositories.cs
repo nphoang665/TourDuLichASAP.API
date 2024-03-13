@@ -8,5 +8,6 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<AnhTour> UploadImg(AnhTour anhTour);
         Task<AnhTour> DeleteImg(string IdAnhTour);
         Task<TourDuLich> GetTourById(string IdTour);
+        string RemoveImgByName(string ImgTour);
     }
 }

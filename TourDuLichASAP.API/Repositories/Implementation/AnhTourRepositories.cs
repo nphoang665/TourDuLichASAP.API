@@ -32,6 +32,29 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.TOUR_DU_LICH.FindAsync(IdTour);
         }
 
+        public  string RemoveImgByName(string ImgTour)
+        {
+            //cắt chuỗi loại bỏ phần string localhost
+            string convertImgTour = ImgTour.Substring(31);
+            //tìm kiếm ảnh trong db ANH_TOUR
+          var imgTour =   _db.ANH_TOUR.Where(s => s.ImgTour == convertImgTour);
+            //nếu ảnh tour có trong db
+            if (imgTour != null)
+            {
+                _db.ANH_TOUR.RemoveRange(imgTour);
+                _db.SaveChanges();
+                string s = "Xóa ảnh thành công";
+                return s;
+
+            }
+            //nếu ảnh tour không có
+            else
+            {
+                string s = "Xóa không thành công";
+                return s;
+            }
+        }
+
         public async Task<AnhTour> UploadImg(AnhTour anhtour)
         {
             _db.ANH_TOUR.Add(anhtour);

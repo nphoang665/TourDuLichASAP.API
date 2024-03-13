@@ -54,5 +54,11 @@ namespace TourDuLichASAP.API.Models.DTO
         [Required]
         [StringLength(100)]
         public string TinhTrang { get; set; }
+
+        public string[] AnhTourDb { get; set; }
+        public string[] AnhTourBrowse { get; set; }
+
+      
+
     }
 }
