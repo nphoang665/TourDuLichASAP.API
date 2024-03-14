@@ -59,6 +59,11 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.TOUR_DU_LICH.FindAsync(idTour);
         }
 
+        public async Task<IEnumerable<DatTour>> GetTourDuLichByIdTour(string idTour)
+        {
+            return await _db.DAT_TOUR.Include(x => x.KhachHang).Include(x => x.NhanVien).Include(x => x.TourDuLich).Where(s=>s.IdTour == idTour).ToListAsync();
+        }
+
         public async Task<DatTour?> UpdateAsync(DatTour datTour)
         {
             var existingDatTour = await _db.DAT_TOUR.Include(x => x.KhachHang).Include(x => x.NhanVien).Include(x => x.TourDuLich).FirstOrDefaultAsync(x => x.IdDatTour == datTour.IdDatTour);

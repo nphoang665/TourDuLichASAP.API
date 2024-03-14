@@ -15,7 +15,7 @@ namespace TourDuLichASAP.API.Models.DTO
         public string IdNhanVien { get; set; }
         public DateTime ThoiGianDatTour { get; set; }
         public string TinhTrang { get; set; }
-        public string KhachHang { get; set; }  // Ensure this is a string
+        public KhachHang KhachHang { get; set; }  // Ensure this is a string
         public string NhanVien { get; set; }
         public string TourDuLich { get; set; }
     }
