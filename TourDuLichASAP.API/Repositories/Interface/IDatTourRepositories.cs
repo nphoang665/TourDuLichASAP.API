@@ -12,5 +12,7 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<KhachHang> GetkhachHangById(string idKhachHang);
         Task<NhanVien> GetNhanVienById(string idNhanVien);
         Task<TourDuLich> GetTourDuLichById(string idTour);
+        //hàm lấy đặt tour theo id tour
+        Task<IEnumerable<DatTour>> GetTourDuLichByIdTour(string idTour);
     }
 }
