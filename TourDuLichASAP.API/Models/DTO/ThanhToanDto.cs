@@ -1,23 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using TourDuLichASAP.API.Models.Domain;
 
-namespace TourDuLichASAP.API.Models.Domain
+namespace TourDuLichASAP.API.Models.DTO
 {
-    public class ThanhToan
+    public class ThanhToanDto
     {
-        [Key]
-        [StringLength(6)]
         public string IdThanhToan { get; set; }
-        [Required]
-        [StringLength(6)]
         public string IdDatTour { get; set; }
-
-        [Required]
-        [StringLength(6)]
         public string IdKhachHang { get; set; }
-
-        [Required]
-        [StringLength(6)]
         public string IdNhanVien { get; set; }
 
         public int TongTienTour { get; set; }
@@ -25,22 +16,11 @@ namespace TourDuLichASAP.API.Models.Domain
         public int TongTienDichVu { get; set; }
 
         public int TongTien { get; set; }
-
-        [StringLength(50)]
         public string TinhTrang { get; set; }
-
         public DateTime NgayThanhToan { get; set; }
-
-        [StringLength(50)]
         public string PhuongThucThanhToan { get; set; }
-
-        [ForeignKey("IdDatTour")]
-        public virtual DatTour DatTour { get; set; }
-
-        [ForeignKey("IdKhachHang")]
-        public virtual KhachHang KhachHang { get; set; }
-
-        [ForeignKey("IdNhanVien")]
-        public virtual NhanVien NhanVien { get; set; }
+        public DatTour DatTour { get; set; }
+        public KhachHang KhachHang { get; set; }
+        public NhanVien NhanVien { get; set; }
     }
 }

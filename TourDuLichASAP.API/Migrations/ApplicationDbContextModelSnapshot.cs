@@ -159,6 +159,20 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasIndex("IdTour");
 
                     b.ToTable("DAT_TOUR");
+
+                    b.HasData(
+                        new
+                        {
+                            IdDatTour = "TLD002",
+                            GhiChu = "Yêu cầu đưa đón",
+                            IdKhachHang = "KH0001",
+                            IdNhanVien = "NV0001",
+                            IdTour = "TDL001",
+                            SoLuongNguoiLon = 2,
+                            SoLuongTreEm = 1,
+                            ThoiGianDatTour = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6136),
+                            TinhTrang = "Chờ xác nhận"
+                        });
                 });
 
             modelBuilder.Entity("TourDuLichASAP.API.Models.Domain.DichVu", b =>
@@ -300,7 +314,7 @@ namespace TourDuLichASAP.API.Migrations
                             NgayDangKy = new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0908116466",
                             TenDoiTac = "Công ty cổ phần Du lịch Đắk Lắk",
-                            TinhTrang = "Hoạt động"
+                            TinhTrang = "Đang hợp tác"
                         },
                         new
                         {
@@ -312,7 +326,7 @@ namespace TourDuLichASAP.API.Migrations
                             NgayDangKy = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0905057890",
                             TenDoiTac = "Công ty TNHH Du lịch DakViet",
-                            TinhTrang = "Hoạt động"
+                            TinhTrang = "Đang hợp tác"
                         });
                 });
 
@@ -371,6 +385,36 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasKey("IdKhachHang");
 
                     b.ToTable("KHACH_HANG");
+
+                    b.HasData(
+                        new
+                        {
+                            IdKhachHang = "KH0001",
+                            CCCD = "123456789012",
+                            DiaChi = "123 Đường A, Quận 1, TP. HCM",
+                            Email = "ntc@example.com",
+                            GioiTinh = "Nữ",
+                            MatKhau = "password123",
+                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6094),
+                            NgaySinh = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SoDienThoai = "0987654321",
+                            TenKhachHang = "Nguyễn Thị C",
+                            TinhTrang = "Đang hoạt động"
+                        },
+                        new
+                        {
+                            IdKhachHang = "KH0002",
+                            CCCD = "987654321098",
+                            DiaChi = "456 Đường S, Quận 5, TP. HCM",
+                            Email = "tvd@example.com",
+                            GioiTinh = "Nam",
+                            MatKhau = "abc123",
+                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6097),
+                            NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            SoDienThoai = "0365478912",
+                            TenKhachHang = "Trần Văn D",
+                            TinhTrang = "Đang hoạt động"
+                        });
                 });
 
             modelBuilder.Entity("TourDuLichASAP.API.Models.Domain.NhanVien", b =>
@@ -440,6 +484,42 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasKey("IdNhanVien");
 
                     b.ToTable("NHAN_VIEN");
+
+                    b.HasData(
+                        new
+                        {
+                            IdNhanVien = "NV0001",
+                            AnhNhanVien = "url_anh",
+                            CCCD = "987654321098",
+                            ChucVu = "Nhân viên",
+                            DiaChi = "123 Lê Thánh Tông, Buôn Ma Thuột",
+                            Email = "ttb@example.com",
+                            GioiTinh = "Nữ",
+                            MatKhau = "password123",
+                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6058),
+                            NgaySinh = new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            NgayVaoLam = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6070),
+                            SoDienThoai = "0987654321",
+                            TenNhanVien = "Trần Thị Thanh",
+                            TinhTrang = "Đang hoạt động"
+                        },
+                        new
+                        {
+                            IdNhanVien = "NV0002",
+                            AnhNhanVien = "url_anh",
+                            CCCD = "456789123456",
+                            ChucVu = "Nhân viên",
+                            DiaChi = "111 Hà Huy Tập, Buôn Ma Thuột",
+                            Email = "lvc@example.com",
+                            GioiTinh = "Nam",
+                            MatKhau = "abc123",
+                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076),
+                            NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            NgayVaoLam = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076),
+                            SoDienThoai = "0365478912",
+                            TenNhanVien = "Lê Văn Khánh",
+                            TinhTrang = "Đang hoạt động"
+                        });
                 });
 
             modelBuilder.Entity("TourDuLichASAP.API.Models.Domain.ThanhToan", b =>
@@ -449,11 +529,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("IdDatTour")
-                        .IsRequired()
-                        .HasMaxLength(6)
-                        .HasColumnType("nvarchar(6)");
-
-                    b.Property<string>("IdDichVuChiTiet")
                         .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
@@ -493,8 +568,6 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasKey("IdThanhToan");
 
                     b.HasIndex("IdDatTour");
-
-                    b.HasIndex("IdDichVuChiTiet");
 
                     b.HasIndex("IdKhachHang");
 
@@ -575,6 +648,48 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasIndex("IdDoiTac");
 
                     b.ToTable("TOUR_DU_LICH");
+
+                    b.HasData(
+                        new
+                        {
+                            IdTour = "TDL001",
+                            DichVuDiKem = "Bữa ăn trưa, vé tham quan",
+                            GiaNguoiLon = 1000000,
+                            GiaTreEm = 500000,
+                            IdDoiTac = "DT0002",
+                            LoaiTour = "Tham quan thác",
+                            MoTa = "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.",
+                            NgayThem = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6118),
+                            NoiKhoiHanh = "Buôn Ma Thuột",
+                            PhuongTienDiChuyen = "Xe ô tô du lịch",
+                            SoChoConNhan = 45,
+                            SoLuongNguoiLon = 30,
+                            SoLuongTreEm = 15,
+                            TenTour = "Thác Dray Nur",
+                            ThoiGianBatDau = new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianKetThuc = new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TinhTrang = "Đang hoạt động"
+                        },
+                        new
+                        {
+                            IdTour = "TDL002",
+                            DichVuDiKem = "Hướng dẫn viên, nước uống",
+                            GiaNguoiLon = 700000,
+                            GiaTreEm = 300000,
+                            IdDoiTac = "DT0001",
+                            LoaiTour = "Thăm quan vườn cà phê",
+                            MoTa = "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.",
+                            NgayThem = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6122),
+                            NoiKhoiHanh = "Buôn Ma Thuột",
+                            PhuongTienDiChuyen = "Xe máy",
+                            SoChoConNhan = 30,
+                            SoLuongNguoiLon = 20,
+                            SoLuongTreEm = 10,
+                            TenTour = "Cà phê sân vườn",
+                            ThoiGianBatDau = new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ThoiGianKetThuc = new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            TinhTrang = "Đang hoạt động"
+                        });
                 });
 
             modelBuilder.Entity("TourDuLichASAP.API.Models.Domain.AnhDoiTac", b =>
@@ -688,12 +803,6 @@ namespace TourDuLichASAP.API.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("TourDuLichASAP.API.Models.Domain.DichVuChiTiet", "DichVuChiTiet")
-                        .WithMany()
-                        .HasForeignKey("IdDichVuChiTiet")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("TourDuLichASAP.API.Models.Domain.KhachHang", "KhachHang")
                         .WithMany()
                         .HasForeignKey("IdKhachHang")
@@ -707,8 +816,6 @@ namespace TourDuLichASAP.API.Migrations
                         .IsRequired();
 
                     b.Navigation("DatTour");
-
-                    b.Navigation("DichVuChiTiet");
 
                     b.Navigation("KhachHang");
 

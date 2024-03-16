@@ -12,7 +12,7 @@ namespace TourDuLichASAP.API.Models.Domain
         [ForeignKey("DoiTac")]
         public string IdDoiTac { get; set; }
 
-        public string imageDoiTac { get; set; } // Consider changing the type based on actual data storage need
+        public string imageDoiTac { get; set; }
 
         [Column(TypeName = "Date")]
         public DateTime NgayThem { get; set; }

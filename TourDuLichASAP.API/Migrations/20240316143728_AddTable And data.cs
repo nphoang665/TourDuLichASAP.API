@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TourDuLichASAP.API.Migrations
 {
     /// <inheritdoc />
-    public partial class AddAllTableToDb : Migration
+    public partial class AddTableAnddata : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -281,7 +281,6 @@ namespace TourDuLichASAP.API.Migrations
                 columns: table => new
                 {
                     IdThanhToan = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    IdDichVuChiTiet = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdDatTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdKhachHang = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdNhanVien = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
@@ -302,12 +301,6 @@ namespace TourDuLichASAP.API.Migrations
                         principalColumn: "IdDatTour",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_THANH_TOAN_DICH_VU_CHI_TIET_IdDichVuChiTiet",
-                        column: x => x.IdDichVuChiTiet,
-                        principalTable: "DICH_VU_CHI_TIET",
-                        principalColumn: "IdDichVuChiTiet",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_THANH_TOAN_KHACH_HANG_IdKhachHang",
                         column: x => x.IdKhachHang,
                         principalTable: "KHACH_HANG",
@@ -326,9 +319,41 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdDoiTac", "DanhGiaApp", "DiaChi", "Email", "MoTa", "NgayDangKy", "SoDienThoai", "TenDoiTac", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "DT0001", 4.5f, "01-03 Phan Chu Trinh, Tp. Buôn Ma Thuột, Đắk Lắk", "sales@daklaktourist.com.vn", "Công ty chuyên về kinh doanh khách sạn, nhà hàng, khu du lịch tại thành phố Đắk Lắk.", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0908116466", "Công ty cổ phần Du lịch Đắk Lắk", "Hoạt động" },
-                    { "DT0002", 4.2f, "32 Nơ Trang Long, Tp. Buôn Ma Thuột, Đắk Lắk", "info@dakviettravel.com", "DakViet Travel, một địa chỉ du lịch đáng tin cậy, có trụ sở tại trung tâm của Việt Nam Tây Nguyên.", new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0905057890", "Công ty TNHH Du lịch DakViet", "Hoạt động" }
+                    { "DT0001", 4.5f, "01-03 Phan Chu Trinh, Tp. Buôn Ma Thuột, Đắk Lắk", "sales@daklaktourist.com.vn", "Công ty chuyên về kinh doanh khách sạn, nhà hàng, khu du lịch tại thành phố Đắk Lắk.", new DateTime(2023, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0908116466", "Công ty cổ phần Du lịch Đắk Lắk", "Đang hợp tác" },
+                    { "DT0002", 4.2f, "32 Nơ Trang Long, Tp. Buôn Ma Thuột, Đắk Lắk", "info@dakviettravel.com", "DakViet Travel, một địa chỉ du lịch đáng tin cậy, có trụ sở tại trung tâm của Việt Nam Tây Nguyên.", new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0905057890", "Công ty TNHH Du lịch DakViet", "Đang hợp tác" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "KHACH_HANG",
+                columns: new[] { "IdKhachHang", "CCCD", "DiaChi", "Email", "GioiTinh", "MatKhau", "NgayDangKy", "NgaySinh", "SoDienThoai", "TenKhachHang", "TinhTrang" },
+                values: new object[,]
+                {
+                    { "KH0001", "123456789012", "123 Đường A, Quận 1, TP. HCM", "ntc@example.com", "Nữ", "password123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6094), new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0987654321", "Nguyễn Thị C", "Đang hoạt động" },
+                    { "KH0002", "987654321098", "456 Đường S, Quận 5, TP. HCM", "tvd@example.com", "Nam", "abc123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6097), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0365478912", "Trần Văn D", "Đang hoạt động" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "NHAN_VIEN",
+                columns: new[] { "IdNhanVien", "AnhNhanVien", "CCCD", "ChucVu", "DiaChi", "Email", "GioiTinh", "MatKhau", "NgayDangKy", "NgaySinh", "NgayVaoLam", "SoDienThoai", "TenNhanVien", "TinhTrang" },
+                values: new object[,]
+                {
+                    { "NV0001", "url_anh", "987654321098", "Nhân viên", "123 Lê Thánh Tông, Buôn Ma Thuột", "ttb@example.com", "Nữ", "password123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6058), new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6070), "0987654321", "Trần Thị Thanh", "Đang hoạt động" },
+                    { "NV0002", "url_anh", "456789123456", "Nhân viên", "111 Hà Huy Tập, Buôn Ma Thuột", "lvc@example.com", "Nam", "abc123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076), "0365478912", "Lê Văn Khánh", "Đang hoạt động" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "TOUR_DU_LICH",
+                columns: new[] { "IdTour", "DichVuDiKem", "GiaNguoiLon", "GiaTreEm", "IdDoiTac", "LoaiTour", "MoTa", "NgayThem", "NoiKhoiHanh", "PhuongTienDiChuyen", "SoChoConNhan", "SoLuongNguoiLon", "SoLuongTreEm", "TenTour", "ThoiGianBatDau", "ThoiGianKetThuc", "TinhTrang" },
+                values: new object[,]
+                {
+                    { "TDL001", "Bữa ăn trưa, vé tham quan", 1000000, 500000, "DT0002", "Tham quan thác", "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6118), "Buôn Ma Thuột", "Xe ô tô du lịch", 45, 30, 15, "Thác Dray Nur", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" },
+                    { "TDL002", "Hướng dẫn viên, nước uống", 700000, 300000, "DT0001", "Thăm quan vườn cà phê", "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6122), "Buôn Ma Thuột", "Xe máy", 30, 20, 10, "Cà phê sân vườn", new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "DAT_TOUR",
+                columns: new[] { "IdDatTour", "GhiChu", "IdKhachHang", "IdNhanVien", "IdTour", "SoLuongNguoiLon", "SoLuongTreEm", "ThoiGianDatTour", "TinhTrang" },
+                values: new object[] { "TLD002", "Yêu cầu đưa đón", "KH0001", "NV0001", "TDL001", 2, 1, new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6136), "Chờ xác nhận" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ANH_DOI_TAC_IdDoiTac",
@@ -391,11 +416,6 @@ namespace TourDuLichASAP.API.Migrations
                 column: "IdDatTour");
 
             migrationBuilder.CreateIndex(
-                name: "IX_THANH_TOAN_IdDichVuChiTiet",
-                table: "THANH_TOAN",
-                column: "IdDichVuChiTiet");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_THANH_TOAN_IdKhachHang",
                 table: "THANH_TOAN",
                 column: "IdKhachHang");
@@ -424,16 +444,16 @@ namespace TourDuLichASAP.API.Migrations
                 name: "DANH_GIA");
 
             migrationBuilder.DropTable(
-                name: "THANH_TOAN");
-
-            migrationBuilder.DropTable(
                 name: "DICH_VU_CHI_TIET");
 
             migrationBuilder.DropTable(
-                name: "DAT_TOUR");
+                name: "THANH_TOAN");
 
             migrationBuilder.DropTable(
                 name: "DICH_VU");
+
+            migrationBuilder.DropTable(
+                name: "DAT_TOUR");
 
             migrationBuilder.DropTable(
                 name: "KHACH_HANG");
