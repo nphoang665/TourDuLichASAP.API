@@ -66,7 +66,7 @@ namespace TourDuLichASAP.API.Controllers
                 TongTienTour = requestDto.TongTienTour,
                 TongTienDichVu = requestDto.TongTienDichVu,
                 TongTien = requestDto.TongTien,
-                TinhTrang = "Đã thanh toán",
+                TinhTrang = "Chưa thanh toán",
                 NgayThanhToan = DateTime.Now,
                 PhuongThucThanhToan = requestDto.PhuongThucThanhToan,
                 DatTour = datTour,
