@@ -63,7 +63,7 @@ namespace TourDuLichASAP.API.Migrations
                     GioiTinh = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    MatKhau = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    MatKhau = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     NgayDangKy = table.Column<DateTime>(type: "Date", nullable: false)
                 },
                 constraints: table =>

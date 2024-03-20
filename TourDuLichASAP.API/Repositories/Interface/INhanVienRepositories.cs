@@ -5,5 +5,6 @@ namespace TourDuLichASAP.API.Repositories.Interface
     public interface INhanVienRepositories
     {
         Task<IEnumerable<NhanVien>> GetAllAsync();
+        Task<NhanVien> ThemNhanVien(NhanVien nhanVien);
     }
 }

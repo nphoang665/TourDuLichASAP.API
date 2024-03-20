@@ -17,5 +17,13 @@ namespace TourDuLichASAP.API.Repositories.Implementation
         {
            return await _db.NHAN_VIEN.ToListAsync();
         }
+
+        public async Task<NhanVien> ThemNhanVien(NhanVien nhanVien)
+        {
+            await _db.NHAN_VIEN.AddAsync(nhanVien);
+            await _db.SaveChangesAsync();
+            return nhanVien;
+
+        }
     }
 }

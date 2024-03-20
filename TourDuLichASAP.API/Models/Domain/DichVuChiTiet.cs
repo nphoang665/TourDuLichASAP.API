@@ -20,7 +20,7 @@ namespace TourDuLichASAP.API.Models.Domain
         public string IdDatTour { get; set; }
 
         [StringLength(6)]
-        public string IdNhanVien { get; set; }
+        public string? IdNhanVien { get; set; }
 
         public DateTime ThoiGianDichVu { get; set; }
 

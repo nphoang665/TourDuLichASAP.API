@@ -13,10 +13,14 @@ namespace TourDuLichASAP.API.Controllers
     public class DatTourController : ControllerBase
     {
         private readonly IDatTourRepositories _datTourRepositories;
+        private readonly IDichVuChiTietRepositories _dichVuChiTietRepositories;
+        private readonly IKhachHangRepositories _khachHangRepositories;
 
-        public DatTourController(IDatTourRepositories datTourRepositories)
+        public DatTourController(IDatTourRepositories datTourRepositories,IKhachHangRepositories khachHangRepositories,IDichVuChiTietRepositories dichVuChiTietRepositories)
         {
             _datTourRepositories = datTourRepositories;
+            _dichVuChiTietRepositories = dichVuChiTietRepositories;
+            _khachHangRepositories = khachHangRepositories;
         }
 
         [HttpPost]
@@ -58,6 +62,74 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = request.TinhTrang,
             };
             return Ok(response);
+        }
+
+        [HttpPost("/DatTourChoKhachHang")]
+        public async Task<IActionResult> DatTourChoKhachHang([FromBody] CreateDatTourRequestFromKhachHangDto request)
+        {
+            Random random = new Random();
+            int randomValue = random.Next(1000);
+            string idDatTour = "DT" + randomValue.ToString("D4");
+
+            
+            int randomValue1 = random.Next(1000);
+            string idKhachHang = "KH" + randomValue1.ToString("D4");
+
+            
+           
+
+            var khachHang = new KhachHang
+            {
+                IdKhachHang = idKhachHang,
+                TenKhachHang = request.TenKhachHang,
+                SoDienThoai = request.SoDienThoai,
+                DiaChi = request.DiaChi,
+                CCCD = request.CCCD,
+                NgaySinh = request.NgaySinh,
+                GioiTinh = request.GioiTinh,
+                Email = request.Email,
+                TinhTrang = request.TinhTrangKhachHang,
+                MatKhau = null,
+                NgayDangKy = request.NgayDangKy,
+            };
+            khachHang =await _khachHangRepositories.CreateAsync(khachHang);
+            var datTour = new DatTour
+            {
+                IdDatTour = idDatTour,
+                IdKhachHang = khachHang.IdKhachHang,
+                IdTour = request.IdTour,
+                SoLuongNguoiLon = request.SoLuongNguoiLon,
+                SoLuongTreEm = request.SoLuongTreEm,
+                GhiChu = null,
+                IdNhanVien = null,
+                ThoiGianDatTour = request.ThoiGianDatTour,
+                TinhTrang = request.TinhTrangDatTour,
+                };
+            datTour = await _datTourRepositories.CreateAsync(datTour);
+
+            if(request.DichVuChiTiet != null)
+            {
+                foreach (var item in request.DichVuChiTiet)
+                {
+                    int randomValue2 = random.Next(1000);
+                    string idDichVuChiTiet = "DC" + randomValue2.ToString("D4");
+                    var dichVuChiTiet = new DichVuChiTiet
+                    {
+                        IdDichVuChiTiet = idDichVuChiTiet,
+                        IdDatTour = datTour.IdDatTour,
+                        IdKhachHang = khachHang.IdKhachHang,
+                        IdDichVu = item.IdDichVu,
+                        ThoiGianDichVu = request.NgayDangKy,
+                        SoLuong = item.SoLuong,
+
+                    };
+                    dichVuChiTiet = await _dichVuChiTietRepositories.ThemDichVuChiTiet(dichVuChiTiet);
+                }
+            }
+
+
+
+            return BadRequest(request);
         }
 
         [HttpGet]

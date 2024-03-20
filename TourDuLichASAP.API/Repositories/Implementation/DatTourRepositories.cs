@@ -21,6 +21,13 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return datTour;
         }
 
+        public async Task<DatTour> DatTourChoKhachHang(DatTour datTour)
+        {
+            await _db.DAT_TOUR.AddAsync(datTour);
+            await _db.SaveChangesAsync();
+            return datTour;
+        }
+
         public async Task<DatTour?> DeleteAsync(string id)
         {
             var existingDatTour = await _db.DAT_TOUR.FirstOrDefaultAsync(x => x.IdDatTour == id);

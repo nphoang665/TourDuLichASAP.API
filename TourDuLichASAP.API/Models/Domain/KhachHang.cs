@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace TourDuLichASAP.API.Models.Domain
 {
@@ -39,10 +40,9 @@ namespace TourDuLichASAP.API.Models.Domain
         [Required]
         [StringLength(20)]
         public string TinhTrang { get; set; }
-
-        [Required]
+        
         [StringLength(30)]
-        public string MatKhau { get; set; }
+        public string? MatKhau { get; set; }
 
         [Column(TypeName = "Date")]
         public DateTime NgayDangKy { get; set; }
