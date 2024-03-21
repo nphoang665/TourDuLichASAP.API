@@ -58,7 +58,7 @@ namespace TourDuLichASAP.API.Controllers
 
             var response = new TourDuLichDto
             {
-                IdTour = idTour,
+                IdTour = requestDto.IdTour,
                 TenTour = requestDto.TenTour,
                 LoaiTour = requestDto.LoaiTour,
                 PhuongTienDiChuyen = requestDto.PhuongTienDiChuyen,
@@ -231,9 +231,9 @@ namespace TourDuLichASAP.API.Controllers
 
             var doiTac = await _tourDuLichRepositories.GetDoiTacAsync(dto.IdDoiTac);
             tourDuLich.DoiTac = doiTac;
-            var updateTourDuLich = await _tourDuLichRepositories.UpdateAsync(tourDuLich);
+            tourDuLich = await _tourDuLichRepositories.UpdateAsync(tourDuLich);
 
-            if (updateTourDuLich == null)
+            if (tourDuLich == null)
             {
                 return NotFound();
             }

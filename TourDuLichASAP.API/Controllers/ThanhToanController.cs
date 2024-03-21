@@ -142,8 +142,8 @@ namespace TourDuLichASAP.API.Controllers
                 NhanVien = nhanVien
             };
 
-            var updateThanhToan = await _thanhToanRepositories.UpdateAsync(thanhToan);
-            if (updateThanhToan == null)
+            thanhToan = await _thanhToanRepositories.UpdateAsync(thanhToan);
+            if (thanhToan == null)
             {
                 return NotFound();
             }
