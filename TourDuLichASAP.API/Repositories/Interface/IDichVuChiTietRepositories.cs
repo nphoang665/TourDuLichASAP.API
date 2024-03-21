@@ -10,5 +10,7 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<DatTour> GetDatTourById(string idDatTour);
         Task<DichVu> GetDichVuById(string idDichVu);
 
+        Task<DichVuChiTiet> ThemDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
+
     }
 }

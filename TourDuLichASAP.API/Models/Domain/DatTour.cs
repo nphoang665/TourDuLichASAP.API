@@ -23,11 +23,11 @@ namespace TourDuLichASAP.API.Models.Domain
 
         public int SoLuongTreEm { get; set; }
 
-        public string GhiChu { get; set; } // NTEXT in SQL Server is mapped to string in C#
+        public string? GhiChu { get; set; } // NTEXT in SQL Server is mapped to string in C#
 
         [StringLength(6)]
         [ForeignKey("NhanVien")]
-        public string IdNhanVien { get; set; }
+        public string? IdNhanVien { get; set; }
 
         public DateTime ThoiGianDatTour { get; set; }
 
@@ -36,8 +36,8 @@ namespace TourDuLichASAP.API.Models.Domain
         public string TinhTrang { get; set; }
 
         // Navigation properties
-        public KhachHang KhachHang { get; set; }
-        public TourDuLich TourDuLich { get; set; }
-        public NhanVien NhanVien { get; set; }
+        public KhachHang? KhachHang { get; set; }
+        public TourDuLich? TourDuLich { get; set; }
+        public NhanVien? NhanVien { get; set; }
     }
 }
