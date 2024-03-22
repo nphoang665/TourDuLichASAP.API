@@ -135,6 +135,7 @@ namespace TourDuLichASAP.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllDatTour()
         {
+            
             var datTours = await _datTourRepositories.GetAllAsync();
 
             var response = new List<DatTourDto>();

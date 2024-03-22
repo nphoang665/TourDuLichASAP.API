@@ -129,6 +129,7 @@ namespace TourDuLichASAP.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTourDuLich()
         {
+            await Task.Delay(TimeSpan.FromSeconds(1));
             var tourDuLichs = await _tourDuLichRepositories.GetAllAsync();
          
             
