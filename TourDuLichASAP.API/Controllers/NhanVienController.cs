@@ -23,7 +23,7 @@ namespace TourDuLichASAP.API.Controllers
             var nhanviens = await _nhanVienRepositories.GetAllAsync();
 
             var response = new List<NhanVienDto>();
-            foreach(var nhanvien in nhanviens)
+            foreach (var nhanvien in nhanviens)
             {
                 response.Add(new NhanVienDto
                 {
@@ -43,6 +43,160 @@ namespace TourDuLichASAP.API.Controllers
                     MatKhau = nhanvien.MatKhau
                 });
             }
+            return Ok(response);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateNhanVien([FromBody] CreateNhanVienRequestDto requestDto)
+        {
+            Random random = new Random();
+            int randomValue = random.Next(1000);
+            string idNhanVien = "NV" + randomValue.ToString("D4");
+
+            var nhanVien = new NhanVien
+            {
+                IdNhanVien = idNhanVien,
+                TenNhanVien = requestDto.TenNhanVien,
+                SoDienThoai = requestDto.SoDienThoai,
+                DiaChi = requestDto.DiaChi,
+                CCCD = requestDto.CCCD,
+                NgaySinh = requestDto.NgaySinh,
+                Email = requestDto.Email,
+                GioiTinh = requestDto.GioiTinh,
+                NgayDangKy = DateTime.Now,
+                ChucVu = requestDto.ChucVu,
+                NgayVaoLam = requestDto.NgayVaoLam,
+                AnhNhanVien = requestDto.AnhNhanVien,
+                TinhTrang = "Đang hoạt động",
+                MatKhau = requestDto.MatKhau,
+            };
+
+            nhanVien = await _nhanVienRepositories.CreateAsync(nhanVien);
+
+            var response = new NhanVienDto
+            {
+                IdNhanVien = requestDto.IdNhanVien,
+                TenNhanVien = requestDto.TenNhanVien,
+                SoDienThoai = requestDto.SoDienThoai,
+                DiaChi = requestDto.DiaChi,
+                CCCD = requestDto.CCCD,
+                NgaySinh = requestDto.NgaySinh,
+                Email = requestDto.Email,
+                GioiTinh = requestDto.GioiTinh,
+                NgayDangKy = requestDto.NgayDangKy,
+                ChucVu = requestDto.ChucVu,
+                NgayVaoLam = requestDto.NgayVaoLam,
+                AnhNhanVien = requestDto.AnhNhanVien,
+                TinhTrang = requestDto.TinhTrang,
+                MatKhau = requestDto.MatKhau,
+            };
+
+            return Ok(response);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetNhanVienById(string id)
+        {
+            var nhanVien = await _nhanVienRepositories.GetByIdAsync(id);
+            if (nhanVien == null)
+            {
+                return NotFound();
+            }
+            var response = new NhanVienDto
+            {
+                IdNhanVien = nhanVien.IdNhanVien,
+                TenNhanVien = nhanVien.TenNhanVien,
+                SoDienThoai = nhanVien.SoDienThoai,
+                DiaChi = nhanVien.DiaChi,
+                CCCD = nhanVien.CCCD,
+                NgaySinh = nhanVien.NgaySinh,
+                Email = nhanVien.Email,
+                GioiTinh = nhanVien.GioiTinh,
+                NgayDangKy = nhanVien.NgayDangKy,
+                ChucVu = nhanVien.ChucVu,
+                NgayVaoLam = nhanVien.NgayVaoLam,
+                AnhNhanVien = nhanVien.AnhNhanVien,
+                TinhTrang = nhanVien.TinhTrang,
+                MatKhau = nhanVien.MatKhau,
+            };
+            return Ok(response);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateNhanVien(string id, UpdateNhanVienRequestDto requestDto)
+        {
+            var nhanVien = new NhanVien
+            {
+                IdNhanVien = id,
+                TenNhanVien = requestDto.TenNhanVien,
+                SoDienThoai = requestDto.SoDienThoai,
+                DiaChi = requestDto.DiaChi,
+                CCCD = requestDto.CCCD,
+                NgaySinh = requestDto.NgaySinh,
+                Email = requestDto.Email,
+                GioiTinh = requestDto.GioiTinh,
+                NgayDangKy = requestDto.NgayDangKy,
+                ChucVu = requestDto.ChucVu,
+                NgayVaoLam = requestDto.NgayVaoLam,
+                AnhNhanVien = requestDto.AnhNhanVien,
+                TinhTrang = requestDto.TinhTrang,
+                MatKhau = requestDto.MatKhau,
+            };
+
+            nhanVien = await _nhanVienRepositories.UpdateAsync(nhanVien);
+            if(nhanVien == null)
+            {
+                return NotFound();
+            }
+
+            var response = new NhanVienDto
+            {
+                IdNhanVien = nhanVien.IdNhanVien,
+                TenNhanVien = nhanVien.TenNhanVien,
+                SoDienThoai = nhanVien.SoDienThoai,
+                DiaChi = nhanVien.DiaChi,
+                CCCD = nhanVien.CCCD,
+                NgaySinh = nhanVien.NgaySinh,
+                Email = nhanVien.Email,
+                GioiTinh = nhanVien.GioiTinh,
+                NgayDangKy = nhanVien.NgayDangKy,
+                ChucVu = nhanVien.ChucVu,
+                NgayVaoLam = nhanVien.NgayVaoLam,
+                AnhNhanVien = nhanVien.AnhNhanVien,
+                TinhTrang = nhanVien.TinhTrang,
+                MatKhau = nhanVien.MatKhau,
+            };
+            return Ok(response);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteNhanVien(string id)
+        {
+            var deleteNhanVien = await _nhanVienRepositories.DeleteAsync(id);
+            if(deleteNhanVien == null)
+            {
+                return NotFound();
+            }
+            var response = new NhanVien
+            {
+                IdNhanVien = id,
+                TenNhanVien = deleteNhanVien.TenNhanVien,
+                SoDienThoai = deleteNhanVien.SoDienThoai,
+                DiaChi = deleteNhanVien.DiaChi,
+                CCCD = deleteNhanVien.CCCD,
+                NgaySinh = deleteNhanVien.NgaySinh,
+                Email = deleteNhanVien.Email,
+                GioiTinh = deleteNhanVien.GioiTinh,
+                NgayDangKy = deleteNhanVien.NgayDangKy,
+                ChucVu = deleteNhanVien.ChucVu,
+                NgayVaoLam = deleteNhanVien.NgayVaoLam,
+                AnhNhanVien = deleteNhanVien.AnhNhanVien,
+                TinhTrang = deleteNhanVien.TinhTrang,
+                MatKhau = deleteNhanVien.MatKhau,
+            };
             return Ok(response);
         }
     }

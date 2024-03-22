@@ -1,11 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-
-namespace TourDuLichASAP.API.Models.DTO
+﻿namespace TourDuLichASAP.API.Models.DTO
 {
-    public class NhanVienDto
+    public class UpdateNhanVienRequestDto
     {
-        public string IdNhanVien { get; set; }
         public string TenNhanVien { get; set; }
         public string SoDienThoai { get; set; }
         public string DiaChi { get; set; }
@@ -16,7 +12,7 @@ namespace TourDuLichASAP.API.Models.DTO
         public DateTime NgayDangKy { get; set; }
         public string ChucVu { get; set; }
         public DateTime NgayVaoLam { get; set; }
-        public string AnhNhanVien { get; set; } 
+        public string AnhNhanVien { get; set; }
         public string TinhTrang { get; set; }
         public string MatKhau { get; set; }
     }

@@ -244,9 +244,9 @@ namespace TourDuLichASAP.API.Controllers
                 TourDuLich = tourDuLich
             };
 
-            var updateDatTour = await _datTourRepositories.UpdateAsync(datTour);
+           datTour = await _datTourRepositories.UpdateAsync(datTour);
 
-            if(updateDatTour == null)
+            if(datTour == null)
             {
                 return NotFound();
             }
