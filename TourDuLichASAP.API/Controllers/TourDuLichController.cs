@@ -129,7 +129,7 @@ namespace TourDuLichASAP.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllTourDuLich()
         {
-            await Task.Delay(TimeSpan.FromSeconds(1));
+            
             var tourDuLichs = await _tourDuLichRepositories.GetAllAsync();
          
             
@@ -171,6 +171,7 @@ namespace TourDuLichASAP.API.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetTourDuLichById(string id)
         {
+           
             var tourDuLich = await _tourDuLichRepositories.GetByIdAsync(id);
             var anhtour = await _tourDuLichRepositories.GetAnhTourByIdAsync(id);
             if (tourDuLich is null)
