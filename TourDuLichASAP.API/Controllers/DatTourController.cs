@@ -213,7 +213,7 @@ namespace TourDuLichASAP.API.Controllers
                         ThoiGianDatTour = dattour.ThoiGianDatTour,
                         TinhTrang = dattour.TinhTrang,
                         KhachHang = dattour.KhachHang,
-                        NhanVien = dattour.NhanVien.TenNhanVien,
+                        NhanVien = dattour.NhanVien !=null  ? dattour.NhanVien.TenNhanVien: null,
                         TourDuLich = dattour.TourDuLich.TenTour
                     });
                 }
