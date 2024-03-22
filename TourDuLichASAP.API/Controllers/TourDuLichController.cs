@@ -46,9 +46,9 @@ namespace TourDuLichASAP.API.Controllers
                 IdDoiTac = requestDto.IdDoiTac,
                 GiaTreEm = requestDto.GiaTreEm,
                 GiaNguoiLon = requestDto.GiaNguoiLon,
-                NgayThem = requestDto.NgayThem,
+                NgayThem = DateTime.Now,
                 DichVuDiKem = requestDto.DichVuDiKem,
-                TinhTrang = requestDto.TinhTrang,
+                TinhTrang = "Đang hoạt động",
             };
 
 
