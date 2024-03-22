@@ -207,8 +207,8 @@ namespace TourDuLichASAP.API.Migrations
                     IdTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     SoLuongNguoiLon = table.Column<int>(type: "int", nullable: false),
                     SoLuongTreEm = table.Column<int>(type: "int", nullable: false),
-                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IdNhanVien = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    GhiChu = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdNhanVien = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     ThoiGianDatTour = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
@@ -243,7 +243,7 @@ namespace TourDuLichASAP.API.Migrations
                     IdDichVu = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdKhachHang = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdDatTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    IdNhanVien = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    IdNhanVien = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     ThoiGianDichVu = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SoLuong = table.Column<int>(type: "int", nullable: false)
                 },

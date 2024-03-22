@@ -172,7 +172,7 @@ namespace TourDuLichASAP.API.Data
                  IdTour = "TDL001",
                  TenTour = "Thác Dray Nur",
                  LoaiTour = "Tham quan thác",
-                 PhuongTienDiChuyen = "Xe ô tô du lịch",
+                 PhuongTienDiChuyen = "Xe ô tô",
                  MoTa = "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.",
                  SoLuongNguoiLon = 30,
                  SoLuongTreEm = 15,
