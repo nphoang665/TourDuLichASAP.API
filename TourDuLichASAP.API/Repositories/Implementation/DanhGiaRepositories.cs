@@ -15,8 +15,15 @@ namespace TourDuLichASAP.API.Repositories.Implementation
 
         public async Task<IEnumerable<DanhGia>> LayTatCaDanhGia()
         {
-            return await _db.DANH_GIA.Include(x=>x.KhachHang).ToListAsync();
+            return await _db.DANH_GIA.Include(x=>x.KhachHang).OrderByDescending(x=>x.ThoiGianDanhGia).ToListAsync();
          
+        }
+
+        public async Task<DanhGia> ThemDanhGia(DanhGia danhGia)
+        {
+            await _db.DANH_GIA.AddAsync(danhGia);
+            await _db.SaveChangesAsync();
+            return danhGia;
         }
     }
 }

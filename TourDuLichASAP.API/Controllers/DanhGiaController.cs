@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.WebSockets;
+using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
 
@@ -38,5 +40,36 @@ namespace TourDuLichASAP.API.Controllers
 
             return Ok(response);
         }
+        [HttpPost]
+        public async Task<IActionResult> ThemDanhGia([FromBody] ThemDanhGiaDto request) {
+            Random random = new Random();
+            int randomValue = random.Next(1000);
+            string idDanhGia = "DG" + randomValue.ToString("D4");
+            if (request.IdTour == "null")
+            {
+                request.IdTour = null;
+            }
+            var danhgia = new DanhGia()
+            {
+                IdDanhGia = idDanhGia,
+                IdKhachHang = "KH0001",
+                IdTour = request.IdTour,
+                DiemDanhGia = request.DiemDanhGia,
+                NhanXet = request.NhanXet,
+                ThoiGianDanhGia = request.ThoiGianDanhGia,
+
+            };
+            danhgia = await _danhGiaRepositories.ThemDanhGia(danhgia);
+            var response = new DanhGiaDto
+            {
+                IdDanhGia = idDanhGia,
+                IdKhachHang = "KH0001",
+                IdTour = request.IdTour,
+                DiemDanhGia = request.DiemDanhGia,
+                NhanXet = request.NhanXet,
+                ThoiGianDanhGia = request.ThoiGianDanhGia,
+            };
+            return Ok(response);
+        } 
     }
 }

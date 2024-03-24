@@ -5,5 +5,6 @@ namespace TourDuLichASAP.API.Repositories.Interface
     public interface IDanhGiaRepositories
     {
         Task<IEnumerable<DanhGia>> LayTatCaDanhGia();
+        Task<DanhGia> ThemDanhGia(DanhGia danhGia);
     }
 }
