@@ -13,13 +13,12 @@ namespace TourDuLichASAP.API.Models.Domain
         [StringLength(6)]
         public string IdKhachHang { get; set; }
 
-        [Required]
         [StringLength(6)]
-        public string IdTour { get; set; }
+        public string? IdTour { get; set; }
 
         public int DiemDanhGia { get; set; }
 
-        public string NhanXet { get; set; } // Nếu dùng SQL Server cũ, ntext. Đối với SQL Server mới hơn, nên dùng NVARCHAR(MAX).
+        public string NhanXet { get; set; } 
 
         public DateTime ThoiGianDanhGia { get; set; }
 
@@ -27,6 +26,6 @@ namespace TourDuLichASAP.API.Models.Domain
         public virtual KhachHang KhachHang { get; set; }
 
         [ForeignKey("IdTour")]
-        public virtual TourDuLich TourDuLich { get; set; }
+        public virtual TourDuLich? TourDuLich { get; set; }
     }
 }

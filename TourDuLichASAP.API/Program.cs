@@ -28,6 +28,7 @@ builder.Services.AddScoped<IDoiTacRepositories, DoiTacRepositories>();
 builder.Services.AddScoped<IThanhToanRepositories, ThanhToanRepositories>();
 builder.Services.AddScoped<IDichVuRepositories,DichVuRepositories>();
 builder.Services.AddScoped<IDichVuChiTietRepositories,DichVuChiTietRepositories>();
+builder.Services.AddScoped<IDanhGiaRepositories, DanhGiaRepositories>();
 
 
 var app = builder.Build();
