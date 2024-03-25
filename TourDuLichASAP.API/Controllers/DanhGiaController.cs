@@ -34,7 +34,9 @@ namespace TourDuLichASAP.API.Controllers
                     DiemDanhGia = danhGia.DiemDanhGia,
                     NhanXet = danhGia.NhanXet,
                     ThoiGianDanhGia = danhGia.ThoiGianDanhGia,
-                    khachHang = danhGia.KhachHang
+                    khachHang = danhGia.KhachHang,
+                    Like = danhGia.Like,
+                    DisLike = danhGia.DisLike,  
                 }); 
             }
 
@@ -57,6 +59,8 @@ namespace TourDuLichASAP.API.Controllers
                 DiemDanhGia = request.DiemDanhGia,
                 NhanXet = request.NhanXet,
                 ThoiGianDanhGia = request.ThoiGianDanhGia,
+                Like = 0,
+                DisLike = 0,
 
             };
             danhgia = await _danhGiaRepositories.ThemDanhGia(danhgia);
@@ -68,6 +72,8 @@ namespace TourDuLichASAP.API.Controllers
                 DiemDanhGia = request.DiemDanhGia,
                 NhanXet = request.NhanXet,
                 ThoiGianDanhGia = request.ThoiGianDanhGia,
+                Like = 0,
+                DisLike = 0,
             };
             return Ok(response);
         } 

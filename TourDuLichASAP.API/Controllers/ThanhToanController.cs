@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
@@ -20,6 +21,8 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllThanhToan()
         {
             var thanhToans = await _thanhToanRepositories.GetAllAsync();
@@ -48,6 +51,8 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateThanhToan([FromBody] CreateThanhToanRequestDto requestDto)
         {
             Random random = new Random();
@@ -94,6 +99,8 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetThanhToanById(string id)
         {
             var thanhToan = await _thanhToanRepositories.GetByIdAsync(id);
@@ -120,6 +127,8 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateDatTour(string id,UpdateThanhToanRequestDto requestDto)
         {
             var khachHang = await _thanhToanRepositories.GetKhachHangById(requestDto.IdKhachHang);
@@ -164,6 +173,8 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteThanhToan(string id)
         {
             var deleteThanhToan = await _thanhToanRepositories.DeleteAsync(id);
