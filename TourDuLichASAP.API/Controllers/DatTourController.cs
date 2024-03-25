@@ -138,6 +138,8 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDatTour()
         {
             
@@ -168,6 +170,8 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetDatTourById(string id)
         {
             var datTour = await _datTourRepositories.GetByIdAsync(id);
@@ -195,6 +199,8 @@ namespace TourDuLichASAP.API.Controllers
             return Ok(response);
         }
         [HttpGet("/timkiemdattourtheoidtour/{idTour}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetDatTourByIdTour(string idTour)
         {
             var datTour = await _datTourRepositories.GetTourDuLichByIdTour(idTour);

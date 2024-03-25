@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -15,6 +16,7 @@ namespace TourDuLichASAP.API.Controllers
             _doiTacRepositories = doiTacRepositories;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDoiTac()
         {
             var doiTacs = await _doiTacRepositories.GetAllAsync();

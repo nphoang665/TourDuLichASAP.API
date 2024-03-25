@@ -22,7 +22,7 @@ namespace TourDuLichASAP.API.Controllers
             _anhTourRepositories = anhTourRepositories;
         }
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAnhTour()
         {
 

@@ -19,7 +19,7 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDichVu()
         {
             var dichVus = await _dichVuRepositories.GetAllAsync();

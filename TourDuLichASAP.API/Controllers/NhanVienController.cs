@@ -19,7 +19,7 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllNhanvien()
         {
             var nhanviens = await _nhanVienRepositories.GetAllAsync();
@@ -49,7 +49,7 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateNhanVien([FromBody] CreateNhanVienRequestDto requestDto)
         {
             Random random = new Random();
@@ -99,7 +99,7 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetNhanVienById(string id)
         {
             var nhanVien = await _nhanVienRepositories.GetByIdAsync(id);
@@ -129,7 +129,7 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateNhanVien(string id, UpdateNhanVienRequestDto requestDto)
         {
             var nhanVien = new NhanVien
@@ -178,7 +178,7 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteNhanVien(string id)
         {
             var deleteNhanVien = await _nhanVienRepositories.DeleteAsync(id);
