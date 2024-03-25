@@ -37,6 +37,7 @@ builder.Services.AddScoped<IThanhToanRepositories, ThanhToanRepositories>();
 builder.Services.AddScoped<IDichVuRepositories,DichVuRepositories>();
 builder.Services.AddScoped<IDichVuChiTietRepositories,DichVuChiTietRepositories>();
 builder.Services.AddScoped<ITokenRepository,TokenRepository>();
+builder.Services.AddScoped<IDanhGiaRepositories, DanhGiaRepositories>();
 
 
 builder.Services.AddIdentityCore<IdentityUser>()
