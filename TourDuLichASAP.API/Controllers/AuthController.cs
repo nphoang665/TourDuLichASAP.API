@@ -40,12 +40,7 @@ namespace TourDuLichASAP.API.Controllers
 
                     var jwtToken = tokenReponsitory.CreateJwtToken(identityUser, roles.ToList());
 
-                    var response = new LoginResponseDto
-                    {
-                        Email = request.Email, // email đã check đúng với mật khẩu đã đúng
-                        Roles = roles.ToList(),
-                        Token = jwtToken
-                    };
+                  
                    // code lấy full data khách hàng
                    var khachHangs = await _khachHangRepositories.GetAllAsync();
                     var responseKhachHang = new List<KhachHangDto>();
@@ -67,7 +62,7 @@ namespace TourDuLichASAP.API.Controllers
                         });
                     }
                     //so sánh email kiểm tra xem tk này có trong khách hàng không
-                    var existKhachHang = responseKhachHang.FirstOrDefault(s => s.Email == response.Email);
+                    var existKhachHang = responseKhachHang.FirstOrDefault(s => s.Email == request.Email);
                     if(existKhachHang == null)
                     {
                         //tìm nhân viên
@@ -94,12 +89,29 @@ namespace TourDuLichASAP.API.Controllers
                             });
                         }
 
-                        var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email == response.Email);
-
-                        return Ok(existNhanVien);
+                        var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email == request.Email);
+                        var response = new LoginResponseDto
+                        {
+                            NhanVien = existNhanVien,
+                            Email = request.Email, // email đã check đúng với mật khẩu đã đúng
+                            Roles = roles.ToList(),
+                            Token = jwtToken
+                        };
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        var response = new LoginResponseDto
+                        {
+                            KhachHang= existKhachHang,
+                            Email = request.Email, // email đã check đúng với mật khẩu đã đúng
+                            Roles = roles.ToList(),
+                            Token = jwtToken
+                        };
+                        return Ok(response);
                     }
 
-                    return Ok(existKhachHang);
+                    
                 }
                 else
                 {
@@ -134,6 +146,51 @@ namespace TourDuLichASAP.API.Controllers
             {
                 // Add role to User (Reader)
                 identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
+                if (identityResult.Succeeded)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    if (identityResult.Errors.Any())
+                    {
+                        foreach (var error in identityResult.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (identityResult.Errors.Any())
+                {
+                    foreach (var error in identityResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return ValidationProblem(ModelState);
+        }
+
+        [HttpPost]
+        [Route("registerNV")]
+        public async Task<IActionResult> RegisterNV([FromBody] RegisterRequestDto request)
+        {
+            // Create IdentityUser object
+            var user = new IdentityUser
+            {
+                UserName = request.Email?.Trim(),
+                Email = request.Email?.Trim(),
+            };
+
+            //Create User 
+            var identityResult = await userManager.CreateAsync(user, request.Password);
+            if (identityResult.Succeeded)
+            {
+                // Add role to User (Reader)
+                identityResult = await userManager.AddToRoleAsync(user, "Nhân viên");
                 if (identityResult.Succeeded)
                 {
                     return Ok();
