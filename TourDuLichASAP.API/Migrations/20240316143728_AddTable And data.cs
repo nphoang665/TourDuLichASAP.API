@@ -176,7 +176,7 @@ namespace TourDuLichASAP.API.Migrations
                 {
                     IdDanhGia = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
                     IdKhachHang = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
-                    IdTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: false),
+                    IdTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     DiemDanhGia = table.Column<int>(type: "int", nullable: false),
                     NhanXet = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ThoiGianDanhGia = table.Column<DateTime>(type: "datetime2", nullable: false)
