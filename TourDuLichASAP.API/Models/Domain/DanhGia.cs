@@ -19,6 +19,8 @@ namespace TourDuLichASAP.API.Models.Domain
         public int DiemDanhGia { get; set; }
 
         public string NhanXet { get; set; } 
+        public int Like {  get; set; } 
+        public int DisLike {  get; set; } 
 
         public DateTime ThoiGianDanhGia { get; set; }
 
