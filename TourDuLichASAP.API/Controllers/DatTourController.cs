@@ -1,5 +1,6 @@
 ﻿using Azure;
 using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
@@ -24,6 +25,8 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateDatTour([FromBody] CreateDatTourRequestDto request)
         {
             Random random = new Random();
@@ -65,6 +68,8 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost("/DatTourChoKhachHang")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DatTourChoKhachHang([FromBody] CreateDatTourRequestFromKhachHangDto request)
         {
             Random random = new Random();
@@ -223,6 +228,8 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateDatTour(string id, UpdateDatTourRequestDto dto)
         {
             var khachHang = await _datTourRepositories.GetkhachHangById(dto.IdKhachHang);
@@ -271,6 +278,8 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Nhân viên")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDatTour(string id)
         {
 
