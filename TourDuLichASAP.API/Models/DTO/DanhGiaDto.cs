@@ -20,6 +20,8 @@ namespace TourDuLichASAP.API.Models.DTO
         public string NhanXet { get; set; } 
 
         public DateTime ThoiGianDanhGia { get; set; }
+        public int Like {  get; set; }
+        public int DisLike { get; set; }
         public KhachHang khachHang { get; set; }
     }
 }

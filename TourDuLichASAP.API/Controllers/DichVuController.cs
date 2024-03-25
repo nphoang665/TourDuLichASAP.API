@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
@@ -19,6 +20,7 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDichVu()
         {
             var dichVus = await _dichVuRepositories.GetAllAsync();
