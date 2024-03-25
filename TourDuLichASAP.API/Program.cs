@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
 using TourDuLichASAP.API.Data;
 using TourDuLichASAP.API.Repositories.Implementation;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -19,6 +22,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
 });
 
+builder.Services.AddDbContext<AuthDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
+});
+
 builder.Services.AddScoped<ITourDuLichRepositories, TourDuLichRepositories>();
 builder.Services.AddScoped<INhanVienRepositories, NhanVienRepositories>();
 builder.Services.AddScoped<IKhachHangRepositories, KhachHangRepositories>();
@@ -28,7 +36,42 @@ builder.Services.AddScoped<IDoiTacRepositories, DoiTacRepositories>();
 builder.Services.AddScoped<IThanhToanRepositories, ThanhToanRepositories>();
 builder.Services.AddScoped<IDichVuRepositories,DichVuRepositories>();
 builder.Services.AddScoped<IDichVuChiTietRepositories,DichVuChiTietRepositories>();
+builder.Services.AddScoped<ITokenRepository,TokenRepository>();
 builder.Services.AddScoped<IDanhGiaRepositories, DanhGiaRepositories>();
+
+
+builder.Services.AddIdentityCore<IdentityUser>()
+    .AddRoles<IdentityRole>()
+    .AddTokenProvider<DataProtectorTokenProvider<IdentityUser>>("TourDuLichASAP")
+    .AddEntityFrameworkStores<AuthDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.Configure<IdentityOptions>(options =>
+{
+    options.Password.RequireDigit = false;
+    options.Password.RequireLowercase = false;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+    options.Password.RequiredLength = 6;
+    options.Password.RequiredUniqueChars = 1;
+});
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            AuthenticationType = "Jwt",
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey =
+            new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+    });
 
 
 var app = builder.Build();
@@ -41,11 +84,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles(new StaticFileOptions
-{
-    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
-    RequestPath = "/uploads"
-});
+
 
 app.UseCors(options =>
 {
@@ -61,7 +100,15 @@ app.UseCors(options =>
 //           .AllowAnyMethod();
 //});
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
+});
 
 app.MapControllers();
 

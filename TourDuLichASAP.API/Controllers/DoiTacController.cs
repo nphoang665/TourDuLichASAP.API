@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -12,14 +13,15 @@ namespace TourDuLichASAP.API.Controllers
         private readonly IDoiTacRepositories _doiTacRepositories;
         public DoiTacController(IDoiTacRepositories doiTacRepositories)
         {
-            _doiTacRepositories= doiTacRepositories;
+            _doiTacRepositories = doiTacRepositories;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDoiTac()
         {
             var doiTacs = await _doiTacRepositories.GetAllAsync();
             var response = new List<DoiTacDto>();
-;            foreach(var doitac in doiTacs)
+            ; foreach (var doitac in doiTacs)
             {
                 response.Add(new DoiTacDto
                 {
@@ -34,7 +36,7 @@ namespace TourDuLichASAP.API.Controllers
                     TinhTrang = doitac.TinhTrang,
                 });
             }
-return Ok(response);
+            return Ok(response);
         }
     }
 }

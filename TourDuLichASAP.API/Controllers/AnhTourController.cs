@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.WebSockets;
 using TourDuLichASAP.API.Models.Domain;
@@ -21,6 +22,7 @@ namespace TourDuLichASAP.API.Controllers
             _anhTourRepositories = anhTourRepositories;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAnhTour()
         {
 
