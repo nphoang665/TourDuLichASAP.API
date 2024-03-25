@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
 
@@ -12,11 +13,15 @@ namespace TourDuLichASAP.API.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenReponsitory;
+        private readonly IKhachHangRepositories _khachHangRepositories;
+        private readonly INhanVienRepositories _nhanVienRepositories;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories)
         {
             this.userManager = userManager;
             this.tokenReponsitory = tokenReponsitory;
+            _khachHangRepositories = khachHangRepositories;
+            _nhanVienRepositories = nhanVienRepositories;
         }
 
         [HttpPost]
@@ -37,12 +42,64 @@ namespace TourDuLichASAP.API.Controllers
 
                     var response = new LoginResponseDto
                     {
-                        Email = request.Email,
+                        Email = request.Email, // email đã check đúng với mật khẩu đã đúng
                         Roles = roles.ToList(),
                         Token = jwtToken
                     };
+                   // code lấy full data khách hàng
+                   var khachHangs = await _khachHangRepositories.GetAllAsync();
+                    var responseKhachHang = new List<KhachHangDto>();
+                    foreach (var khachHang in khachHangs)
+                    {
+                        responseKhachHang.Add(new KhachHangDto
+                        {
+                            IdKhachHang = khachHang.IdKhachHang,
+                            TenKhachHang = khachHang.TenKhachHang,
+                            SoDienThoai = khachHang.SoDienThoai,
+                            DiaChi = khachHang.DiaChi,
+                            CCCD = khachHang.CCCD,
+                            NgaySinh = khachHang.NgaySinh,
+                            GioiTinh = khachHang.GioiTinh,
+                            Email = khachHang.Email,
+                            TinhTrang = khachHang.TinhTrang,
+                            MatKhau = khachHang.MatKhau,
+                            NgayDangKy = khachHang.NgayDangKy
+                        });
+                    }
+                    //so sánh email kiểm tra xem tk này có trong khách hàng không
+                    var existKhachHang = responseKhachHang.FirstOrDefault(s => s.Email == response.Email);
+                    if(existKhachHang == null)
+                    {
+                        //tìm nhân viên
+                        var nhanViens= await _nhanVienRepositories.GetAllAsync();
+                        var responseNhanVien = new List<NhanVienDto>();
+                        foreach (var nhanvien in nhanViens)
+                        {
+                            responseNhanVien.Add(new NhanVienDto
+                            {
+                                IdNhanVien = nhanvien.IdNhanVien,
+                                TenNhanVien = nhanvien.TenNhanVien,
+                                SoDienThoai = nhanvien.SoDienThoai,
+                                DiaChi = nhanvien.DiaChi,
+                                CCCD = nhanvien.CCCD,
+                                NgaySinh = nhanvien.NgaySinh,
+                                Email = nhanvien.Email,
+                                GioiTinh = nhanvien.GioiTinh,
+                                NgayDangKy = nhanvien.NgayDangKy,
+                                ChucVu = nhanvien.ChucVu,
+                                NgayVaoLam = nhanvien.NgayVaoLam,
+                                AnhNhanVien = nhanvien.AnhNhanVien,
+                                TinhTrang = nhanvien.TinhTrang,
+                                MatKhau = nhanvien.MatKhau
+                            });
+                        }
 
-                    return Ok(response);
+                        var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email == response.Email);
+
+                        return Ok(existNhanVien);
+                    }
+
+                    return Ok(existKhachHang);
                 }
                 else
                 {
