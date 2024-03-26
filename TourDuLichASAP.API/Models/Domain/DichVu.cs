@@ -21,9 +21,9 @@ namespace TourDuLichASAP.API.Models.Domain
         [StringLength(50)]
         public string TinhTrang { get; set; }
 
-        public DateTime GioBatDau { get; set; }
+        public TimeOnly GioBatDau { get; set; }
 
-        public DateTime GioKetThuc { get; set; }
+        public TimeOnly GioKetThuc { get; set; }
 
         [Column(TypeName = "Date")]
         public DateTime NgayThem { get; set; }

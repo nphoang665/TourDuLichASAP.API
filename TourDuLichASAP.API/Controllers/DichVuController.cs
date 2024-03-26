@@ -20,7 +20,7 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        
         public async Task<IActionResult> GetAllDichVu()
         {
             var dichVus = await _dichVuRepositories.GetAllAsync();
@@ -73,7 +73,7 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = requestDto.TinhTrang,
                 GioBatDau = requestDto.GioBatDau,
                 GioKetThuc = requestDto.GioKetThuc,
-                NgayThem = DateTime.Now,
+                NgayThem = requestDto.NgayThem,
 
             };
 
