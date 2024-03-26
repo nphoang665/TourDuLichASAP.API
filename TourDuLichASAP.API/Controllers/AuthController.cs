@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Azure.Core;
+using Google.Apis.Auth;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -15,13 +21,15 @@ namespace TourDuLichASAP.API.Controllers
         private readonly ITokenRepository tokenReponsitory;
         private readonly IKhachHangRepositories _khachHangRepositories;
         private readonly INhanVienRepositories _nhanVienRepositories;
+        private readonly JwtBearerOptions _jwtBearerOptions;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories,IOptions<JwtBearerOptions> options)
         {
             this.userManager = userManager;
             this.tokenReponsitory = tokenReponsitory;
             _khachHangRepositories = khachHangRepositories;
             _nhanVienRepositories = nhanVienRepositories;
+            _jwtBearerOptions = options.Value;
         }
 
         [HttpPost]
@@ -218,5 +226,157 @@ namespace TourDuLichASAP.API.Controllers
             }
             return ValidationProblem(ModelState);
         }
+
+
+        //[HttpPost]
+        //[Route("google-login")]
+        //public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto requestDto)
+        //{
+        //    var idToken = requestDto.IdToken;
+        //    var setting = new GoogleJsonWebSignature.ValidationSettings
+        //    {
+        //        Audience = new string[] { "101863175272-n460ifjdvtb6gevl0sa64md26bt0r22v.apps.googleusercontent.com" }
+        //    };
+        //    var result = await GoogleJsonWebSignature.ValidateAsync(idToken, setting);
+        //    if(result is null)
+        //    {
+        //        return BadRequest();
+        //    }
+
+
+        //}
+        [HttpPost]
+        [Route("google-login")]
+        public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto requestDto)
+        {
+            var idToken = requestDto.IdToken;
+            var setting = new GoogleJsonWebSignature.ValidationSettings
+            {
+                Audience = new string[] { "101863175272-n460ifjdvtb6gevl0sa64md26bt0r22v.apps.googleusercontent.com" }
+            };
+
+            // Xác thực token từ Google
+            var result = await GoogleJsonWebSignature.ValidateAsync(idToken, setting);
+            if (result is null)
+            {
+                return BadRequest();
+            }
+
+            // Lấy email từ token đã xác thực
+            var userEmail = result.Email;
+
+            // Kiểm tra xem email này đã tồn tại trong CSDL của bạn hay chưa
+            var identityUser = await userManager.FindByEmailAsync(userEmail);
+
+            if (identityUser != null)
+            {
+                // Nếu người dùng tồn tại, đồng bộ thông tin nếu cần (cập nhật bất kỳ thông tin nào)
+                // Ví dụ: identityUser.Name = result.Name;
+                // Cập nhật người dùng trong CSDL
+                await userManager.UpdateAsync(identityUser);
+            }
+            else
+            {
+                // Nếu người dùng không tồn tại, tạo một người dùng mới
+                var newUser = new IdentityUser
+                {
+                    UserName = userEmail,
+                    Email = userEmail,
+                };
+
+                // Tạo người dùng
+                var identityResult = await userManager.CreateAsync(newUser);
+                if (identityResult.Succeeded)
+                {
+                    // Thêm vai trò mặc định cho người dùng (ví dụ: "Khách hàng")
+                    identityResult = await userManager.AddToRoleAsync(newUser, "Khách hàng");
+                    if (!identityResult.Succeeded)
+                    {
+                        // Xử lý lỗi
+                        return BadRequest("Không thể gán vai trò cho người dùng.");
+                    }
+                }
+                else
+                {
+                    // Xử lý lỗi
+                    return BadRequest("Không thể tạo người dùng mới.");
+                }
+            }
+
+            // Tạo JWT token cho người dùng (tương tự như mã bạn đã có)
+            var roles = await userManager.GetRolesAsync(identityUser);
+            var jwtToken = tokenReponsitory.CreateJwtToken(identityUser, roles.ToList());
+
+            // code lấy full data khách hàng
+            var khachHangs = await _khachHangRepositories.GetAllAsync();
+            var responseKhachHang = new List<KhachHangDto>();
+            foreach (var khachHang in khachHangs)
+            {
+                responseKhachHang.Add(new KhachHangDto
+                {
+                    IdKhachHang = khachHang.IdKhachHang,
+                    TenKhachHang = khachHang.TenKhachHang,
+                    SoDienThoai = khachHang.SoDienThoai,
+                    DiaChi = khachHang.DiaChi,
+                    CCCD = khachHang.CCCD,
+                    NgaySinh = khachHang.NgaySinh,
+                    GioiTinh = khachHang.GioiTinh,
+                    Email = khachHang.Email,
+                    TinhTrang = khachHang.TinhTrang,
+                    MatKhau = khachHang.MatKhau,
+                    NgayDangKy = khachHang.NgayDangKy
+                });
+            }
+            //so sánh email kiểm tra xem tk này có trong khách hàng không
+            var existKhachHang = responseKhachHang.FirstOrDefault(s => s.Email == requestDto.Email);
+            if (existKhachHang == null)
+            {
+                //tìm nhân viên
+                var nhanViens = await _nhanVienRepositories.GetAllAsync();
+                var responseNhanVien = new List<NhanVienDto>();
+                foreach (var nhanvien in nhanViens)
+                {
+                    responseNhanVien.Add(new NhanVienDto
+                    {
+                        IdNhanVien = nhanvien.IdNhanVien,
+                        TenNhanVien = nhanvien.TenNhanVien,
+                        SoDienThoai = nhanvien.SoDienThoai,
+                        DiaChi = nhanvien.DiaChi,
+                        CCCD = nhanvien.CCCD,
+                        NgaySinh = nhanvien.NgaySinh,
+                        Email = nhanvien.Email,
+                        GioiTinh = nhanvien.GioiTinh,
+                        NgayDangKy = nhanvien.NgayDangKy,
+                        ChucVu = nhanvien.ChucVu,
+                        NgayVaoLam = nhanvien.NgayVaoLam,
+                        AnhNhanVien = nhanvien.AnhNhanVien,
+                        TinhTrang = nhanvien.TinhTrang,
+                        MatKhau = nhanvien.MatKhau
+                    });
+                }
+
+                var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email == requestDto.Email);
+                var response = new LoginResponseDto
+                {
+                    NhanVien = existNhanVien,
+                    Email = requestDto.Email, // email đã check đúng với mật khẩu đã đúng
+                    Roles = roles.ToList(),
+                    Token = jwtToken
+                };
+                return Ok(response);
+            }
+            else
+            {
+                var response = new LoginResponseDto
+                {
+                    KhachHang = existKhachHang,
+                    Email = requestDto.Email, // email đã check đúng với mật khẩu đã đúng
+                    Roles = roles.ToList(),
+                    Token = jwtToken
+                };
+                return Ok(response);
+            }
+        }
+
     }
 }
