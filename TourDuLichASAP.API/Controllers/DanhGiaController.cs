@@ -54,7 +54,7 @@ namespace TourDuLichASAP.API.Controllers
             var danhgia = new DanhGia()
             {
                 IdDanhGia = idDanhGia,
-                IdKhachHang = "KH0001",
+                IdKhachHang = request.IdKhachHang,
                 IdTour = request.IdTour,
                 DiemDanhGia = request.DiemDanhGia,
                 NhanXet = request.NhanXet,
