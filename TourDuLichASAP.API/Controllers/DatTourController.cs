@@ -77,11 +77,13 @@ namespace TourDuLichASAP.API.Controllers
             
             int randomValue1 = random.Next(1000);
             string idKhachHang = "KH" + randomValue1.ToString("D4");
-
-            
-           
-
-            var khachHang = new KhachHang
+            //đoạn check khách hàng có tồn tại trong db chưa
+            var getAllKhachHang = await _khachHangRepositories.GetAllAsync();
+            var existKhachHang = getAllKhachHang.FirstOrDefault(s => s.IdKhachHang == request.IdKhachHang);
+            //
+            if(existKhachHang== null)
+            {
+                var khachHang = new KhachHang
             {
                 IdKhachHang = idKhachHang,
                 TenKhachHang = request.TenKhachHang,
@@ -96,10 +98,12 @@ namespace TourDuLichASAP.API.Controllers
                 NgayDangKy = request.NgayDangKy,
             };
             khachHang =await _khachHangRepositories.CreateAsync(khachHang);
+            }
+           
             var datTour = new DatTour
             {
                 IdDatTour = idDatTour,
-                IdKhachHang = khachHang.IdKhachHang,
+                IdKhachHang = existKhachHang!=null ? existKhachHang.IdKhachHang : idKhachHang,
                 IdTour = request.IdTour,
                 SoLuongNguoiLon = request.SoLuongNguoiLon,
                 SoLuongTreEm = request.SoLuongTreEm,
@@ -120,7 +124,7 @@ namespace TourDuLichASAP.API.Controllers
                     {
                         IdDichVuChiTiet = idDichVuChiTiet,
                         IdDatTour = datTour.IdDatTour,
-                        IdKhachHang = khachHang.IdKhachHang,
+                        IdKhachHang = existKhachHang != null ? existKhachHang.IdKhachHang : idKhachHang,
                         IdDichVu = item.IdDichVu,
                         ThoiGianDichVu = request.NgayDangKy,
                         SoLuong = item.SoLuong,
