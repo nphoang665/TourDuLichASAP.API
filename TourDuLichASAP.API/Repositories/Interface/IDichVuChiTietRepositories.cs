@@ -11,6 +11,9 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<DichVu> GetDichVuById(string idDichVu);
 
         Task<DichVuChiTiet> ThemDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
+        Task<DichVuChiTiet> CapNhatDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
+        Task<DichVuChiTiet> XoaDichVuChiTiet(string id);
+
 
     }
 }

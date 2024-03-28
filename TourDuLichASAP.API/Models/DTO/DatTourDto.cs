@@ -12,7 +12,7 @@ namespace TourDuLichASAP.API.Models.DTO
         public int SoLuongNguoiLon { get; set; }
         public int SoLuongTreEm { get; set; }
         public string GhiChu { get; set; }
-        public string IdNhanVien { get; set; }
+        public string? IdNhanVien { get; set; }
         public DateTime ThoiGianDatTour { get; set; }
         public string TinhTrang { get; set; }
         public KhachHang KhachHang { get; set; }  // Ensure this is a string

@@ -157,11 +157,11 @@ namespace TourDuLichASAP.API.Controllers
                     SoLuongNguoiLon = datTour.SoLuongNguoiLon,
                     SoLuongTreEm = datTour.SoLuongTreEm,
                     GhiChu = datTour.GhiChu,
-                    IdNhanVien = datTour.IdNhanVien,
+                    IdNhanVien = datTour.IdNhanVien !=null? datTour.IdNhanVien: null,
                     ThoiGianDatTour = datTour.ThoiGianDatTour,
                     TinhTrang = datTour.TinhTrang,
                     KhachHang = datTour.KhachHang,
-                    NhanVien = datTour.NhanVien.TenNhanVien,
+                    NhanVien = datTour.NhanVien != null ? datTour.NhanVien.TenNhanVien : null,
                     TourDuLich = datTour.TourDuLich.TenTour
                 });
             }
@@ -193,7 +193,7 @@ namespace TourDuLichASAP.API.Controllers
                 ThoiGianDatTour = datTour.ThoiGianDatTour,
                 TinhTrang = datTour.TinhTrang,
                 KhachHang = datTour.KhachHang,
-                NhanVien = datTour.NhanVien.TenNhanVien,
+                NhanVien = datTour.NhanVien != null ? datTour.NhanVien.TenNhanVien : null,
                 TourDuLich = datTour.TourDuLich.TenTour
             };
 
@@ -275,7 +275,7 @@ namespace TourDuLichASAP.API.Controllers
                 ThoiGianDatTour = datTour.ThoiGianDatTour,
                 TinhTrang = datTour.TinhTrang,
                 KhachHang = datTour.KhachHang,
-                NhanVien = datTour.NhanVien.TenNhanVien,
+                NhanVien = datTour.NhanVien != null ? datTour.NhanVien.TenNhanVien : null,
                 TourDuLich = datTour.TourDuLich.TenTour
             };
             return Ok(response);

@@ -13,9 +13,24 @@ namespace TourDuLichASAP.API.Repositories.Implementation
         {
             _db = db;
         }
+
+        public async Task<DichVuChiTiet> CapNhatDichVuChiTiet(DichVuChiTiet dichVuChiTiet)
+        {
+            var existingDichVuChiTiet = await _db.DICH_VU_CHI_TIET.FirstOrDefaultAsync(x => x.IdDichVuChiTiet == dichVuChiTiet.IdDichVuChiTiet);
+            if (existingDichVuChiTiet == null)
+            {
+                return null;
+            }
+            _db.Entry(existingDichVuChiTiet).CurrentValues.SetValues(dichVuChiTiet);
+            await _db.SaveChangesAsync();
+            return dichVuChiTiet;
+
+
+        }
+
         public async Task<IEnumerable<DichVuChiTiet>> GetAllAsync()
         {
-           return await _db.DICH_VU_CHI_TIET.Include(x=>x.KhachHang).Include(x=>x.DichVu).Include(x=>x.DatTour).Include(x=>x.NhanVien).ToListAsync();
+            return await _db.DICH_VU_CHI_TIET.Include(x => x.KhachHang).Include(x => x.DichVu).Include(x => x.DatTour).Include(x => x.NhanVien).ToListAsync();
         }
 
         public async Task<DatTour> GetDatTourById(string idDatTour)
@@ -43,6 +58,21 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             await _db.DICH_VU_CHI_TIET.AddAsync(dichVuChiTiet);
             await _db.SaveChangesAsync();
             return dichVuChiTiet;
+        }
+
+        public async Task<DichVuChiTiet> XoaDichVuChiTiet(string id)
+        {
+            var existDichVuChiTiet =  _db.DICH_VU_CHI_TIET.FirstOrDefault(s => s.IdDichVuChiTiet == id);
+            if (existDichVuChiTiet != null)
+            {
+                _db.DICH_VU_CHI_TIET.Remove(existDichVuChiTiet);
+                _db.SaveChanges();
+                 return existDichVuChiTiet;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
