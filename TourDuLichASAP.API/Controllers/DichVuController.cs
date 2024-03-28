@@ -56,7 +56,7 @@ namespace TourDuLichASAP.API.Controllers
                 TenDichVu = requestDto.TenDichVu,
                 DonViTinh = requestDto.DonViTinh,
                 GiaTien = requestDto.GiaTien,
-                TinhTrang = requestDto.TinhTrang,
+                TinhTrang = "Đang hoạt động",
                 GioBatDau = requestDto.GioBatDau,
                 GioKetThuc = requestDto.GioKetThuc,
                 NgayThem = DateTime.Now,
@@ -97,7 +97,7 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = dichVu.TinhTrang,
                 GioBatDau = dichVu.GioBatDau,
                 GioKetThuc = dichVu.GioKetThuc,
-                NgayThem = DateTime.Now,
+                NgayThem = dichVu.NgayThem,
             };
             return Ok(response);
         }
@@ -107,14 +107,14 @@ namespace TourDuLichASAP.API.Controllers
         {
             var dichVu = new DichVu
             {
-                IdDichVu = requestDto.IdDichVu,
+                IdDichVu = id,
                 TenDichVu = requestDto.TenDichVu,
                 DonViTinh = requestDto.DonViTinh,
                 GiaTien = requestDto.GiaTien,
                 TinhTrang = requestDto.TinhTrang,
                 GioBatDau = requestDto.GioBatDau,
                 GioKetThuc = requestDto.GioKetThuc,
-                NgayThem = DateTime.Now,
+                NgayThem = requestDto.NgayThem,
             };
 
             dichVu = await _dichVuRepositories.UpdateAsync(dichVu);
@@ -132,7 +132,7 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = dichVu.TinhTrang,
                 GioBatDau = dichVu.GioBatDau,
                 GioKetThuc = dichVu.GioKetThuc,
-                NgayThem = DateTime.Now,
+                NgayThem = requestDto.NgayThem,
             };
             return Ok(response);
         }
@@ -154,7 +154,7 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = deleteDichVu.TinhTrang,
                 GioBatDau = deleteDichVu.GioBatDau,
                 GioKetThuc = deleteDichVu.GioKetThuc,
-                NgayThem = DateTime.Now,
+                NgayThem = deleteDichVu.NgayThem,
             };
             return Ok(response);
         }
