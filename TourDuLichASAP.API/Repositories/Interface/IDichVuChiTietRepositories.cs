@@ -9,7 +9,7 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<NhanVien> GetNhanVienById(string idNhanVien);
         Task<DatTour> GetDatTourById(string idDatTour);
         Task<DichVu> GetDichVuById(string idDichVu);
-
+        //Task<DichVuChiTiet> SuaDichVuChiTiet(string id, DichVuChiTiet dichVuChiTiet);
         Task<DichVuChiTiet> ThemDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
         Task<DichVuChiTiet> CapNhatDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
         Task<DichVuChiTiet> XoaDichVuChiTiet(string id);

@@ -79,39 +79,39 @@ namespace TourDuLichASAP.API.Controllers
 
             return Ok(response);
         }
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<IActionResult> UpdateDichVuChiTiet(string id, UpdateDichVuChiTietRequestDto requestDto)
-        {
-            var dichVu = new DichVuChiTiet
-            {
-                IdDichVuChiTiet = id,
-                IdDichVu = requestDto.IdDichVu,
-                IdKhachHang = requestDto.IdKhachHang,
-                IdDatTour = requestDto.IdDatTour,
-                IdNhanVien = requestDto.IdNhanVien,
-                ThoiGianDichVu = requestDto.ThoiGianDichVu,
-                SoLuong = requestDto.SoLuong,
-            };
+        //[HttpPut]
+        //[Route("{id}")]
+        //public async Task<IActionResult> UpdateDichVuChiTiet(string id, UpdateDichVuChiTietRequestDto requestDto)
+        //{
+        //    var dichVu = new DichVuChiTiet
+        //    {
+        //        IdDichVuChiTiet = id,
+        //        IdDichVu = requestDto.IdDichVu,
+        //        IdKhachHang = requestDto.IdKhachHang,
+        //        IdDatTour = requestDto.IdDatTour,
+        //        IdNhanVien = requestDto.IdNhanVien,
+        //        ThoiGianDichVu = requestDto.ThoiGianDichVu,
+        //        SoLuong = requestDto.SoLuong,
+        //    };
 
-            dichVu = await _dichVuChiTietRepositories.SuaDichVuChiTiet(id, dichVu);
-            if (dichVu == null)
-            {
-                return NotFound();
-            }
+        //    dichVu = await _dichVuChiTietRepositories.SuaDichVuChiTiet(id, dichVu);
+        //    if (dichVu == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var response = new DichVuChiTietDto
-            {
-                IdDichVuChiTiet = id,
-                IdDichVu = requestDto.IdDichVu,
-                IdKhachHang = requestDto.IdKhachHang,
-                IdDatTour = requestDto.IdDatTour,
-                IdNhanVien = requestDto.IdNhanVien,
-                ThoiGianDichVu = requestDto.ThoiGianDichVu,
-                SoLuong = requestDto.SoLuong,
-            };
-            return Ok(response);
-        }
+        //    var response = new DichVuChiTietDto
+        //    {
+        //        IdDichVuChiTiet = id,
+        //        IdDichVu = requestDto.IdDichVu,
+        //        IdKhachHang = requestDto.IdKhachHang,
+        //        IdDatTour = requestDto.IdDatTour,
+        //        IdNhanVien = requestDto.IdNhanVien,
+        //        ThoiGianDichVu = requestDto.ThoiGianDichVu,
+        //        SoLuong = requestDto.SoLuong,
+        //    };
+        //    return Ok(response);
+        //}
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> CreateDichVuChiTiet(string id, List<CreateDichVuChiTietRequestDto> requestDto)
