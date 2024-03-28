@@ -53,6 +53,18 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.NHAN_VIEN.FirstAsync(nv => nv.IdNhanVien == idNhanVien);
         }
 
+        public async Task<DichVuChiTiet> SuaDichVuChiTiet(string id, DichVuChiTiet dichVuChiTiet)
+        {
+            var existingDichVu = await _db.DICH_VU_CHI_TIET.FirstOrDefaultAsync(x => x.IdDichVuChiTiet == dichVuChiTiet.IdDichVuChiTiet);
+            if (existingDichVu == null)
+            {
+                return null;
+            }
+            _db.Entry(existingDichVu).CurrentValues.SetValues(dichVuChiTiet);
+            await _db.SaveChangesAsync();
+            return dichVuChiTiet;
+        }
+
         public async Task<DichVuChiTiet> ThemDichVuChiTiet(DichVuChiTiet dichVuChiTiet)
         {
             await _db.DICH_VU_CHI_TIET.AddAsync(dichVuChiTiet);

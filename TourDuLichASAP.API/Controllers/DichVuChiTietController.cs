@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
+using TourDuLichASAP.API.Repositories.Implementation;
 using TourDuLichASAP.API.Repositories.Interface;
 
 namespace TourDuLichASAP.API.Controllers
@@ -41,6 +42,74 @@ namespace TourDuLichASAP.API.Controllers
 
                 });
             }
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateDichVuChiTiet([FromBody] CreateDichVuChiTietDto requestDto)
+        {
+            Random random = new Random();
+            int randomValue = random.Next(1000);
+            string id = "DCT" + randomValue.ToString("D3");
+
+            var dichVu = new DichVuChiTiet
+            {
+                IdDichVuChiTiet = id,
+                IdDichVu = requestDto.IdDichVu,
+                IdKhachHang = requestDto.IdKhachHang,
+                IdDatTour = requestDto.IdDatTour,
+                IdNhanVien = requestDto.IdNhanVien,
+                ThoiGianDichVu = requestDto.ThoiGianDichVu,
+                SoLuong = requestDto.SoLuong,
+
+            };
+
+            dichVu = await _dichVuChiTietRepositories.ThemDichVuChiTiet(dichVu);
+
+            var response = new DichVuChiTietDto
+            {
+                IdDichVuChiTiet = id,
+                IdDichVu = requestDto.IdDichVu,
+                IdKhachHang = requestDto.IdKhachHang,
+                IdDatTour = requestDto.IdDatTour,
+                IdNhanVien = requestDto.IdNhanVien,
+                ThoiGianDichVu = requestDto.ThoiGianDichVu,
+                SoLuong = requestDto.SoLuong,
+
+            };
+
+            return Ok(response);
+        }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateDichVuChiTiet(string id, UpdateDichVuChiTietRequestDto requestDto)
+        {
+            var dichVu = new DichVuChiTiet
+            {
+                IdDichVuChiTiet = id,
+                IdDichVu = requestDto.IdDichVu,
+                IdKhachHang = requestDto.IdKhachHang,
+                IdDatTour = requestDto.IdDatTour,
+                IdNhanVien = requestDto.IdNhanVien,
+                ThoiGianDichVu = requestDto.ThoiGianDichVu,
+                SoLuong = requestDto.SoLuong,
+            };
+
+            dichVu = await _dichVuChiTietRepositories.SuaDichVuChiTiet(id, dichVu);
+            if (dichVu == null)
+            {
+                return NotFound();
+            }
+
+            var response = new DichVuChiTietDto
+            {
+                IdDichVuChiTiet = id,
+                IdDichVu = requestDto.IdDichVu,
+                IdKhachHang = requestDto.IdKhachHang,
+                IdDatTour = requestDto.IdDatTour,
+                IdNhanVien = requestDto.IdNhanVien,
+                ThoiGianDichVu = requestDto.ThoiGianDichVu,
+                SoLuong = requestDto.SoLuong,
+            };
             return Ok(response);
         }
         [HttpPut]
