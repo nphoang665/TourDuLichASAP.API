@@ -20,7 +20,6 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Nhân viên,Admin")]
         public async Task<IActionResult> GetAllKhachHang()
         {
             var khachHangs = await _khachHangRepositories.GetAllAsync();
@@ -48,7 +47,6 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Nhân viên,Admin")]
         public async Task<IActionResult> CreateKhachHang([FromBody] CreateKhachHangRequestDto request)
         {
             Random random = new Random();
@@ -89,7 +87,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Nhân viên,Admin")]
         public async Task<IActionResult> GetKhachHangById(string id)
         {
             var khachHang = await _khachHangRepositories.GetkhachHangById(id);
@@ -117,7 +114,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Nhân viên,Admin")]
         public async Task<IActionResult> UpdateKhachHang(string id, UpdateKhachHangRequestDto request)
         {
             var khachHang = new KhachHang
@@ -159,7 +155,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Nhân viên,Admin")]
         public async Task<IActionResult>DeleteKhachHang(string id)
         {
             var deleteKhachHang = await _khachHangRepositories.DeleteAsync(id);
