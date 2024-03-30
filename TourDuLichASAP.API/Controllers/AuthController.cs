@@ -264,6 +264,7 @@ namespace TourDuLichASAP.API.Controllers
 
             // Lấy email từ token đã xác thực
             var userEmail = result.Email;
+            requestDto.Email = result.Email;
 
             // Kiểm tra xem email này đã tồn tại trong CSDL của bạn hay chưa
             var identityUser = await userManager.FindByEmailAsync(userEmail);
@@ -302,10 +303,11 @@ namespace TourDuLichASAP.API.Controllers
                     return BadRequest("Không thể tạo người dùng mới.");
                 }
             }
-
+            //thực hiện tìm kiếm lại người dùng trong bảng aspnetuser để get role
+            var TimKiemLaiIdentityUser = await userManager.FindByEmailAsync(userEmail);
             // Tạo JWT token cho người dùng (tương tự như mã bạn đã có)
-            var roles = await userManager.GetRolesAsync(identityUser);
-            var jwtToken = tokenReponsitory.CreateJwtToken(identityUser, roles.ToList());
+            var roles = await userManager.GetRolesAsync(TimKiemLaiIdentityUser);
+            var jwtToken = tokenReponsitory.CreateJwtToken(TimKiemLaiIdentityUser, roles.ToList());
 
             // code lấy full data khách hàng
             var khachHangs = await _khachHangRepositories.GetAllAsync();
@@ -355,7 +357,7 @@ namespace TourDuLichASAP.API.Controllers
                     });
                 }
 
-                var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email == requestDto.Email);
+                var existNhanVien = responseNhanVien.FirstOrDefault(s => s.Email.ToLower() == requestDto.Email.ToLower());
                 var response = new LoginResponseDto
                 {
                     NhanVien = existNhanVien,
