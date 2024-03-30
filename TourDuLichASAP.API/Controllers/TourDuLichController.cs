@@ -23,7 +23,6 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task <IActionResult> CreateTourDuLich([FromBody] CreateTourDuLichRequestDto requestDto)
         {
            
@@ -210,7 +209,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateTourDuLichById(string id, UpdateTourDuLichRequestDto dto)
         {
             var tourDuLich = new TourDuLich
@@ -322,7 +320,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTourDuLich(string id)
         {
             var deleteTourDuLich = await _tourDuLichRepositories.DeleteAsync(id);
