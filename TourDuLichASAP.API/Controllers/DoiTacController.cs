@@ -16,7 +16,7 @@ namespace TourDuLichASAP.API.Controllers
             _doiTacRepositories = doiTacRepositories;
         }
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+       
         public async Task<IActionResult> GetAllDoiTac()
         {
             var doiTacs = await _doiTacRepositories.GetAllAsync();
