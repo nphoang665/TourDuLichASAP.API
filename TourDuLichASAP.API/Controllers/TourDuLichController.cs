@@ -320,7 +320,6 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteTourDuLich(string id)
         {
             var deleteTourDuLich = await _tourDuLichRepositories.DeleteAsync(id);

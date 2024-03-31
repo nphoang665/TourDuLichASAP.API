@@ -305,7 +305,7 @@ namespace TourDuLichASAP.API.Controllers
             var TimKiemLaiIdentityUser = await userManager.FindByEmailAsync(userEmail);
             // Tạo JWT token cho người dùng (tương tự như mã bạn đã có)
             var roles = await userManager.GetRolesAsync(TimKiemLaiIdentityUser);
-            var jwtToken = tokenReponsitory.CreateJwtToken(TimKiemLaiIdentityUser, roles.ToList());
+            var jwtToken = tokenReponsitory.CreateJwtToken(TimKiemLaiIdentityUser   , roles.ToList());
 
             // code lấy full data khách hàng
             var khachHangs = await _khachHangRepositories.GetAllAsync();
