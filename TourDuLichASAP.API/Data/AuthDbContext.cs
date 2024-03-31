@@ -55,9 +55,35 @@ namespace TourDuLichASAP.API.Data
                 NormalizedEmail = "admin@gmail.com".ToUpper(),
                 NormalizedUserName = "admin@gmail.com".ToUpper()
             };
-
             admin.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(admin, "admin123");
+
+            //Tạo nhân viên
+            var nhanvienId = "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b";
+            var nhanVien = new IdentityUser()
+            {
+                Id = nhanvienId,
+                UserName = "Nhân viên",
+                Email = "nhanvien@gmail.com",
+                NormalizedEmail = "nhanvien@gmail.com".ToUpper(),
+                NormalizedUserName = "nhanvien@gmail.com".ToUpper()
+            };
+            nhanVien.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(nhanVien, "nhanvien123");
+
+            //Tạo khách hàng
+            var khachHangId = "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5";
+            var khachHang = new IdentityUser()
+            {
+                Id = khachHangId,
+                UserName = "Khách hàng",
+                Email = "khachhang@gmail.com",
+                NormalizedEmail = "khachhang@gmail.com".ToUpper(),
+                NormalizedUserName = "khachhang@gmail.com".ToUpper()
+            };
+            khachHang.PasswordHash = new PasswordHasher<IdentityUser>().HashPassword(khachHang, "khachhang123");
+
             builder.Entity<IdentityUser>().HasData(admin);
+            builder.Entity<IdentityUser>().HasData(nhanVien);
+            builder.Entity<IdentityUser>().HasData(khachHang);
 
             // Trao vai trò cho quản trị viên
             var adminRoles = new List<IdentityUserRole<string>>()
@@ -79,6 +105,26 @@ namespace TourDuLichASAP.API.Data
                 }
             };
             builder.Entity<IdentityUserRole<string>>().HasData(adminRoles);
+
+            var nhanvienRoles = new List<IdentityUserRole<string>>()
+            {
+                new()
+                {
+                    UserId = nhanvienId,
+                    RoleId = nhanVienRoleId
+                }
+            };
+            builder.Entity<IdentityUserRole<string>>().HasData(nhanvienRoles);
+
+            var khachHangRoles = new List<IdentityUserRole<string>>()
+            {
+                new()
+                {
+                    UserId = khachHangId,
+                    RoleId = khachHangRoleId
+                }
+            };
+            builder.Entity<IdentityUserRole<string>>().HasData(khachHangRoles);
         }
 
     }

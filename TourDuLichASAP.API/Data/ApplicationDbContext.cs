@@ -219,6 +219,23 @@ namespace TourDuLichASAP.API.Data
                TinhTrang = "Chờ xác nhận"
            }
        );
+            modelBuilder.Entity<AnhTour>().HasData(
+                new AnhTour
+                {
+                    IdAnhTour = 1,
+                    IdTour = "TDL001",
+                    ImgTour = "image_0_638475168948066701.jpeg",
+                    NgayThem = DateTime.Now
+                });
+
+            modelBuilder.Entity<AnhTour>().HasData(
+               new AnhTour
+               {
+                   IdAnhTour = 2,
+                   IdTour = "TDL002",
+                   ImgTour = "image_0_638475170750328322.gif",
+                   NgayThem = DateTime.Now
+               });
 
 
 
