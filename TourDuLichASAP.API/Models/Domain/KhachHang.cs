@@ -41,8 +41,6 @@ namespace TourDuLichASAP.API.Models.Domain
         [StringLength(20)]
         public string TinhTrang { get; set; }
         
-        [StringLength(30)]
-        public string? MatKhau { get; set; }
 
         [Column(TypeName = "Date")]
         public DateTime NgayDangKy { get; set; }

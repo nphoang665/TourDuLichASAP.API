@@ -42,7 +42,6 @@ namespace TourDuLichASAP.API.Controllers
                     NgayVaoLam = nhanvien.NgayVaoLam,
                     AnhNhanVien = nhanvien.AnhNhanVien,
                     TinhTrang = nhanvien.TinhTrang,
-                    MatKhau = nhanvien.MatKhau
                 });
             }
             return Ok(response);
@@ -71,7 +70,6 @@ namespace TourDuLichASAP.API.Controllers
                 NgayVaoLam = requestDto.NgayVaoLam,
                 AnhNhanVien = requestDto.AnhNhanVien,
                 TinhTrang = "Đang hoạt động",
-                MatKhau = requestDto.MatKhau,
             };
 
             nhanVien = await _nhanVienRepositories.CreateAsync(nhanVien);
@@ -91,7 +89,6 @@ namespace TourDuLichASAP.API.Controllers
                 NgayVaoLam = requestDto.NgayVaoLam,
                 AnhNhanVien = requestDto.AnhNhanVien,
                 TinhTrang = requestDto.TinhTrang,
-                MatKhau = requestDto.MatKhau,
             };
 
             return Ok(response);
@@ -122,7 +119,6 @@ namespace TourDuLichASAP.API.Controllers
                 NgayVaoLam = nhanVien.NgayVaoLam,
                 AnhNhanVien = nhanVien.AnhNhanVien,
                 TinhTrang = nhanVien.TinhTrang,
-                MatKhau = nhanVien.MatKhau,
             };
             return Ok(response);
         }
@@ -146,8 +142,7 @@ namespace TourDuLichASAP.API.Controllers
                 ChucVu = requestDto.ChucVu,
                 NgayVaoLam = requestDto.NgayVaoLam,
                 AnhNhanVien = requestDto.AnhNhanVien,
-                TinhTrang = requestDto.TinhTrang,
-                MatKhau = requestDto.MatKhau,
+                TinhTrang = requestDto.TinhTrang
             };
 
             nhanVien = await _nhanVienRepositories.UpdateAsync(nhanVien);
@@ -171,7 +166,6 @@ namespace TourDuLichASAP.API.Controllers
                 NgayVaoLam = nhanVien.NgayVaoLam,
                 AnhNhanVien = nhanVien.AnhNhanVien,
                 TinhTrang = nhanVien.TinhTrang,
-                MatKhau = nhanVien.MatKhau,
             };
             return Ok(response);
         }
@@ -201,7 +195,6 @@ namespace TourDuLichASAP.API.Controllers
                 NgayVaoLam = deleteNhanVien.NgayVaoLam,
                 AnhNhanVien = deleteNhanVien.AnhNhanVien,
                 TinhTrang = deleteNhanVien.TinhTrang,
-                MatKhau = deleteNhanVien.MatKhau,
             };
             return Ok(response);
         }

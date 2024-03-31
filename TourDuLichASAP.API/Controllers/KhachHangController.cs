@@ -38,7 +38,6 @@ namespace TourDuLichASAP.API.Controllers
                     GioiTinh = khachHang.GioiTinh,
                     Email = khachHang.Email,
                     TinhTrang = khachHang.TinhTrang,
-                    MatKhau = khachHang.MatKhau,
                     NgayDangKy = khachHang.NgayDangKy
                 });
             }
@@ -64,7 +63,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = request.GioiTinh,
                 Email = request.Email,
                 TinhTrang = "Đang hoạt động",
-                MatKhau = request.MatKhau,
                 NgayDangKy = DateTime.Now,
             };
             khachHang = await _khachHangRepositories.CreateAsync(khachHang);
@@ -79,7 +77,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = khachHang.GioiTinh,
                 Email = khachHang.Email,
                 TinhTrang = khachHang.TinhTrang,
-                MatKhau = khachHang.MatKhau,
                 NgayDangKy = khachHang.NgayDangKy
             };
             return Ok(response);
@@ -106,7 +103,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = khachHang.GioiTinh,
                 Email = khachHang.Email,
                 TinhTrang = khachHang.TinhTrang,
-                MatKhau = khachHang.MatKhau,
                 NgayDangKy = khachHang.NgayDangKy
             };
             return Ok(response);
@@ -127,7 +123,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = request.GioiTinh,
                 Email = request.Email,
                 TinhTrang = request.TinhTrang,
-                MatKhau = request.MatKhau,
                 NgayDangKy = request.NgayDangKy,
             };
             var updateKhachHang = await _khachHangRepositories.UpdateAsync(khachHang);
@@ -147,7 +142,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = khachHang.GioiTinh,
                 Email = khachHang.Email,
                 TinhTrang = khachHang.TinhTrang,
-                MatKhau = khachHang.MatKhau,
                 NgayDangKy = khachHang.NgayDangKy
             };
             return Ok(response);
@@ -174,7 +168,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = deleteKhachHang.GioiTinh,
                 Email = deleteKhachHang.Email,
                 TinhTrang = deleteKhachHang.TinhTrang,
-                MatKhau = deleteKhachHang.MatKhau,
                 NgayDangKy = deleteKhachHang.NgayDangKy,
             };
             return Ok(response);

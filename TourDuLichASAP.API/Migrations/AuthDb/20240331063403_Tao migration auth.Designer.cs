@@ -12,7 +12,7 @@ using TourDuLichASAP.API.Data;
 namespace TourDuLichASAP.API.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240324080119_Tao migration auth")]
+    [Migration("20240331063403_Tao migration auth")]
     partial class Taomigrationauth
     {
         /// <inheritdoc />
@@ -169,17 +169,17 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
                         {
                             Id = "b83cf6dd-435c-48cd-8c16-06338e726032",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3d1addf-daf9-428a-88ba-d73acb1a7936",
+                            ConcurrencyStamp = "72a6fd99-43e5-4ef5-9f58-ddbf22207839",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEP2T9I2x7FbpbrTORvLijNdhSCUyvnJK2ft2s+uu+i6FRJQSLtWfRVR7mBU/R8tz1Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHhUgjEduRsMjHcnfyHmrAKZQqZfxsYxEZqGAaH2juMJyadvvVPziiqMzJFD8axL1w==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "caf69306-1cc7-43fe-8aee-f9df1f5eaeaf",
+                            SecurityStamp = "eb5e4d97-1b1c-4dcb-92a8-3dee371b707a",
                             TwoFactorEnabled = false,
-                            UserName = "admin@gmail.com"
+                            UserName = "Admin"
                         });
                 });
 

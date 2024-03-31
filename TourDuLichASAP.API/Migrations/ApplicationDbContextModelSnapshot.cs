@@ -173,7 +173,7 @@ namespace TourDuLichASAP.API.Migrations
                             IdTour = "TDL001",
                             SoLuongNguoiLon = 2,
                             SoLuongTreEm = 1,
-                            ThoiGianDatTour = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5657),
+                            ThoiGianDatTour = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9519),
                             TinhTrang = "Chờ xác nhận"
                         });
                 });
@@ -358,10 +358,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<string>("MatKhau")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<DateTime>("NgayDangKy")
                         .HasColumnType("Date");
 
@@ -395,8 +391,7 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "123 Đường A, Quận 1, TP. HCM",
                             Email = "ntc@example.com",
                             GioiTinh = "Nữ",
-                            MatKhau = "password123",
-                            NgayDangKy = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5605),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9474),
                             NgaySinh = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenKhachHang = "Nguyễn Thị C",
@@ -409,8 +404,7 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "456 Đường S, Quận 5, TP. HCM",
                             Email = "tvd@example.com",
                             GioiTinh = "Nam",
-                            MatKhau = "abc123",
-                            NgayDangKy = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5607),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9478),
                             NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0365478912",
                             TenKhachHang = "Trần Văn D",
@@ -453,11 +447,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<string>("MatKhau")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<DateTime>("NgayDangKy")
                         .HasColumnType("Date");
 
@@ -496,10 +485,9 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "123 Lê Thánh Tông, Buôn Ma Thuột",
                             Email = "ttb@example.com",
                             GioiTinh = "Nữ",
-                            MatKhau = "password123",
-                            NgayDangKy = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5562),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9441),
                             NgaySinh = new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayVaoLam = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5579),
+                            NgayVaoLam = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9451),
                             SoDienThoai = "0987654321",
                             TenNhanVien = "Trần Thị Thanh",
                             TinhTrang = "Đang hoạt động"
@@ -513,10 +501,9 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "111 Hà Huy Tập, Buôn Ma Thuột",
                             Email = "lvc@example.com",
                             GioiTinh = "Nam",
-                            MatKhau = "abc123",
-                            NgayDangKy = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5585),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9456),
                             NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayVaoLam = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5586),
+                            NgayVaoLam = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9457),
                             SoDienThoai = "0365478912",
                             TenNhanVien = "Lê Văn Khánh",
                             TinhTrang = "Đang hoạt động"
@@ -660,7 +647,7 @@ namespace TourDuLichASAP.API.Migrations
                             IdDoiTac = "DT0002",
                             LoaiTour = "Tham quan thác",
                             MoTa = "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.",
-                            NgayThem = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5630),
+                            NgayThem = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9499),
                             NoiKhoiHanh = "Buôn Ma Thuột",
                             PhuongTienDiChuyen = "Xe ô tô",
                             SoChoConNhan = 45,
@@ -674,13 +661,13 @@ namespace TourDuLichASAP.API.Migrations
                         new
                         {
                             IdTour = "TDL002",
-                            DichVuDiKem = "Hướng dẫn viên, nước uống",
+                            DichVuDiKem = "Hướng dẫn viên và nước uống",
                             GiaNguoiLon = 700000,
                             GiaTreEm = 300000,
                             IdDoiTac = "DT0001",
                             LoaiTour = "Thăm quan vườn cà phê",
                             MoTa = "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.",
-                            NgayThem = new DateTime(2024, 3, 26, 15, 52, 44, 843, DateTimeKind.Local).AddTicks(5634),
+                            NgayThem = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9503),
                             NoiKhoiHanh = "Buôn Ma Thuột",
                             PhuongTienDiChuyen = "Xe máy",
                             SoChoConNhan = 30,

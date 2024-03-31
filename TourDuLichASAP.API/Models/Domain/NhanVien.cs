@@ -51,9 +51,5 @@ namespace TourDuLichASAP.API.Models.Domain
         [Required]
         [StringLength(20)]
         public string TinhTrang { get; set; }
-
-        [Required]
-        [StringLength(30)]
-        public string MatKhau { get; set; }
     }
 }

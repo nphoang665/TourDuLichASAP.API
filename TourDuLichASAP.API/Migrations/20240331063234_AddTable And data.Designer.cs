@@ -12,7 +12,7 @@ using TourDuLichASAP.API.Data;
 namespace TourDuLichASAP.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240316143728_AddTable And data")]
+    [Migration("20240331063234_AddTable And data")]
     partial class AddTableAnddata
     {
         /// <inheritdoc />
@@ -88,15 +88,20 @@ namespace TourDuLichASAP.API.Migrations
                     b.Property<int>("DiemDanhGia")
                         .HasColumnType("int");
 
+                    b.Property<int>("DisLike")
+                        .HasColumnType("int");
+
                     b.Property<string>("IdKhachHang")
                         .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("IdTour")
-                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
+
+                    b.Property<int>("Like")
+                        .HasColumnType("int");
 
                     b.Property<string>("NhanXet")
                         .IsRequired()
@@ -121,7 +126,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("GhiChu")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("IdKhachHang")
@@ -130,7 +134,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("IdNhanVien")
-                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
@@ -173,7 +176,7 @@ namespace TourDuLichASAP.API.Migrations
                             IdTour = "TDL001",
                             SoLuongNguoiLon = 2,
                             SoLuongTreEm = 1,
-                            ThoiGianDatTour = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6136),
+                            ThoiGianDatTour = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9519),
                             TinhTrang = "Chờ xác nhận"
                         });
                 });
@@ -192,11 +195,11 @@ namespace TourDuLichASAP.API.Migrations
                     b.Property<int>("GiaTien")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("GioBatDau")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("GioBatDau")
+                        .HasColumnType("time");
 
-                    b.Property<DateTime>("GioKetThuc")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("GioKetThuc")
+                        .HasColumnType("time");
 
                     b.Property<DateTime>("NgayThem")
                         .HasColumnType("Date");
@@ -238,7 +241,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasColumnType("nvarchar(6)");
 
                     b.Property<string>("IdNhanVien")
-                        .IsRequired()
                         .HasMaxLength(6)
                         .HasColumnType("nvarchar(6)");
 
@@ -359,11 +361,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<string>("MatKhau")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<DateTime>("NgayDangKy")
                         .HasColumnType("Date");
 
@@ -397,8 +394,7 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "123 Đường A, Quận 1, TP. HCM",
                             Email = "ntc@example.com",
                             GioiTinh = "Nữ",
-                            MatKhau = "password123",
-                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6094),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9474),
                             NgaySinh = new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0987654321",
                             TenKhachHang = "Nguyễn Thị C",
@@ -411,8 +407,7 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "456 Đường S, Quận 5, TP. HCM",
                             Email = "tvd@example.com",
                             GioiTinh = "Nam",
-                            MatKhau = "abc123",
-                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6097),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9478),
                             NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             SoDienThoai = "0365478912",
                             TenKhachHang = "Trần Văn D",
@@ -455,11 +450,6 @@ namespace TourDuLichASAP.API.Migrations
                         .HasMaxLength(3)
                         .HasColumnType("nvarchar(3)");
 
-                    b.Property<string>("MatKhau")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<DateTime>("NgayDangKy")
                         .HasColumnType("Date");
 
@@ -498,10 +488,9 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "123 Lê Thánh Tông, Buôn Ma Thuột",
                             Email = "ttb@example.com",
                             GioiTinh = "Nữ",
-                            MatKhau = "password123",
-                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6058),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9441),
                             NgaySinh = new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayVaoLam = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6070),
+                            NgayVaoLam = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9451),
                             SoDienThoai = "0987654321",
                             TenNhanVien = "Trần Thị Thanh",
                             TinhTrang = "Đang hoạt động"
@@ -515,10 +504,9 @@ namespace TourDuLichASAP.API.Migrations
                             DiaChi = "111 Hà Huy Tập, Buôn Ma Thuột",
                             Email = "lvc@example.com",
                             GioiTinh = "Nam",
-                            MatKhau = "abc123",
-                            NgayDangKy = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076),
+                            NgayDangKy = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9456),
                             NgaySinh = new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            NgayVaoLam = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076),
+                            NgayVaoLam = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9457),
                             SoDienThoai = "0365478912",
                             TenNhanVien = "Lê Văn Khánh",
                             TinhTrang = "Đang hoạt động"
@@ -662,9 +650,9 @@ namespace TourDuLichASAP.API.Migrations
                             IdDoiTac = "DT0002",
                             LoaiTour = "Tham quan thác",
                             MoTa = "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.",
-                            NgayThem = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6118),
+                            NgayThem = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9499),
                             NoiKhoiHanh = "Buôn Ma Thuột",
-                            PhuongTienDiChuyen = "Xe ô tô du lịch",
+                            PhuongTienDiChuyen = "Xe ô tô",
                             SoChoConNhan = 45,
                             SoLuongNguoiLon = 30,
                             SoLuongTreEm = 15,
@@ -676,13 +664,13 @@ namespace TourDuLichASAP.API.Migrations
                         new
                         {
                             IdTour = "TDL002",
-                            DichVuDiKem = "Hướng dẫn viên, nước uống",
+                            DichVuDiKem = "Hướng dẫn viên và nước uống",
                             GiaNguoiLon = 700000,
                             GiaTreEm = 300000,
                             IdDoiTac = "DT0001",
                             LoaiTour = "Thăm quan vườn cà phê",
                             MoTa = "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.",
-                            NgayThem = new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6122),
+                            NgayThem = new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9503),
                             NoiKhoiHanh = "Buôn Ma Thuột",
                             PhuongTienDiChuyen = "Xe máy",
                             SoChoConNhan = 30,
@@ -727,9 +715,7 @@ namespace TourDuLichASAP.API.Migrations
 
                     b.HasOne("TourDuLichASAP.API.Models.Domain.TourDuLich", "TourDuLich")
                         .WithMany()
-                        .HasForeignKey("IdTour")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdTour");
 
                     b.Navigation("KhachHang");
 
@@ -746,9 +732,7 @@ namespace TourDuLichASAP.API.Migrations
 
                     b.HasOne("TourDuLichASAP.API.Models.Domain.NhanVien", "NhanVien")
                         .WithMany()
-                        .HasForeignKey("IdNhanVien")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNhanVien");
 
                     b.HasOne("TourDuLichASAP.API.Models.Domain.TourDuLich", "TourDuLich")
                         .WithMany()
@@ -786,8 +770,7 @@ namespace TourDuLichASAP.API.Migrations
                     b.HasOne("TourDuLichASAP.API.Models.Domain.NhanVien", "NhanVien")
                         .WithMany()
                         .HasForeignKey("IdNhanVien")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("DatTour");
 

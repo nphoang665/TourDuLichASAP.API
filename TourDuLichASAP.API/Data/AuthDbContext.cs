@@ -50,7 +50,7 @@ namespace TourDuLichASAP.API.Data
             var admin = new IdentityUser()
             {
                 Id = adminUserId,
-                UserName = "admin@gmail.com",
+                UserName = "Admin",
                 Email = "admin@gmail.com",
                 NormalizedEmail = "admin@gmail.com".ToUpper(),
                 NormalizedUserName = "admin@gmail.com".ToUpper()

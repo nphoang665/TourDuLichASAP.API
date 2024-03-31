@@ -9,7 +9,7 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<KhachHang?> UpdateAsync(KhachHang khachHang);
         Task<KhachHang?> DeleteAsync(string id);
         Task<KhachHang> GetkhachHangById(string idKhachHang);
-
+            
 
     }
 }

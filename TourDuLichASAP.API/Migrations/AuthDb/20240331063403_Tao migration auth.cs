@@ -171,7 +171,7 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "a3d1addf-daf9-428a-88ba-d73acb1a7936", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEP2T9I2x7FbpbrTORvLijNdhSCUyvnJK2ft2s+uu+i6FRJQSLtWfRVR7mBU/R8tz1Q==", null, false, "caf69306-1cc7-43fe-8aee-f9df1f5eaeaf", false, "admin@gmail.com" });
+                values: new object[] { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "72a6fd99-43e5-4ef5-9f58-ddbf22207839", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEHhUgjEduRsMjHcnfyHmrAKZQqZfxsYxEZqGAaH2juMJyadvvVPziiqMzJFD8axL1w==", null, false, "eb5e4d97-1b1c-4dcb-92a8-3dee371b707a", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",

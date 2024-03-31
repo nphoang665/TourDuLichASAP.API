@@ -94,7 +94,6 @@ namespace TourDuLichASAP.API.Controllers
                 GioiTinh = request.GioiTinh,
                 Email = request.Email,
                 TinhTrang = request.TinhTrangKhachHang,
-                MatKhau = null,
                 NgayDangKy = request.NgayDangKy,
             };
             khachHang =await _khachHangRepositories.CreateAsync(khachHang);

@@ -10,7 +10,6 @@
         public string GioiTinh { get; set; }
         public string Email { get; set; }
         public string TinhTrang { get; set; }
-        public string MatKhau { get; set; }
         public DateTime NgayDangKy { get; set; }
     }
 }

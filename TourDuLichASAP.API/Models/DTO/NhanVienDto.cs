@@ -18,6 +18,5 @@ namespace TourDuLichASAP.API.Models.DTO
         public DateTime NgayVaoLam { get; set; }
         public string AnhNhanVien { get; set; } 
         public string TinhTrang { get; set; }
-        public string MatKhau { get; set; }
     }
 }

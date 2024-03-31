@@ -65,7 +65,6 @@ namespace TourDuLichASAP.API.Controllers
                             GioiTinh = khachHang.GioiTinh,
                             Email = khachHang.Email,
                             TinhTrang = khachHang.TinhTrang,
-                            MatKhau = khachHang.MatKhau,
                             NgayDangKy = khachHang.NgayDangKy
                         });
                     }
@@ -93,7 +92,6 @@ namespace TourDuLichASAP.API.Controllers
                                 NgayVaoLam = nhanvien.NgayVaoLam,
                                 AnhNhanVien = nhanvien.AnhNhanVien,
                                 TinhTrang = nhanvien.TinhTrang,
-                                MatKhau = nhanvien.MatKhau
                             });
                         }
 
@@ -325,7 +323,6 @@ namespace TourDuLichASAP.API.Controllers
                     GioiTinh = khachHang.GioiTinh,
                     Email = khachHang.Email,
                     TinhTrang = khachHang.TinhTrang,
-                    MatKhau = khachHang.MatKhau,
                     NgayDangKy = khachHang.NgayDangKy
                 });
             }
@@ -353,7 +350,6 @@ namespace TourDuLichASAP.API.Controllers
                         NgayVaoLam = nhanvien.NgayVaoLam,
                         AnhNhanVien = nhanvien.AnhNhanVien,
                         TinhTrang = nhanvien.TinhTrang,
-                        MatKhau = nhanvien.MatKhau
                     });
                 }
 

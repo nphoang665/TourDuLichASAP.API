@@ -22,8 +22,8 @@ namespace TourDuLichASAP.API.Migrations
                     DonViTinh = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     GiaTien = table.Column<int>(type: "int", nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    GioBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GioKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    GioBatDau = table.Column<TimeOnly>(type: "time", nullable: false),
+                    GioKetThuc = table.Column<TimeOnly>(type: "time", nullable: false),
                     NgayThem = table.Column<DateTime>(type: "Date", nullable: false)
                 },
                 constraints: table =>
@@ -63,7 +63,6 @@ namespace TourDuLichASAP.API.Migrations
                     GioiTinh = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     TinhTrang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    MatKhau = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     NgayDangKy = table.Column<DateTime>(type: "Date", nullable: false)
                 },
                 constraints: table =>
@@ -87,8 +86,7 @@ namespace TourDuLichASAP.API.Migrations
                     ChucVu = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     NgayVaoLam = table.Column<DateTime>(type: "Date", nullable: false),
                     AnhNhanVien = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TinhTrang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
-                    MatKhau = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    TinhTrang = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,6 +177,8 @@ namespace TourDuLichASAP.API.Migrations
                     IdTour = table.Column<string>(type: "nvarchar(6)", maxLength: 6, nullable: true),
                     DiemDanhGia = table.Column<int>(type: "int", nullable: false),
                     NhanXet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Like = table.Column<int>(type: "int", nullable: false),
+                    DisLike = table.Column<int>(type: "int", nullable: false),
                     ThoiGianDanhGia = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -194,8 +194,7 @@ namespace TourDuLichASAP.API.Migrations
                         name: "FK_DANH_GIA_TOUR_DU_LICH_IdTour",
                         column: x => x.IdTour,
                         principalTable: "TOUR_DU_LICH",
-                        principalColumn: "IdTour",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdTour");
                 });
 
             migrationBuilder.CreateTable(
@@ -225,8 +224,7 @@ namespace TourDuLichASAP.API.Migrations
                         name: "FK_DAT_TOUR_NHAN_VIEN_IdNhanVien",
                         column: x => x.IdNhanVien,
                         principalTable: "NHAN_VIEN",
-                        principalColumn: "IdNhanVien",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdNhanVien");
                     table.ForeignKey(
                         name: "FK_DAT_TOUR_TOUR_DU_LICH_IdTour",
                         column: x => x.IdTour,
@@ -325,20 +323,20 @@ namespace TourDuLichASAP.API.Migrations
 
             migrationBuilder.InsertData(
                 table: "KHACH_HANG",
-                columns: new[] { "IdKhachHang", "CCCD", "DiaChi", "Email", "GioiTinh", "MatKhau", "NgayDangKy", "NgaySinh", "SoDienThoai", "TenKhachHang", "TinhTrang" },
+                columns: new[] { "IdKhachHang", "CCCD", "DiaChi", "Email", "GioiTinh", "NgayDangKy", "NgaySinh", "SoDienThoai", "TenKhachHang", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "KH0001", "123456789012", "123 Đường A, Quận 1, TP. HCM", "ntc@example.com", "Nữ", "password123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6094), new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0987654321", "Nguyễn Thị C", "Đang hoạt động" },
-                    { "KH0002", "987654321098", "456 Đường S, Quận 5, TP. HCM", "tvd@example.com", "Nam", "abc123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6097), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0365478912", "Trần Văn D", "Đang hoạt động" }
+                    { "KH0001", "123456789012", "123 Đường A, Quận 1, TP. HCM", "ntc@example.com", "Nữ", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9474), new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0987654321", "Nguyễn Thị C", "Đang hoạt động" },
+                    { "KH0002", "987654321098", "456 Đường S, Quận 5, TP. HCM", "tvd@example.com", "Nam", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9478), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0365478912", "Trần Văn D", "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
                 table: "NHAN_VIEN",
-                columns: new[] { "IdNhanVien", "AnhNhanVien", "CCCD", "ChucVu", "DiaChi", "Email", "GioiTinh", "MatKhau", "NgayDangKy", "NgaySinh", "NgayVaoLam", "SoDienThoai", "TenNhanVien", "TinhTrang" },
+                columns: new[] { "IdNhanVien", "AnhNhanVien", "CCCD", "ChucVu", "DiaChi", "Email", "GioiTinh", "NgayDangKy", "NgaySinh", "NgayVaoLam", "SoDienThoai", "TenNhanVien", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "NV0001", "url_anh", "987654321098", "Nhân viên", "123 Lê Thánh Tông, Buôn Ma Thuột", "ttb@example.com", "Nữ", "password123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6058), new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6070), "0987654321", "Trần Thị Thanh", "Đang hoạt động" },
-                    { "NV0002", "url_anh", "456789123456", "Nhân viên", "111 Hà Huy Tập, Buôn Ma Thuột", "lvc@example.com", "Nam", "abc123", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6076), "0365478912", "Lê Văn Khánh", "Đang hoạt động" }
+                    { "NV0001", "url_anh", "987654321098", "Nhân viên", "123 Lê Thánh Tông, Buôn Ma Thuột", "ttb@example.com", "Nữ", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9441), new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9451), "0987654321", "Trần Thị Thanh", "Đang hoạt động" },
+                    { "NV0002", "url_anh", "456789123456", "Nhân viên", "111 Hà Huy Tập, Buôn Ma Thuột", "lvc@example.com", "Nam", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9456), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9457), "0365478912", "Lê Văn Khánh", "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
@@ -346,14 +344,14 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdTour", "DichVuDiKem", "GiaNguoiLon", "GiaTreEm", "IdDoiTac", "LoaiTour", "MoTa", "NgayThem", "NoiKhoiHanh", "PhuongTienDiChuyen", "SoChoConNhan", "SoLuongNguoiLon", "SoLuongTreEm", "TenTour", "ThoiGianBatDau", "ThoiGianKetThuc", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "TDL001", "Bữa ăn trưa, vé tham quan", 1000000, 500000, "DT0002", "Tham quan thác", "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6118), "Buôn Ma Thuột", "Xe ô tô du lịch", 45, 30, 15, "Thác Dray Nur", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" },
-                    { "TDL002", "Hướng dẫn viên, nước uống", 700000, 300000, "DT0001", "Thăm quan vườn cà phê", "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.", new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6122), "Buôn Ma Thuột", "Xe máy", 30, 20, 10, "Cà phê sân vườn", new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" }
+                    { "TDL001", "Bữa ăn trưa, vé tham quan", 1000000, 500000, "DT0002", "Tham quan thác", "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9499), "Buôn Ma Thuột", "Xe ô tô", 45, 30, 15, "Thác Dray Nur", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" },
+                    { "TDL002", "Hướng dẫn viên và nước uống", 700000, 300000, "DT0001", "Thăm quan vườn cà phê", "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.", new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9503), "Buôn Ma Thuột", "Xe máy", 30, 20, 10, "Cà phê sân vườn", new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
                 table: "DAT_TOUR",
                 columns: new[] { "IdDatTour", "GhiChu", "IdKhachHang", "IdNhanVien", "IdTour", "SoLuongNguoiLon", "SoLuongTreEm", "ThoiGianDatTour", "TinhTrang" },
-                values: new object[] { "TLD002", "Yêu cầu đưa đón", "KH0001", "NV0001", "TDL001", 2, 1, new DateTime(2024, 3, 16, 21, 37, 28, 708, DateTimeKind.Local).AddTicks(6136), "Chờ xác nhận" });
+                values: new object[] { "TLD002", "Yêu cầu đưa đón", "KH0001", "NV0001", "TDL001", 2, 1, new DateTime(2024, 3, 31, 13, 32, 33, 14, DateTimeKind.Local).AddTicks(9519), "Chờ xác nhận" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ANH_DOI_TAC_IdDoiTac",

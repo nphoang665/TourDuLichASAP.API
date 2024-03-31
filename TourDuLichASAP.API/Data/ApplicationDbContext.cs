@@ -113,7 +113,6 @@ namespace TourDuLichASAP.API.Data
                NgayVaoLam = DateTime.Now,
                AnhNhanVien = "url_anh",
                TinhTrang = "Đang hoạt động",
-               MatKhau = "password123"
            },
            new NhanVien
            {
@@ -130,7 +129,6 @@ namespace TourDuLichASAP.API.Data
                NgayVaoLam = DateTime.Now,
                AnhNhanVien = "url_anh",
                TinhTrang = "Đang hoạt động",
-               MatKhau = "abc123"
            }
        );
 
@@ -147,7 +145,6 @@ namespace TourDuLichASAP.API.Data
                 GioiTinh = "Nữ",
                 Email = "ntc@example.com",
                 TinhTrang = "Đang hoạt động",
-                MatKhau = "password123",
                 NgayDangKy = DateTime.Now
             },
             new KhachHang
@@ -161,7 +158,6 @@ namespace TourDuLichASAP.API.Data
                 GioiTinh = "Nam",
                 Email = "tvd@example.com",
                 TinhTrang = "Đang hoạt động",
-                MatKhau = "abc123",
                 NgayDangKy = DateTime.Now
             }
         );
@@ -204,7 +200,7 @@ namespace TourDuLichASAP.API.Data
                  GiaTreEm = 300000,
                  GiaNguoiLon = 700000,
                  NgayThem = DateTime.Now,
-                 DichVuDiKem = "Hướng dẫn viên, nước uống",
+                 DichVuDiKem = "Hướng dẫn viên và nước uống",
                  TinhTrang = "Đang hoạt động"
              }
          );
