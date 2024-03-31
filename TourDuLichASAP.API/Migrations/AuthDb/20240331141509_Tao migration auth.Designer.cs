@@ -12,7 +12,7 @@ using TourDuLichASAP.API.Data;
 namespace TourDuLichASAP.API.Migrations.AuthDb
 {
     [DbContext(typeof(AuthDbContext))]
-    [Migration("20240331063403_Tao migration auth")]
+    [Migration("20240331141509_Tao migration auth")]
     partial class Taomigrationauth
     {
         /// <inheritdoc />
@@ -169,17 +169,49 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
                         {
                             Id = "b83cf6dd-435c-48cd-8c16-06338e726032",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "72a6fd99-43e5-4ef5-9f58-ddbf22207839",
+                            ConcurrencyStamp = "75c586e9-a06c-4675-a594-09fbca542061",
                             Email = "admin@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEHhUgjEduRsMjHcnfyHmrAKZQqZfxsYxEZqGAaH2juMJyadvvVPziiqMzJFD8axL1w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOQ/IIkavmao7LWTf6MnKyCusjAxfMJOqKidbjgC5ePFs/knfruJlk5Y3DkSdDPuCA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "eb5e4d97-1b1c-4dcb-92a8-3dee371b707a",
+                            SecurityStamp = "a647210f-10ba-4b64-bdf3-214709fcd537",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "03142b3f-e556-406b-a799-a685f32e5bd4",
+                            Email = "nhanvien@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "NHANVIEN@GMAIL.COM",
+                            NormalizedUserName = "NHANVIEN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEN2d2clPAkEmEsLRZapTbqNEdHXfoVe2Z1K/JDdl4l5vfnGtUBpWAYSCAvlZZxJKIQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "88cff59f-d989-4233-971d-18a24d863012",
+                            TwoFactorEnabled = false,
+                            UserName = "Nhân viên"
+                        },
+                        new
+                        {
+                            Id = "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1e78b590-da70-42c3-8dca-814ca4ffe2a8",
+                            Email = "khachhang@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "KHACHHANG@GMAIL.COM",
+                            NormalizedUserName = "KHACHHANG@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEM39wAVjt9OMMhirB56jls9UfHP9/VIJ8+uBbTIQFESMQRyc4yS96ka2hJGyCB/Stg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "7654cc25-6e40-4872-bc5a-d9e4671c88f5",
+                            TwoFactorEnabled = false,
+                            UserName = "Khách hàng"
                         });
                 });
 
@@ -258,6 +290,16 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
                         new
                         {
                             UserId = "b83cf6dd-435c-48cd-8c16-06338e726032",
+                            RoleId = "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e"
+                        },
+                        new
+                        {
+                            UserId = "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b",
+                            RoleId = "8db11b28-ce22-475f-8b1e-d23d2e100fcf"
+                        },
+                        new
+                        {
+                            UserId = "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5",
                             RoleId = "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e"
                         });
                 });

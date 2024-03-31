@@ -171,16 +171,23 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "72a6fd99-43e5-4ef5-9f58-ddbf22207839", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEHhUgjEduRsMjHcnfyHmrAKZQqZfxsYxEZqGAaH2juMJyadvvVPziiqMzJFD8axL1w==", null, false, "eb5e4d97-1b1c-4dcb-92a8-3dee371b707a", false, "Admin" });
+                values: new object[,]
+                {
+                    { "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5", 0, "1e78b590-da70-42c3-8dca-814ca4ffe2a8", "khachhang@gmail.com", false, false, null, "KHACHHANG@GMAIL.COM", "KHACHHANG@GMAIL.COM", "AQAAAAIAAYagAAAAEM39wAVjt9OMMhirB56jls9UfHP9/VIJ8+uBbTIQFESMQRyc4yS96ka2hJGyCB/Stg==", null, false, "7654cc25-6e40-4872-bc5a-d9e4671c88f5", false, "Khách hàng" },
+                    { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "75c586e9-a06c-4675-a594-09fbca542061", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEOQ/IIkavmao7LWTf6MnKyCusjAxfMJOqKidbjgC5ePFs/knfruJlk5Y3DkSdDPuCA==", null, false, "a647210f-10ba-4b64-bdf3-214709fcd537", false, "Admin" },
+                    { "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b", 0, "03142b3f-e556-406b-a799-a685f32e5bd4", "nhanvien@gmail.com", false, false, null, "NHANVIEN@GMAIL.COM", "NHANVIEN@GMAIL.COM", "AQAAAAIAAYagAAAAEN2d2clPAkEmEsLRZapTbqNEdHXfoVe2Z1K/JDdl4l5vfnGtUBpWAYSCAvlZZxJKIQ==", null, false, "88cff59f-d989-4233-971d-18a24d863012", false, "Nhân viên" }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
                 values: new object[,]
                 {
+                    { "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e", "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5" },
                     { "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e", "b83cf6dd-435c-48cd-8c16-06338e726032" },
                     { "4304b846-6ee9-4800-a670-ccf11eabae35", "b83cf6dd-435c-48cd-8c16-06338e726032" },
-                    { "8db11b28-ce22-475f-8b1e-d23d2e100fcf", "b83cf6dd-435c-48cd-8c16-06338e726032" }
+                    { "8db11b28-ce22-475f-8b1e-d23d2e100fcf", "b83cf6dd-435c-48cd-8c16-06338e726032" },
+                    { "8db11b28-ce22-475f-8b1e-d23d2e100fcf", "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b" }
                 });
 
             migrationBuilder.CreateIndex(
