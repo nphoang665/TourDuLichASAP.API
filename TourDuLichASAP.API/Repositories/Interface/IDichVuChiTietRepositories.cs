@@ -13,6 +13,7 @@ namespace TourDuLichASAP.API.Repositories.Interface
         Task<DichVuChiTiet> ThemDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
         Task<DichVuChiTiet> CapNhatDichVuChiTiet(DichVuChiTiet dichVuChiTiet);
         Task<DichVuChiTiet> XoaDichVuChiTiet(string id);
+        Task<IEnumerable<DichVuChiTiet>> GetDichVuChiTietById(string id);
 
 
     }

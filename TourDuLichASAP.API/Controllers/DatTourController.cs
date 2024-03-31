@@ -135,7 +135,7 @@ namespace TourDuLichASAP.API.Controllers
 
 
 
-            return BadRequest(request);
+            return Ok(request);
         }
 
         [HttpGet]
