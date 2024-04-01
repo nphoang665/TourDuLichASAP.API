@@ -43,6 +43,13 @@ namespace TourDuLichASAP.API.Repositories.Implementation
             return await _db.DICH_VU.FirstAsync(dv => dv.IdDichVu == idDichVu);
         }
 
+        public async Task<IEnumerable<DichVuChiTiet>> GetDichVuChiTietById(string id)
+        {
+            return await _db.DICH_VU_CHI_TIET.Where(s => s.IdDatTour == id).Include(x =>x.DichVu).ToListAsync();
+
+
+        }
+
         public async Task<KhachHang> GetkhachHangById(string idKhachHang)
         {
             return await _db.KHACH_HANG.FirstAsync(kh => kh.IdKhachHang == idKhachHang);

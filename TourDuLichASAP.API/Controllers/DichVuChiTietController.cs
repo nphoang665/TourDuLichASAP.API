@@ -210,5 +210,33 @@ namespace TourDuLichASAP.API.Controllers
             }
             return Ok("Sửa dịch vụ thành công");
         }
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetAllDichVuChiTietById(string id)
+        {
+            var dichVuChiTiets = await _dichVuChiTietRepositories.GetDichVuChiTietById(id);
+
+            var response = new List<DichVuChiTietDto>();
+
+            foreach (var dichVuChiTiet in dichVuChiTiets)
+            {
+                response.Add(new DichVuChiTietDto
+                {
+                    IdDichVuChiTiet = dichVuChiTiet.IdDichVuChiTiet,
+                    IdDichVu = dichVuChiTiet.IdDichVu,
+                    IdKhachHang = dichVuChiTiet.IdKhachHang,
+                    IdDatTour = dichVuChiTiet.IdDatTour,
+                    IdNhanVien = dichVuChiTiet.IdNhanVien,
+                    ThoiGianDichVu = dichVuChiTiet.ThoiGianDichVu,
+                    SoLuong = dichVuChiTiet.SoLuong,
+                    KhachHang = dichVuChiTiet.KhachHang,
+                    NhanVien = dichVuChiTiet.NhanVien,
+                    DichVu = dichVuChiTiet.DichVu,
+                    DatTour = dichVuChiTiet.DatTour
+
+                });
+            }
+            return Ok(response);
+        }
     }
 }
