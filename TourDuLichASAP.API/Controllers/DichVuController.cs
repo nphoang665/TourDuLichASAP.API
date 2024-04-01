@@ -20,7 +20,6 @@ namespace TourDuLichASAP.API.Controllers
         }
 
         [HttpGet]
-        
         public async Task<IActionResult> GetAllDichVu()
         {
             var dichVus = await _dichVuRepositories.GetAllAsync();
@@ -44,6 +43,7 @@ namespace TourDuLichASAP.API.Controllers
 
         }
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateDichVU([FromBody] CreateDichVuRequestDto requestDto)
         {
             Random random = new Random();
@@ -103,6 +103,7 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpPut]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateDichVu(string id, UpdateDichVuRequestDto requestDto)
         {
             var dichVu = new DichVu
@@ -138,6 +139,7 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDichVu(string id)
         {
             var deleteDichVu = await _dichVuRepositories.DeleteAsync(id);
