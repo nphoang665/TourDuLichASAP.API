@@ -10,6 +10,9 @@ using System.Text;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
 
 namespace TourDuLichASAP.API.Controllers
 {
@@ -23,7 +26,7 @@ namespace TourDuLichASAP.API.Controllers
         private readonly INhanVienRepositories _nhanVienRepositories;
         private readonly JwtBearerOptions _jwtBearerOptions;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories,IOptions<JwtBearerOptions> options)
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories, IOptions<JwtBearerOptions> options)
         {
             this.userManager = userManager;
             this.tokenReponsitory = tokenReponsitory;
@@ -48,9 +51,9 @@ namespace TourDuLichASAP.API.Controllers
 
                     var jwtToken = tokenReponsitory.CreateJwtToken(identityUser, roles.ToList());
 
-                  
-                   // code lấy full data khách hàng
-                   var khachHangs = await _khachHangRepositories.GetAllAsync();
+
+                    // code lấy full data khách hàng
+                    var khachHangs = await _khachHangRepositories.GetAllAsync();
                     var responseKhachHang = new List<KhachHangDto>();
                     foreach (var khachHang in khachHangs)
                     {
@@ -70,10 +73,10 @@ namespace TourDuLichASAP.API.Controllers
                     }
                     //so sánh email kiểm tra xem tk này có trong khách hàng không
                     var existKhachHang = responseKhachHang.FirstOrDefault(s => s.Email == request.Email);
-                    if(existKhachHang == null)
+                    if (existKhachHang == null)
                     {
                         //tìm nhân viên
-                        var nhanViens= await _nhanVienRepositories.GetAllAsync();
+                        var nhanViens = await _nhanVienRepositories.GetAllAsync();
                         var responseNhanVien = new List<NhanVienDto>();
                         foreach (var nhanvien in nhanViens)
                         {
@@ -109,7 +112,7 @@ namespace TourDuLichASAP.API.Controllers
                     {
                         var response = new LoginResponseDto
                         {
-                            KhachHang= existKhachHang,
+                            KhachHang = existKhachHang,
                             Email = request.Email, // email đã check đúng với mật khẩu đã đúng
                             Roles = roles.ToList(),
                             Token = jwtToken
@@ -117,7 +120,7 @@ namespace TourDuLichASAP.API.Controllers
                         return Ok(response);
                     }
 
-                    
+
                 }
                 else
                 {
@@ -305,7 +308,7 @@ namespace TourDuLichASAP.API.Controllers
             var TimKiemLaiIdentityUser = await userManager.FindByEmailAsync(userEmail);
             // Tạo JWT token cho người dùng (tương tự như mã bạn đã có)
             var roles = await userManager.GetRolesAsync(TimKiemLaiIdentityUser);
-            var jwtToken = tokenReponsitory.CreateJwtToken(TimKiemLaiIdentityUser   , roles.ToList());
+            var jwtToken = tokenReponsitory.CreateJwtToken(TimKiemLaiIdentityUser, roles.ToList());
 
             // code lấy full data khách hàng
             var khachHangs = await _khachHangRepositories.GetAllAsync();
@@ -375,6 +378,22 @@ namespace TourDuLichASAP.API.Controllers
                 return Ok(response);
             }
         }
-
+        [HttpPost]
+        [Route("QuenMatKhau")]
+        public async Task<IActionResult> QuenMatKhau()
+        {  
+            string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
+            string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+            TwilioClient.Init(accountSid, authToken);
+            var to = new PhoneNumber("+84 869 536 182");  
+            var from = new PhoneNumber("+14693012499");
+            Random random = new Random();
+            int otp = random.Next(100000, 999999);
+            var message = MessageResource.Create(
+                to: to,
+                from: from,
+                body: $"Mã OTP đặt tour của bạn là: {otp}");
+            return Ok();
+        }
     }
 }

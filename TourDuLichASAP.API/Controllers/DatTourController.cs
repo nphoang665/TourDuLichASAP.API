@@ -222,6 +222,7 @@ namespace TourDuLichASAP.API.Controllers
                         KhachHang = dattour.KhachHang,
                         NhanVien = dattour.NhanVien !=null  ? dattour.NhanVien.TenNhanVien: null,
                         TourDuLich = dattour.TourDuLich.TenTour
+                       
                     });
                 }
 
@@ -230,7 +231,7 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Nhân viên, Admin")]
+        //[Authorize(Roles = "Nhân viên, Admin, Khách hàng")]
         public async Task<IActionResult> UpdateDatTour(string id, UpdateDatTourRequestDto dto)
         {
             var khachHang = await _datTourRepositories.GetkhachHangById(dto.IdKhachHang);

@@ -208,7 +208,7 @@ namespace TourDuLichASAP.API.Controllers
                 }
 
             }
-            return Ok("Sửa dịch vụ thành công");
+            return Ok();
         }
         [HttpGet]
         [Route("{id}")]
