@@ -49,6 +49,7 @@ namespace TourDuLichASAP.API.Controllers
                 NhanVien = nhanVien,
                 TourDuLich = tourDuLich
             };
+            await Task.Delay(1000);
 
             datTour = await _datTourRepositories.CreateAsync(datTour);
             var response = new DatTourDto
