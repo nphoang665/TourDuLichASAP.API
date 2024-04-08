@@ -147,6 +147,9 @@ namespace TourDuLichASAP.API.Controllers
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterRequestDto request)
         {
+            Random random = new Random();
+            int randomValue = random.Next(1000);
+            string idKhachHang = "KH" + randomValue.ToString("D4");
             // Create IdentityUser object
             var user = new IdentityUser
             {
@@ -162,6 +165,21 @@ namespace TourDuLichASAP.API.Controllers
                 identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
                 if (identityResult.Succeeded)
                 {
+                    var khachHang = new KhachHang
+                    {
+                        IdKhachHang = idKhachHang,
+                        TenKhachHang = "",
+                        SoDienThoai = "",
+                        DiaChi = "",
+                        CCCD = "",
+                        NgaySinh = DateTime.Now,
+                        GioiTinh = "",
+                        Email = request.Email,
+                        TinhTrang = "Đang hoạt động",
+                        NgayDangKy = DateTime.Now.Date,
+                    };
+
+                    await _khachHangRepositories.CreateAsync(khachHang);
                     return Ok();
                 }
                 else
