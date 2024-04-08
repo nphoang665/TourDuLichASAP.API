@@ -277,10 +277,15 @@ namespace TourDuLichASAP.API.Controllers
              Random random = new Random();
             int randomValue = random.Next(1000);
             string idKhachHang = "KH" + randomValue.ToString("D4");
+
+
+            // Xác thực token từ Google
+
+
             var idToken = requestDto.IdToken;
             var setting = new GoogleJsonWebSignature.ValidationSettings
             {
-                Audience = new string[] { "101863175272-n460ifjdvtb6gevl0sa64md26bt0r22v.apps.googleusercontent.com" }
+                Audience = new string[] { "101863175272-n460ifjdvtb6gevl0sa64md26bt0r22v.apps.googleusercontent.com" },
             };
 
             // Xác thực token từ Google
@@ -293,6 +298,8 @@ namespace TourDuLichASAP.API.Controllers
             // Lấy email từ token đã xác thực
             var userEmail = result.Email;
             requestDto.Email = result.Email;
+            // Lấy thông tin từ token đã xác thực
+            var userName = result.Name; // Lấy tên từ token
 
             // Kiểm tra xem email này đã tồn tại trong CSDL của bạn hay chưa
             var identityUser = await userManager.FindByEmailAsync(userEmail);
@@ -317,18 +324,21 @@ namespace TourDuLichASAP.API.Controllers
                 var identityResult = await userManager.CreateAsync(newUser);
                 if (identityResult.Succeeded)
                 {
+
+
+
                     // Thêm vai trò mặc định cho người dùng (ví dụ: "Khách hàng")
                     identityResult = await userManager.AddToRoleAsync(newUser, "Khách hàng");
                     var khachHang = new KhachHang
                     {
                         IdKhachHang = idKhachHang,
-                        TenKhachHang = "",
+                        TenKhachHang = userName,
                         SoDienThoai = "",
                         DiaChi = "",
                         CCCD = "",
                         NgaySinh = DateTime.Now,
                         GioiTinh = "",
-                        Email = requestDto.Email,
+                        Email = userEmail,
                         TinhTrang = "Đang hoạt động",
                         NgayDangKy = DateTime.Now.Date,
                     };
