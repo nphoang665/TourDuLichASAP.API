@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
+using System.Net;
 using System.Text;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
@@ -13,6 +15,9 @@ using TourDuLichASAP.API.Repositories.Interface;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
+using iTextSharp.text.pdf;
+using iTextSharp.text;
+using iTextSharp.tool.xml;
 
 namespace TourDuLichASAP.API.Controllers
 {
@@ -388,12 +393,60 @@ namespace TourDuLichASAP.API.Controllers
             var to = new PhoneNumber("+84 869 536 182");  
             var from = new PhoneNumber("+14693012499");
             Random random = new Random();
-            int otp = random.Next(100000, 999999);
+            int otp = random.Next(100000, 999999);  
             var message = MessageResource.Create(
                 to: to,
                 from: from,
                 body: $"Mã OTP đặt tour của bạn là: {otp}");
             return Ok();
         }
+        [HttpPost]
+        [Route("GuiEmailChoKhachHang")]
+        public async Task<IActionResult> GuiMail()
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+
+            string MaXacNhan;
+            Random rnd = new Random();
+            MaXacNhan = rnd.Next().ToString();
+
+            SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+            smtp.EnableSsl = true;
+            smtp.Port = 587;
+            smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+            smtp.Credentials = new NetworkCredential("khachsanasap@gmail.com", "ulwg gvjl vqmb iwya");
+
+            MailMessage mail = new MailMessage();
+            mail.To.Add("nhutbmt82@gmail.com");
+            mail.From = new MailAddress("khachsanasap@gmail.com");
+            mail.Subject = "Thông Báo Quan Trọng Từ Khách Sạn ASAP";
+
+            string logoUrl = "https://i.imgur.com/2VUOkoU.png";
+
+            // Đọc nội dung từ file HTML
+            string folderPath = Path.Combine(Directory.GetCurrentDirectory(), "Template/index.html");
+
+            string htmlFilePath = folderPath; // Đường dẫn tới file HTML của bạn
+            string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
+
+            byte[] pdf; // Biến này sẽ chứa dữ liệu PDF
+            using (var stream = new MemoryStream())
+            {
+                var document = new Document();
+                var writer = PdfWriter.GetInstance(document, stream);
+                document.Open();
+                XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, new StringReader(htmlContent));
+                document.Close();
+                pdf = stream.ToArray();
+            }
+
+            // Tạo tệp đính kèm từ file PDF
+            Attachment attachment = new Attachment(new MemoryStream(pdf), "bill.pdf");
+            mail.Attachments.Add(attachment);
+
+            await smtp.SendMailAsync(mail);
+            return Ok();
+        }
+
     }
 }
