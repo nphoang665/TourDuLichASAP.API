@@ -11,6 +11,7 @@ using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
 using Twilio;
+using Twilio.Http;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
@@ -268,6 +269,9 @@ namespace TourDuLichASAP.API.Controllers
         [Route("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto requestDto)
         {
+             Random random = new Random();
+            int randomValue = random.Next(1000);
+            string idKhachHang = "KH" + randomValue.ToString("D4");
             var idToken = requestDto.IdToken;
             var setting = new GoogleJsonWebSignature.ValidationSettings
             {
@@ -310,6 +314,21 @@ namespace TourDuLichASAP.API.Controllers
                 {
                     // Thêm vai trò mặc định cho người dùng (ví dụ: "Khách hàng")
                     identityResult = await userManager.AddToRoleAsync(newUser, "Khách hàng");
+                    var khachHang = new KhachHang
+                    {
+                        IdKhachHang = idKhachHang,
+                        TenKhachHang = "",
+                        SoDienThoai = "",
+                        DiaChi = "",
+                        CCCD = "",
+                        NgaySinh = DateTime.Now,
+                        GioiTinh = "",
+                        Email = requestDto.Email,
+                        TinhTrang = "Đang hoạt động",
+                        NgayDangKy = DateTime.Now.Date,
+                    };
+
+                    await _khachHangRepositories.CreateAsync(khachHang);
                     if (!identityResult.Succeeded)
                     {
                         // Xử lý lỗi
