@@ -475,6 +475,7 @@ namespace TourDuLichASAP.API.Controllers
 
             string htmlFilePath = folderPath; // Đường dẫn tới file HTML của bạn
             string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
+            htmlContent = htmlContent.Replace("{OrderId}", "22222");
 
             byte[] pdf; // Biến này sẽ chứa dữ liệu PDF
             using (var stream = new MemoryStream())
