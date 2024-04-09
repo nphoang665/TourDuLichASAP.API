@@ -13,7 +13,6 @@
         public DateTime NgayDangKy { get; set; }
         public string ChucVu { get; set; }
         public DateTime NgayVaoLam { get; set; }
-        public string AnhNhanVien { get; set; }
         public string TinhTrang { get; set; }
     }
 }

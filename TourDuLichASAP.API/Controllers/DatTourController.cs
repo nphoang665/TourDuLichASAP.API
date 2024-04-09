@@ -1,4 +1,4 @@
-﻿using Azure;
+﻿                using Azure;
 using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -43,7 +43,7 @@ namespace TourDuLichASAP.API.Controllers
                 SoLuongTreEm = request.SoLuongTreEm,
                 GhiChu = request.GhiChu,
                 IdNhanVien = request.IdNhanVien,
-                ThoiGianDatTour = request.ThoiGianDatTour,
+                ThoiGianDatTour = DateTime.Now,
                 TinhTrang = request.TinhTrang,
                 KhachHang = khachHang,
                 NhanVien = nhanVien,
@@ -98,7 +98,37 @@ namespace TourDuLichASAP.API.Controllers
             };
             khachHang =await _khachHangRepositories.CreateAsync(khachHang);
             }
-           
+            else
+            {
+                var properties = typeof(KhachHang).GetProperties();
+                bool shouldUpdate = false;
+
+                foreach (var property in properties)
+                {
+                    var value = property.GetValue(existKhachHang);
+                    if (value == null || string.IsNullOrEmpty(value.ToString()))
+                    {
+                        shouldUpdate = true;
+                        break;
+                    }
+                }
+
+                if (shouldUpdate)
+                {
+                    existKhachHang.TenKhachHang = request.TenKhachHang;
+                    existKhachHang.SoDienThoai = request.SoDienThoai;
+                    existKhachHang.DiaChi = request.DiaChi;
+                    existKhachHang.CCCD = request.CCCD;
+                    existKhachHang.NgaySinh = request.NgaySinh;
+                    existKhachHang.GioiTinh = request.GioiTinh;
+                    existKhachHang.Email = request.Email;
+                    existKhachHang.TinhTrang = request.TinhTrangKhachHang;
+                    existKhachHang.NgayDangKy = request.NgayDangKy;
+
+                    existKhachHang = await _khachHangRepositories.UpdateAsync(existKhachHang);
+                }
+            }
+
             var datTour = new DatTour
             {
                 IdDatTour = idDatTour,
@@ -108,7 +138,7 @@ namespace TourDuLichASAP.API.Controllers
                 SoLuongTreEm = request.SoLuongTreEm,
                 GhiChu = null,
                 IdNhanVien = null,
-                ThoiGianDatTour = request.ThoiGianDatTour,
+                ThoiGianDatTour = DateTime.Now,
                 TinhTrang = request.TinhTrangDatTour,
                 };
             datTour = await _datTourRepositories.CreateAsync(datTour);

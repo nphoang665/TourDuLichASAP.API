@@ -46,7 +46,6 @@ namespace TourDuLichASAP.API.Models.Domain
         [Column(TypeName = "Date")]
         public DateTime NgayVaoLam { get; set; }
 
-        public string AnhNhanVien { get; set; } // TEXT in SQL Server maps to string in C#
 
         [Required]
         [StringLength(20)]

@@ -111,7 +111,7 @@ namespace TourDuLichASAP.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize(Roles = "Nhân viên, Admin")]
+        //[Authorize(Roles = "Nhân viên, Admin")]
         public async Task<IActionResult> UpdateKhachHang(string id, UpdateKhachHangRequestDto request)
         {
             var khachHang = new KhachHang

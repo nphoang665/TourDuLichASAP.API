@@ -106,12 +106,11 @@ namespace TourDuLichASAP.API.Data
                DiaChi = "123 Lê Thánh Tông, Buôn Ma Thuột",
                CCCD = "987654321098",
                NgaySinh = new DateTime(1995, 5, 10),
-               Email = "ttb@example.com",
+               Email = "nhanvien@gmail.com",
                GioiTinh = "Nữ",
                NgayDangKy = DateTime.Now,
                ChucVu = "Nhân viên",
                NgayVaoLam = DateTime.Now,
-               AnhNhanVien = "url_anh",
                TinhTrang = "Đang hoạt động",
            },
            new NhanVien
@@ -127,7 +126,21 @@ namespace TourDuLichASAP.API.Data
                NgayDangKy = DateTime.Now,
                ChucVu = "Nhân viên",
                NgayVaoLam = DateTime.Now,
-               AnhNhanVien = "url_anh",
+               TinhTrang = "Đang hoạt động",
+           },
+           new NhanVien
+           {
+               IdNhanVien = "ADMIN1",
+               TenNhanVien = "Admin",
+               SoDienThoai = "0123012312",
+               DiaChi = "123 Hà Huy Tập, Buôn Ma Thuột",
+               CCCD = "04883948532",
+               NgaySinh = new DateTime(1988, 3, 15),
+               Email = "admin@gmail.com",
+               GioiTinh = "Nam",
+               NgayDangKy = DateTime.Now,
+               ChucVu = "Nhân viên",
+               NgayVaoLam = DateTime.Now,
                TinhTrang = "Đang hoạt động",
            }
        );
@@ -143,7 +156,7 @@ namespace TourDuLichASAP.API.Data
                 CCCD = "123456789012",
                 NgaySinh = new DateTime(1990, 1, 1),
                 GioiTinh = "Nữ",
-                Email = "ntc@example.com",
+                Email = "khachhang@gmail.com",
                 TinhTrang = "Đang hoạt động",
                 NgayDangKy = DateTime.Now
             },
@@ -205,26 +218,13 @@ namespace TourDuLichASAP.API.Data
              }
          );
 
-            modelBuilder.Entity<DatTour>().HasData(
-           new DatTour
-           {
-               IdDatTour = "TLD002",
-               IdKhachHang = "KH0001",
-               IdTour = "TDL001",
-               SoLuongNguoiLon = 2,
-               SoLuongTreEm = 1,
-               GhiChu = "Yêu cầu đưa đón",
-               IdNhanVien = "NV0001",
-               ThoiGianDatTour = DateTime.Now,
-               TinhTrang = "Chờ xác nhận"
-           }
-       );
+           
             modelBuilder.Entity<AnhTour>().HasData(
                 new AnhTour
                 {
                     IdAnhTour = 1,
                     IdTour = "TDL001",
-                    ImgTour = "image_0_638475168948066701.jpeg",
+                    ImgTour = "image_0_638482704013218648.jpeg",
                     NgayThem = DateTime.Now
                 });
 
@@ -233,10 +233,22 @@ namespace TourDuLichASAP.API.Data
                {
                    IdAnhTour = 2,
                    IdTour = "TDL002",
-                   ImgTour = "image_0_638475170750328322.gif",
+                   ImgTour = "image_1_638482704145321161.gif",
                    NgayThem = DateTime.Now
                });
 
+            modelBuilder.Entity<DichVu>().HasData(
+                new DichVu
+                {
+                    IdDichVu = "DV0001",
+                    TenDichVu = "Hướng dẫn viên du lịch",
+                    DonViTinh = "",
+                    GiaTien = 500000,
+                    TinhTrang = "Đang hoạt động",
+                    GioBatDau = TimeOnly.Parse("05:00:00"),
+                    GioKetThuc = TimeOnly.Parse("20:00:00"),
+                    NgayThem = DateTime.Now
+                });
 
 
         }

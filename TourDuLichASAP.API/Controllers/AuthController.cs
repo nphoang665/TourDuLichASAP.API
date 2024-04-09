@@ -99,7 +99,6 @@ namespace TourDuLichASAP.API.Controllers
                                 NgayDangKy = nhanvien.NgayDangKy,
                                 ChucVu = nhanvien.ChucVu,
                                 NgayVaoLam = nhanvien.NgayVaoLam,
-                                AnhNhanVien = nhanvien.AnhNhanVien,
                                 TinhTrang = nhanvien.TinhTrang,
                             });
                         }
@@ -403,7 +402,6 @@ namespace TourDuLichASAP.API.Controllers
                         NgayDangKy = nhanvien.NgayDangKy,
                         ChucVu = nhanvien.ChucVu,
                         NgayVaoLam = nhanvien.NgayVaoLam,
-                        AnhNhanVien = nhanvien.AnhNhanVien,
                         TinhTrang = nhanvien.TinhTrang,
                     });
                 }
@@ -475,6 +473,7 @@ namespace TourDuLichASAP.API.Controllers
 
             string htmlFilePath = folderPath; // Đường dẫn tới file HTML của bạn
             string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
+            htmlContent = htmlContent.Replace("{OrderId}", "22222");
 
             byte[] pdf; // Biến này sẽ chứa dữ liệu PDF
             using (var stream = new MemoryStream())
