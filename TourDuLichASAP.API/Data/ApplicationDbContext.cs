@@ -218,20 +218,7 @@ namespace TourDuLichASAP.API.Data
              }
          );
 
-            modelBuilder.Entity<DatTour>().HasData(
-           new DatTour
-           {
-               IdDatTour = "TLD002",
-               IdKhachHang = "KH0001",
-               IdTour = "TDL001",
-               SoLuongNguoiLon = 2,
-               SoLuongTreEm = 1,
-               GhiChu = "Yêu cầu đưa đón",
-               IdNhanVien = "NV0001",
-               ThoiGianDatTour = DateTime.Now,
-               TinhTrang = "Chờ xác nhận"
-           }
-       );
+           
             modelBuilder.Entity<AnhTour>().HasData(
                 new AnhTour
                 {
