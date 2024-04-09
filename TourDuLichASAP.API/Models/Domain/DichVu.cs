@@ -14,7 +14,7 @@ namespace TourDuLichASAP.API.Models.Domain
         public string TenDichVu { get; set; }
 
         [StringLength(50)]
-        public string DonViTinh { get; set; }
+        public string? DonViTinh { get; set; }
 
         public int GiaTien { get; set; }
 

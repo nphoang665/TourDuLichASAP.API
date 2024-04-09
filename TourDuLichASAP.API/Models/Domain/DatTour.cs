@@ -23,7 +23,7 @@ namespace TourDuLichASAP.API.Models.Domain
 
         public int SoLuongTreEm { get; set; }
 
-        public string? GhiChu { get; set; } // NTEXT in SQL Server is mapped to string in C#
+        public string? GhiChu { get; set; }
 
         [StringLength(6)]
         [ForeignKey("NhanVien")]
