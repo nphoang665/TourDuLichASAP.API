@@ -42,7 +42,8 @@ namespace TourDuLichASAP.API.Controllers
                     PhuongThucThanhToan = thanhToan.PhuongThucThanhToan,
                     DatTour = thanhToan.DatTour,
                     KhachHang = thanhToan.KhachHang,
-                    NhanVien = thanhToan.NhanVien
+                 
+                    
                 });
             }
             return Ok(response);
