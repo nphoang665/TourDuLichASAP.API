@@ -40,7 +40,7 @@ namespace TourDuLichASAP.API.Controllers
                                              }).ToListAsync();
 
             var daThanhToan = soTourTheoTinhTrang.FirstOrDefault(tt => tt.TinhTrang == "Đã thanh toán")?.SoTour ?? 0;
-            var daDuyet = soTourTheoTinhTrang.FirstOrDefault(tt => tt.TinhTrang == "Đã được duyệt")?.SoTour ?? 0;
+            var daDuyet = soTourTheoTinhTrang.FirstOrDefault(tt => tt.TinhTrang == "Đã đặt tour")?.SoTour ?? 0;
             var daTuChoi = soTourTheoTinhTrang.FirstOrDefault(tt => tt.TinhTrang == "Đã từ chối")?.SoTour ?? 0;
             var dangDoiDuyet = soTourTheoTinhTrang.FirstOrDefault(tt => tt.TinhTrang == "Đang đợi duyệt")?.SoTour ?? 0;
 
