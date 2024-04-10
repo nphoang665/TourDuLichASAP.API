@@ -74,6 +74,8 @@ namespace TourDuLichASAP.API.Controllers
                 KhachHang = khachHang,
                 NhanVien = nhanVien
             };
+            await Task.Delay(1000);
+
             thanhToan = await _thanhToanRepositories.CreateAsync(thanhToan);
 
             var response = new ThanhToanDto

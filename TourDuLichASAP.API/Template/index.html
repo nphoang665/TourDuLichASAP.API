@@ -42,6 +42,24 @@
             line-height: 24px;
             font-family: 'Times New Roman', Times, serif;
             color: #555;
+            position: relative;
+            background-position: center;
+            background-size: cover;
+            overflow: hidden;
+        }
+
+        .invoice-box::before {
+            content: "";
+            position: absolute;
+            top: 60%;
+            left: 10%;
+            width: 20%;
+            height: 20%;
+            background-image: url('https://t3.ftcdn.net/jpg/04/56/93/58/360_F_456935809_9jMU6fif04vYDyalH1z2bDc9rvuSRAij.jpg');
+            background-position: center;
+            background-size: cover;
+            filter: blur(0px);
+            z-index: -1;
         }
 
         .invoice-box table {
@@ -78,7 +96,7 @@
             background: #eee;
             border-bottom: 1px solid #ddd;
             font-weight: bold;
-            font-size: 15px;
+            /*font-size: 15px;*/
         }
 
         .invoice-box table tr.details td {
@@ -142,28 +160,34 @@
 
     <div class="invoice-box">
         <table cellpadding="0" cellspacing="0">
-            <tr class="top_rw">
 
-                <td>
-                    <h2 class="title_chung" style="margin-bottom: 0px;">Hóa đơn thanh toán tour ASAP</h2>
-                </td>
-                <td>
-                    <span class="title_chung_1" style="white-space: nowrap; font-size: 17px;">Mã hóa đơn: {{MaHoaDon}} |
-                        {{NgayTaoHoaDon}}</span>
-                </td>
-            </tr>
+            <!-- <tr class=""> -->
+            <!-- <td> -->
+            <div class="row">
+                <div class="col-6" style="font-size: 17px;">Tour du lịch: <b>ASAP</b></div>
+                <div class="col-6"> <span class="title_chung_1 d-flex justify-content-end"
+                        style="white-space: nowrap; font-size: 17px;">Mã hóa
+                        đơn:
+                        {{MaHoaDon}} |
+                        {{NgayTaoHoaDon}}</span></div>
+            </div>
+
+            <!-- </td> -->
+            <h2 class="title_chung text-center mt-3"><b>HÓA ĐƠN THANH TOÁN</b></h2>
+
+            <!-- </tr> -->
             <tr class="information" style=" width: auto;">
                 <td colspan="3" style=" width: auto;">
                     <table>
                         <tr>
                             <td colspan="2" style=" width: auto; font-size: 17px;">
-                                <b> Nhân viên thanh toán</b><br />
+                                <b>Thông tin nhân viên</b><br />
                                 <b>Tên nhân viên:</b> {{TenNhanVienThanhToan}} <br />
                                 <b>Số điện thoại: </b>{{SoDienThoaiNhanVienThanhToan}}<br />
                                 <b>Email:</b> {{EmailNhanVienThanhToan}}<br />
                             </td>
                             <td colspan="2" style=" width: auto; font-size: 17px; ">
-                                <b> Khách hàng thanh toán </b><br />
+                                <b>Thông tin khách hàng</b><br />
                                 <b>Tên khách hàng:</b> {{TenKhachHangThanhToan}} <br />
                                 <b>Số điện thoại:</b> {{SoDienThoaiKhachHangThanhToan}} <br />
                                 <b>Email:</b> {{EmailKhachHangThanhToan}}
@@ -174,8 +198,9 @@
             </tr>
             <tr class="total">
                 <td colspan="3">
-                    <table cellspacing="0px" cellpadding="2px" class="tbl_HienThiDatTour table ">
-                        <tr class="heading" style=" width: auto ">
+                    <table cellspacing="0px" cellpadding="2px" class="tbl_HienThiDatTour table text-dark "
+                        style="font-size:17px">
+                        <tr class="heading" style=" width: auto; ">
                             <td style="width:25%;">
                                 Tên tour
                             </td>
@@ -200,8 +225,9 @@
 
                     </table>
 
-                    <table cellspacing="0px" cellpadding="2px" class="tbl_HienThiDichVuChiTiet mt-3">
-                        <tr class="heading">
+                    <table cellspacing="0px" cellpadding="2px" class="tbl_HienThiDichVuChiTiet text-dark mt-3"
+                        style="font-size:17px">
+                        <tr class="heading ">
 
                             <td style="width:25%;">
                                 Tên dịch vụ
@@ -236,7 +262,7 @@
                             <td width="50%">
 
                             </td>
-                            <td style=" width: auto; font-size: 20px; " class="pt-5">
+                            <td style=" width: auto; font-size: 18px; " class="pt-5">
                                 <span class="d-block"><b>TỔNG TIỀN</b></span>
                                 <span class="d-block">Tổng tiền tour: <b>{{TongTienTour}}</b>VNĐ</span>
                                 <span class="d-block">Tổng tiên dịch vụ: <b>{{TongTienDichVu}}</b>VNĐ</span>
@@ -258,6 +284,7 @@
                     </table>
                 </td>
             </tr>
+
         </table>
     </div>
 
