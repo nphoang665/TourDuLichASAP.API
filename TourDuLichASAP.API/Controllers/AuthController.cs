@@ -532,8 +532,8 @@ namespace TourDuLichASAP.API.Controllers
                 NgayThanhToan = thanhToan.NgayThanhToan,
                 PhuongThucThanhToan = thanhToan.PhuongThucThanhToan,
             };
-            htmlContent = htmlContent.Replace("MaHoaDon", responseThanhToan.IdThanhToan);
-            htmlContent = htmlContent.Replace("NgayTaoHoaDon", responseThanhToan.NgayThanhToan.ToString());
+            htmlContent = htmlContent.Replace("{{MaHoaDon}}", responseThanhToan.IdThanhToan);
+            htmlContent = htmlContent.Replace("{{NgayTaoHoaDon}}", responseThanhToan.NgayThanhToan.ToString());
 
             //GET ĐẶT TOUR 
             var datTour = await _datTourRepositories.GetByIdAsync(responseThanhToan.IdDatTour);
@@ -589,16 +589,16 @@ namespace TourDuLichASAP.API.Controllers
             if (responseTour != null)
             {
                
-                htmlContent = htmlContent.Replace("TenTour", responseTour.TenTour);
-                htmlContent = htmlContent.Replace("SoLuongNguoiLon_DatTour", responseDatTour.SoLuongNguoiLon.ToString());
-                htmlContent = htmlContent.Replace("SoLuongTreEm_DatTour", responseDatTour.SoLuongTreEm.ToString());
-                htmlContent = htmlContent.Replace("ThoiGianDatTour", responseDatTour.ThoiGianDatTour.ToString());
+                htmlContent = htmlContent.Replace("{{TenTour}}", responseTour.TenTour);
+                htmlContent = htmlContent.Replace("{{SoLuongNguoiLon_DatTour}}", responseDatTour.SoLuongNguoiLon.ToString());
+                htmlContent = htmlContent.Replace("{{SoLuongTreEm_DatTour}}", responseDatTour.SoLuongTreEm.ToString());
+                htmlContent = htmlContent.Replace("{{ThoiGianDatTour}}", responseDatTour.ThoiGianDatTour.ToString());
             }
 
             //gán thông tin nhân viên và khách hàng
-            htmlContent = htmlContent.Replace("TenKhachHangThanhToan", responseDatTour.KhachHang.TenKhachHang);
-            htmlContent = htmlContent.Replace("SoDienThoaiKhachHangThanhToan", responseDatTour.KhachHang.SoDienThoai);
-            htmlContent = htmlContent.Replace("EmailKhachHangThanhToan", responseDatTour.KhachHang.Email);
+            htmlContent = htmlContent.Replace("{{TenKhachHangThanhToan}}", responseDatTour.KhachHang.TenKhachHang);
+            htmlContent = htmlContent.Replace("{{SoDienThoaiKhachHangThanhToan}}", responseDatTour.KhachHang.SoDienThoai);
+            htmlContent = htmlContent.Replace("{{EmailKhachHangThanhToan}}", responseDatTour.KhachHang.Email);
             //khách hàng
             if(responseDatTour.IdNhanVien != null)
             {
@@ -617,12 +617,11 @@ namespace TourDuLichASAP.API.Controllers
                     NgayDangKy = nhanVien.NgayDangKy,
                     ChucVu = nhanVien.ChucVu,
                     NgayVaoLam = nhanVien.NgayVaoLam,
-                    AnhNhanVien = nhanVien.AnhNhanVien,
                     TinhTrang = nhanVien.TinhTrang,
                 };
-                htmlContent = htmlContent.Replace("TenNhanVienThanhToan", responseNhanVien.TenNhanVien);
-                htmlContent = htmlContent.Replace("SoDienThoaiNhanVienThanhToan", responseNhanVien.SoDienThoai);
-                htmlContent = htmlContent.Replace("EmailNhanVienThanhToan", responseNhanVien.Email);
+                htmlContent = htmlContent.Replace("{{TenNhanVienThanhToan}}", responseNhanVien.TenNhanVien);
+                htmlContent = htmlContent.Replace("{{SoDienThoaiNhanVienThanhToan}}", responseNhanVien.SoDienThoai);
+                htmlContent = htmlContent.Replace("{{EmailNhanVienThanhToan}}", responseNhanVien.Email);
 
             }
 
@@ -664,19 +663,19 @@ namespace TourDuLichASAP.API.Controllers
                     string itemHtmlContent = string.Copy(trContent);
 
                     // Thay thế các placeholder trong HTML với dữ liệu thực tế
-                    itemHtmlContent = itemHtmlContent.Replace("{TenDichVu}", item.DichVu.TenDichVu);
-                    itemHtmlContent = itemHtmlContent.Replace("{SoLuongDichVu}", item.SoLuong.ToString());
-                    itemHtmlContent = itemHtmlContent.Replace("{DonGiaDichVu}", item.DichVu.GiaTien.ToString());
-                    itemHtmlContent = itemHtmlContent.Replace("{ThoiGianDichVu}", item.ThoiGianDichVu.ToString());
+                    itemHtmlContent = itemHtmlContent.Replace("{{TenDichVu}}", item.DichVu.TenDichVu);
+                    itemHtmlContent = itemHtmlContent.Replace("{{SoLuongDichVu}}", item.SoLuong.ToString());
+                    itemHtmlContent = itemHtmlContent.Replace("{{DonGiaDichVu}}", item.DichVu.GiaTien.ToString());
+                    itemHtmlContent = itemHtmlContent.Replace("{{ThoiGianDichVu}}", item.ThoiGianDichVu.ToString());
 
 
 
                     finalHtmlContent.Append(itemHtmlContent);
                 }
                
-                htmlContent = htmlContent.Replace("{TongTienTour}", responseThanhToan.TongTienTour.ToString());
-                htmlContent = htmlContent.Replace("{TongTienDichVu}", responseThanhToan.TongTienDichVu.ToString());
-                htmlContent = htmlContent.Replace("{TongCong}", responseThanhToan.TongTien.ToString());
+                htmlContent = htmlContent.Replace("{{TongTienTour}}", responseThanhToan.TongTienTour.ToString());
+                htmlContent = htmlContent.Replace("{{TongTienDichVu}}", responseThanhToan.TongTienDichVu.ToString());
+                htmlContent = htmlContent.Replace("{{TongCong}}", responseThanhToan.TongTien.ToString());
 
                 htmlContent = htmlContent.Replace(trContent, finalHtmlContent.ToString());
             }

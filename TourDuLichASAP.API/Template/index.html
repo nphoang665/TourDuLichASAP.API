@@ -148,8 +148,8 @@
                     <h2 class="title_chung" style="margin-bottom: 0px;">Hóa đơn thanh toán tour ASAP</h2>
                 </td>
                 <td>
-                    <span class="title_chung_1" style="white-space: nowrap; font-size: 17px;">Mã hóa đơn: MaHoaDon |
-                        NgayTaoHoaDon</span>
+                    <span class="title_chung_1" style="white-space: nowrap; font-size: 17px;">Mã hóa đơn: {{MaHoaDon}} |
+                        {{NgayTaoHoaDon}}</span>
                 </td>
             </tr>
             <tr class="information" style=" width: auto;">
@@ -158,15 +158,15 @@
                         <tr>
                             <td colspan="2" style=" width: auto; font-size: 17px;">
                                 <b> Nhân viên thanh toán</b><br />
-                                <b>Tên nhân viên:</b> TenNhanVienThanhToan <br />
-                                <b>Số điện thoại: </b>SoDienThoaiNhanVienThanhToan<br />
-                                <b>Email:</b> EmailNhanVienThanhToan<br />
+                                <b>Tên nhân viên:</b> {{TenNhanVienThanhToan}} <br />
+                                <b>Số điện thoại: </b>{{SoDienThoaiNhanVienThanhToan}}<br />
+                                <b>Email:</b> {{EmailNhanVienThanhToan}}<br />
                             </td>
                             <td colspan="2" style=" width: auto; font-size: 17px; ">
                                 <b> Khách hàng thanh toán </b><br />
-                                <b>Tên khách hàng:</b> TenKhachHangThanhToan <br />
-                                <b>Số điện thoại:</b> SoDienThoaiKhachHangThanhToan <br />
-                                <b>Email:</b> EmailKhachHangThanhToan
+                                <b>Tên khách hàng:</b> {{TenKhachHangThanhToan}} <br />
+                                <b>Số điện thoại:</b> {{SoDienThoaiKhachHangThanhToan}} <br />
+                                <b>Email:</b> {{EmailKhachHangThanhToan}}
                             </td>
                         </tr>
                     </table>
@@ -191,10 +191,10 @@
 
                         </tr>
                         <tr class="item tr_item_DatTour">
-                            <td style="width:25%;">TenTour</td>
-                            <td style="width:10%; text-align:center;">SoLuongNguoiLon_DatTour</td>
-                            <td style="width:10%; text-align:center;">SoLuongTreEm_DatTour</td>
-                            <td style="width:15%; text-align:center;">ThoiGianDatTour</td>
+                            <td style="width:25%;">{{TenTour}}</td>
+                            <td style="width:10%; text-align:center;">{{SoLuongNguoiLon_DatTour}}</td>
+                            <td style="width:10%; text-align:center;">{{SoLuongTreEm_DatTour}}</td>
+                            <td style="width:15%; text-align:center;">{{ThoiGianDatTour}}</td>
 
                         </tr>
 
@@ -218,10 +218,10 @@
 
                         </tr>
                         <tr class="item tr_item_DichVu">
-                            <td style="width:25%;">{TenDichVu}</td>
-                            <td style="width:10%; text-align:center;">{SoLuongDichVu}</td>
-                            <td style="width:10%; text-align:center;">{DonGiaDichVu}</td>
-                            <td style="width:15%; text-align:center;">{ThoiGianDichVu}</td>
+                            <td style="width:25%;">{{TenDichVu}}</td>
+                            <td style="width:10%; text-align:center;">{{SoLuongDichVu}}</td>
+                            <td style="width:10%; text-align:center;">{{DonGiaDichVu}}</td>
+                            <td style="width:15%; text-align:center;">{{ThoiGianDichVu}}</td>
 
                         </tr>
 
@@ -238,9 +238,9 @@
                             </td>
                             <td style=" width: auto; font-size: 20px; " class="pt-5">
                                 <span class="d-block"><b>TỔNG TIỀN</b></span>
-                                <span class="d-block">Tổng tiền tour: <b>{TongTienTour}</b>VNĐ</span>
-                                <span class="d-block">Tổng tiên dịch vụ: <b>{TongTienDichVu}</b>VNĐ</span>
-                                <span class="d-block">Tổng cộng: <b>{TongCong}</b>VNĐ</span>
+                                <span class="d-block">Tổng tiền tour: <b>{{TongTienTour}}</b>VNĐ</span>
+                                <span class="d-block">Tổng tiên dịch vụ: <b>{{TongTienDichVu}}</b>VNĐ</span>
+                                <span class="d-block">Tổng cộng: <b>{{TongCong}}</b>VNĐ</span>
                             </td>
                         </tr>
                         <tr>
