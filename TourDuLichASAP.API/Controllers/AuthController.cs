@@ -180,7 +180,7 @@ namespace TourDuLichASAP.API.Controllers
                     var khachHang = new KhachHang
                     {
                         IdKhachHang = idKhachHang,
-                        TenKhachHang = "",
+                        TenKhachHang = request.Username,
                         SoDienThoai = "",
                         DiaChi = "",
                         CCCD = "",
