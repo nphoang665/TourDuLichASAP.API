@@ -43,7 +43,7 @@ namespace TourDuLichASAP.API.Controllers
                 SoLuongTreEm = request.SoLuongTreEm,
                 GhiChu = request.GhiChu,
                 IdNhanVien = request.IdNhanVien,
-                ThoiGianDatTour = request.ThoiGianDatTour,
+                ThoiGianDatTour = DateTime.Now,
                 TinhTrang = request.TinhTrang,
                 KhachHang = khachHang,
                 NhanVien = nhanVien,
@@ -138,7 +138,7 @@ namespace TourDuLichASAP.API.Controllers
                 SoLuongTreEm = request.SoLuongTreEm,
                 GhiChu = null,
                 IdNhanVien = null,
-                ThoiGianDatTour = request.ThoiGianDatTour,
+                ThoiGianDatTour = DateTime.Now,
                 TinhTrang = request.TinhTrangDatTour,
                 };
             datTour = await _datTourRepositories.CreateAsync(datTour);

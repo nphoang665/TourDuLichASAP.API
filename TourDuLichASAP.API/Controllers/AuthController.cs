@@ -111,7 +111,6 @@ namespace TourDuLichASAP.API.Controllers
                                 NgayDangKy = nhanvien.NgayDangKy,
                                 ChucVu = nhanvien.ChucVu,
                                 NgayVaoLam = nhanvien.NgayVaoLam,
-                                AnhNhanVien = nhanvien.AnhNhanVien,
                                 TinhTrang = nhanvien.TinhTrang,
                             });
                         }
@@ -415,7 +414,6 @@ namespace TourDuLichASAP.API.Controllers
                         NgayDangKy = nhanvien.NgayDangKy,
                         ChucVu = nhanvien.ChucVu,
                         NgayVaoLam = nhanvien.NgayVaoLam,
-                        AnhNhanVien = nhanvien.AnhNhanVien,
                         TinhTrang = nhanvien.TinhTrang,
                     });
                 }
