@@ -1,24 +1,21 @@
-﻿using Azure.Core;
-using Google.Apis.Auth;
+﻿using Google.Apis.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.Net.Mail;
+using PuppeteerSharp;
+using PuppeteerSharp.Media;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
 using Twilio;
-using Twilio.Http;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
-using iTextSharp.text.pdf;
-using iTextSharp.text;
-using iTextSharp.tool.xml;
+using static iTextSharp.text.pdf.AcroFields;
+
 
 namespace TourDuLichASAP.API.Controllers
 {
@@ -26,19 +23,34 @@ namespace TourDuLichASAP.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+       
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenReponsitory;
         private readonly IKhachHangRepositories _khachHangRepositories;
         private readonly INhanVienRepositories _nhanVienRepositories;
         private readonly JwtBearerOptions _jwtBearerOptions;
+        private readonly IThanhToanRepositories _thanhToanRepositories;
+        private readonly IDatTourRepositories _datTourRepositories;
+        private readonly IDichVuChiTietRepositories _dichVuChiTietRepositories;
+        private readonly ITourDuLichRepositories _tourDuLichRepositories;
 
-        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories, IOptions<JwtBearerOptions> options)
+
+
+
+
+
+        public AuthController(UserManager<IdentityUser> userManager, ITokenRepository tokenReponsitory, IKhachHangRepositories khachHangRepositories, INhanVienRepositories nhanVienRepositories, IOptions<JwtBearerOptions> options, IThanhToanRepositories thanhToanRepositories, IDatTourRepositories datTourRepositories,IDichVuChiTietRepositories dichVuChiTietRepositories, ITourDuLichRepositories tourDuLichRepositories)
         {
             this.userManager = userManager;
             this.tokenReponsitory = tokenReponsitory;
             _khachHangRepositories = khachHangRepositories;
             _nhanVienRepositories = nhanVienRepositories;
             _jwtBearerOptions = options.Value;
+            _thanhToanRepositories = thanhToanRepositories;
+            _datTourRepositories = datTourRepositories;
+            _dichVuChiTietRepositories = dichVuChiTietRepositories;
+            _tourDuLichRepositories = tourDuLichRepositories;
+            
         }
 
         [HttpPost]
@@ -273,7 +285,7 @@ namespace TourDuLichASAP.API.Controllers
         [Route("google-login")]
         public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto requestDto)
         {
-             Random random = new Random();
+            Random random = new Random();
             int randomValue = random.Next(1000);
             string idKhachHang = "KH" + randomValue.ToString("D4");
 
@@ -431,14 +443,14 @@ namespace TourDuLichASAP.API.Controllers
         [HttpPost]
         [Route("QuenMatKhau")]
         public async Task<IActionResult> QuenMatKhau()
-        {  
+        {
             string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
             string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
             TwilioClient.Init(accountSid, authToken);
-            var to = new PhoneNumber("+84 869 536 182");  
+            var to = new PhoneNumber("+84 869 536 182");
             var from = new PhoneNumber("+14693012499");
             Random random = new Random();
-            int otp = random.Next(100000, 999999);  
+            int otp = random.Next(100000, 999999);
             var message = MessageResource.Create(
                 to: to,
                 from: from,
@@ -473,17 +485,22 @@ namespace TourDuLichASAP.API.Controllers
 
             string htmlFilePath = folderPath; // Đường dẫn tới file HTML của bạn
             string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
-            htmlContent = htmlContent.Replace("{OrderId}", "22222");
+            htmlContent = await XuLyHoaDonThanhToan(htmlContent);
 
-            byte[] pdf; // Biến này sẽ chứa dữ liệu PDF
-            using (var stream = new MemoryStream())
+            byte[] pdf;
+
+            // Khởi tạo trình duyệt
+            await new BrowserFetcher().DownloadAsync();
+            using (var browser = await Puppeteer.LaunchAsync(new LaunchOptions { Headless = true }))
             {
-                var document = new Document();
-                var writer = PdfWriter.GetInstance(document, stream);
-                document.Open();
-                XMLWorkerHelper.GetInstance().ParseXHtml(writer, document, new StringReader(htmlContent));
-                document.Close();
-                pdf = stream.ToArray();
+                using (var page = await browser.NewPageAsync())
+                {
+                    // Đặt nội dung HTML cho trang
+                    await page.SetContentAsync(htmlContent);
+
+                    // Chuyển đổi trang thành PDF
+                    pdf = await page.PdfDataAsync(new PdfOptions { Format = PaperFormat.A4 });
+                }
             }
 
             // Tạo tệp đính kèm từ file PDF
@@ -493,6 +510,184 @@ namespace TourDuLichASAP.API.Controllers
             await smtp.SendMailAsync(mail);
             return Ok();
         }
+        async Task<string> XuLyHoaDonThanhToan(string htmlContent)
+        {
+            //lấy thanh toán
+            var thanhToan = await _thanhToanRepositories.GetByIdAsync("TT0446");
+            if (thanhToan == null)
+            {
+                return "";
+            }
+
+            var responseThanhToan = new ThanhToanDto
+            {
+                IdThanhToan = thanhToan.IdThanhToan,
+                IdDatTour = thanhToan.IdDatTour,
+                IdKhachHang = thanhToan.IdKhachHang,
+                IdNhanVien = thanhToan.IdNhanVien,
+                TongTienTour = thanhToan.TongTienTour,
+                TongTienDichVu = thanhToan.TongTienDichVu,
+                TongTien = thanhToan.TongTien,
+                TinhTrang = thanhToan.TinhTrang,
+                NgayThanhToan = thanhToan.NgayThanhToan,
+                PhuongThucThanhToan = thanhToan.PhuongThucThanhToan,
+            };
+            htmlContent = htmlContent.Replace("{{MaHoaDon}}", responseThanhToan.IdThanhToan);
+            htmlContent = htmlContent.Replace("{{NgayTaoHoaDon}}", responseThanhToan.NgayThanhToan.ToString());
+
+            //GET ĐẶT TOUR 
+            var datTour = await _datTourRepositories.GetByIdAsync(responseThanhToan.IdDatTour);
+            if (datTour is null)
+            {
+                return "";
+            }
+
+            var responseDatTour = new DatTourDto
+            {
+                IdDatTour = datTour.IdDatTour,
+                IdKhachHang = datTour.IdKhachHang,
+                IdTour = datTour.IdTour,
+                SoLuongNguoiLon = datTour.SoLuongNguoiLon,
+                SoLuongTreEm = datTour.SoLuongTreEm,
+                GhiChu = datTour.GhiChu,
+                IdNhanVien = datTour.IdNhanVien,
+                ThoiGianDatTour = datTour.ThoiGianDatTour,
+                TinhTrang = datTour.TinhTrang,
+                KhachHang = datTour.KhachHang,
+                NhanVien = datTour.NhanVien != null ? datTour.NhanVien.IdNhanVien : null,
+                TourDuLich = datTour.TourDuLich != null ? datTour.TourDuLich.IdTour : null,
+            };
+            var tourDuLich = await _tourDuLichRepositories.GetByIdAsync(responseDatTour.IdTour);
+            if (tourDuLich is null)
+            {
+                return "";
+            }
+
+            var responseTour = new TourDuLichDto
+            {
+                IdTour = tourDuLich.IdTour,
+                TenTour = tourDuLich.TenTour,
+                LoaiTour = tourDuLich.LoaiTour,
+                PhuongTienDiChuyen = tourDuLich.PhuongTienDiChuyen,
+                MoTa = tourDuLich.MoTa,
+                SoLuongNguoiLon = tourDuLich.SoLuongNguoiLon,
+                SoLuongTreEm = tourDuLich.SoLuongTreEm,
+                ThoiGianBatDau = tourDuLich.ThoiGianBatDau,
+                ThoiGianKetThuc = tourDuLich.ThoiGianKetThuc,
+                NoiKhoiHanh = tourDuLich.NoiKhoiHanh,
+                SoChoConNhan = tourDuLich.SoChoConNhan,
+                IdDoiTac = tourDuLich.IdDoiTac,
+                GiaTreEm = tourDuLich.GiaTreEm,
+                GiaNguoiLon = tourDuLich.GiaNguoiLon,
+                NgayThem = tourDuLich.NgayThem,
+                DichVuDiKem = tourDuLich.DichVuDiKem,
+                TinhTrang = tourDuLich.TinhTrang,
+                TenDoiTac = tourDuLich.DoiTac.TenDoiTac,
+                EmailDoiTac = tourDuLich.DoiTac.Email,
+                SoDienThoaiDoiTac = tourDuLich.DoiTac.SoDienThoai,
+            };
+            if (responseTour != null)
+            {
+               
+                htmlContent = htmlContent.Replace("{{TenTour}}", responseTour.TenTour);
+                htmlContent = htmlContent.Replace("{{SoLuongNguoiLon_DatTour}}", responseDatTour.SoLuongNguoiLon.ToString());
+                htmlContent = htmlContent.Replace("{{SoLuongTreEm_DatTour}}", responseDatTour.SoLuongTreEm.ToString());
+                htmlContent = htmlContent.Replace("{{ThoiGianDatTour}}", responseDatTour.ThoiGianDatTour.ToString());
+            }
+
+            //gán thông tin nhân viên và khách hàng
+            htmlContent = htmlContent.Replace("{{TenKhachHangThanhToan}}", responseDatTour.KhachHang.TenKhachHang);
+            htmlContent = htmlContent.Replace("{{SoDienThoaiKhachHangThanhToan}}", responseDatTour.KhachHang.SoDienThoai);
+            htmlContent = htmlContent.Replace("{{EmailKhachHangThanhToan}}", responseDatTour.KhachHang.Email);
+            //khách hàng
+            if(responseDatTour.IdNhanVien != null)
+            {
+                var nhanVien = await _nhanVienRepositories.GetByIdAsync(responseDatTour.IdNhanVien);
+                
+                var responseNhanVien = new NhanVienDto
+                {
+                    IdNhanVien = nhanVien.IdNhanVien,
+                    TenNhanVien = nhanVien.TenNhanVien,
+                    SoDienThoai = nhanVien.SoDienThoai,
+                    DiaChi = nhanVien.DiaChi,
+                    CCCD = nhanVien.CCCD,
+                    NgaySinh = nhanVien.NgaySinh,
+                    Email = nhanVien.Email,
+                    GioiTinh = nhanVien.GioiTinh,
+                    NgayDangKy = nhanVien.NgayDangKy,
+                    ChucVu = nhanVien.ChucVu,
+                    NgayVaoLam = nhanVien.NgayVaoLam,
+                    TinhTrang = nhanVien.TinhTrang,
+                };
+                htmlContent = htmlContent.Replace("{{TenNhanVienThanhToan}}", responseNhanVien.TenNhanVien);
+                htmlContent = htmlContent.Replace("{{SoDienThoaiNhanVienThanhToan}}", responseNhanVien.SoDienThoai);
+                htmlContent = htmlContent.Replace("{{EmailNhanVienThanhToan}}", responseNhanVien.Email);
+
+            }
+
+            //lấy dịch vụ
+            var dichVuChiTiets = await _dichVuChiTietRepositories.GetAllAsync();
+
+            var responseDichVu = new List<DichVuChiTietDto>();
+            foreach (var dichVuChiTiet in dichVuChiTiets)
+            {
+                responseDichVu.Add(new DichVuChiTietDto
+                {
+                    IdDichVuChiTiet = dichVuChiTiet.IdDichVuChiTiet,
+                    IdDichVu = dichVuChiTiet.IdDichVu,
+                    IdKhachHang = dichVuChiTiet.IdKhachHang,
+                    IdDatTour = dichVuChiTiet.IdDatTour,
+                    IdNhanVien = dichVuChiTiet.IdNhanVien,
+                    ThoiGianDichVu = dichVuChiTiet.ThoiGianDichVu,
+                    SoLuong = dichVuChiTiet.SoLuong,
+                    KhachHang = dichVuChiTiet.KhachHang,
+                    NhanVien = dichVuChiTiet.NhanVien,
+                    DichVu = dichVuChiTiet.DichVu,
+                    DatTour = dichVuChiTiet.DatTour
+
+                });
+            }
+            if(responseDichVu.Count > 0)
+            {
+                var dichVuDuocDat = responseDichVu.Where(s => s.IdDatTour == responseThanhToan.IdDatTour).ToList();
+                int startTrIndex = htmlContent.IndexOf("<tr class=\"item tr_item_DichVu\">");
+                int endTrIndex = htmlContent.IndexOf("</tr>", startTrIndex) + 5; // +5 để bao gồm cả thẻ </tr>
+                string trContent = htmlContent.Substring(startTrIndex, endTrIndex - startTrIndex);
+                // Biến để lưu nội dung HTML cuối cùng
+                StringBuilder finalHtmlContent = new StringBuilder();
+
+                // Lặp qua từng mục trong danh sách
+                foreach (var item in dichVuDuocDat)
+                {
+                    // Sao chép nội dung HTML gốc
+                    string itemHtmlContent = string.Copy(trContent);
+
+                    // Thay thế các placeholder trong HTML với dữ liệu thực tế
+                    itemHtmlContent = itemHtmlContent.Replace("{{TenDichVu}}", item.DichVu.TenDichVu);
+                    itemHtmlContent = itemHtmlContent.Replace("{{SoLuongDichVu}}", item.SoLuong.ToString());
+                    itemHtmlContent = itemHtmlContent.Replace("{{DonGiaDichVu}}", item.DichVu.GiaTien.ToString());
+                    itemHtmlContent = itemHtmlContent.Replace("{{ThoiGianDichVu}}", item.ThoiGianDichVu.ToString());
+
+
+
+                    finalHtmlContent.Append(itemHtmlContent);
+                }
+               
+                htmlContent = htmlContent.Replace("{{TongTienTour}}", responseThanhToan.TongTienTour.ToString());
+                htmlContent = htmlContent.Replace("{{TongTienDichVu}}", responseThanhToan.TongTienDichVu.ToString());
+                htmlContent = htmlContent.Replace("{{TongCong}}", responseThanhToan.TongTien.ToString());
+
+                htmlContent = htmlContent.Replace(trContent, finalHtmlContent.ToString());
+            }
+
+
+
+
+
+            return htmlContent;
+        }
+
+
 
     }
 }
