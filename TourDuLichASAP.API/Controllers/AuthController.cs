@@ -457,9 +457,10 @@ namespace TourDuLichASAP.API.Controllers
                 body: $"Mã OTP đặt tour của bạn là: {otp}");
             return Ok();
         }
-        [HttpPost]
-        [Route("GuiEmailChoKhachHang")]
-        public async Task<IActionResult> GuiMail()
+        [HttpGet]
+        [Route("GuiEmailChoKhachHang/{id}")]
+
+        public async Task<IActionResult> GuiMailHoaDon(string id)
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
@@ -485,7 +486,7 @@ namespace TourDuLichASAP.API.Controllers
 
             string htmlFilePath = folderPath; // Đường dẫn tới file HTML của bạn
             string htmlContent = System.IO.File.ReadAllText(htmlFilePath);
-            htmlContent = await XuLyHoaDonThanhToan(htmlContent);
+            htmlContent = await XuLyHoaDonThanhToan(htmlContent,id);
 
             byte[] pdf;
 
@@ -504,16 +505,16 @@ namespace TourDuLichASAP.API.Controllers
             }
 
             // Tạo tệp đính kèm từ file PDF
-            Attachment attachment = new Attachment(new MemoryStream(pdf), "bill.pdf");
+            Attachment attachment = new Attachment(new MemoryStream(pdf), "HoaDonDienTu.pdf");
             mail.Attachments.Add(attachment);
 
             await smtp.SendMailAsync(mail);
             return Ok();
         }
-        async Task<string> XuLyHoaDonThanhToan(string htmlContent)
+        async Task<string> XuLyHoaDonThanhToan(string htmlContent,string idThanhToan)
         {
             //lấy thanh toán
-            var thanhToan = await _thanhToanRepositories.GetByIdAsync("TT0446");
+            var thanhToan = await _thanhToanRepositories.GetByIdAsync(idThanhToan);
             if (thanhToan == null)
             {
                 return "";

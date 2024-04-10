@@ -22,5 +22,6 @@ namespace TourDuLichASAP.API.Models.DTO
         public DatTour DatTour { get; set; }
         public KhachHang KhachHang { get; set; }
         public NhanVien NhanVien { get; set; }
+        public TourDuLich TourDuLich { get; set; }
     }
 }

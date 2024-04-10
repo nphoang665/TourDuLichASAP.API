@@ -42,7 +42,8 @@ namespace TourDuLichASAP.API.Controllers
                     PhuongThucThanhToan = thanhToan.PhuongThucThanhToan,
                     DatTour = thanhToan.DatTour,
                     KhachHang = thanhToan.KhachHang,
-                    NhanVien = thanhToan.NhanVien
+                 
+                    
                 });
             }
             return Ok(response);
@@ -74,6 +75,8 @@ namespace TourDuLichASAP.API.Controllers
                 KhachHang = khachHang,
                 NhanVien = nhanVien
             };
+            await Task.Delay(1000);
+
             thanhToan = await _thanhToanRepositories.CreateAsync(thanhToan);
 
             var response = new ThanhToanDto
