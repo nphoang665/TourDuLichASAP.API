@@ -92,17 +92,7 @@ namespace TourDuLichASAP.API.Data
                 {
                     UserId = adminUserId,
                     RoleId = adminRoleId
-                },
-                new()
-                {
-                    UserId = adminUserId,
-                    RoleId = nhanVienRoleId
-                },
-                new()
-                {
-                    UserId = adminUserId,
-                    RoleId = khachHangRoleId
-                }
+                },             
             };
             builder.Entity<IdentityUserRole<string>>().HasData(adminRoles);
 
