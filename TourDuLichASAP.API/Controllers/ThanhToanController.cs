@@ -114,6 +114,9 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = thanhToan.TinhTrang,
                 NgayThanhToan = thanhToan.NgayThanhToan,
                 PhuongThucThanhToan = thanhToan.PhuongThucThanhToan,
+                KhachHang = thanhToan.KhachHang,
+                NhanVien = thanhToan.NhanVien
+
             };
             return Ok(response);
         }

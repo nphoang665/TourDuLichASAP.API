@@ -41,7 +41,7 @@ namespace TourDuLichASAP.API.Repositories.Implementation
 
         public async Task<ThanhToan?> GetByIdAsync(string id)
         {
-            return await _db.THANH_TOAN.FirstOrDefaultAsync(x=>x.IdThanhToan==id);
+            return await _db.THANH_TOAN.Include(x => x.KhachHang).Include(x => x.NhanVien).FirstOrDefaultAsync(x=>x.IdThanhToan==id);
         }
 
         public async Task<DatTour?> GetDatTourById(string idDatTour)
