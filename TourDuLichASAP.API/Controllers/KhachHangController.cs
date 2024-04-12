@@ -1,6 +1,7 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
@@ -13,10 +14,12 @@ namespace TourDuLichASAP.API.Controllers
     public class KhachHangController : ControllerBase
     {
         private readonly IKhachHangRepositories _khachHangRepositories;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public KhachHangController(IKhachHangRepositories khachHangRepositories)
+        public KhachHangController(IKhachHangRepositories khachHangRepositories, UserManager<IdentityUser> userManager)
         {
             _khachHangRepositories = khachHangRepositories;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -52,35 +55,99 @@ namespace TourDuLichASAP.API.Controllers
             Random random = new Random();
             int randomValue = random.Next(1000);
             string idKhachHang = "KH" + randomValue.ToString("D4");
+            var user = new IdentityUser
+            {
+                UserName = request.Email?.Trim(),
+                Email = request.Email?.Trim(),
+            };
+            //Create User 
+            var identityResult = await userManager.CreateAsync(user);
+            if (identityResult.Succeeded)
+            {
+                identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
+                if (identityResult.Succeeded)
+                {
+                    var khachHang = new KhachHang
+                    {
+                        IdKhachHang = idKhachHang,
+                        TenKhachHang = request.TenKhachHang,
+                        SoDienThoai = request.SoDienThoai,
+                        DiaChi = request.DiaChi,
+                        CCCD = request.CCCD,
+                        NgaySinh = request.NgaySinh,
+                        GioiTinh = request.GioiTinh,
+                        Email = request.Email,
+                        TinhTrang = "Đang hoạt động",
+                        NgayDangKy = DateTime.Now,
+                    };
 
-            var khachHang = new KhachHang
+                    await _khachHangRepositories.CreateAsync(khachHang);
+                    var response = new KhachHangDto
+                    {
+                        IdKhachHang = khachHang.IdKhachHang,
+                        TenKhachHang = khachHang.TenKhachHang,
+                        SoDienThoai = khachHang.SoDienThoai,
+                        DiaChi = khachHang.DiaChi,
+                        CCCD = khachHang.CCCD,
+                        NgaySinh = khachHang.NgaySinh,
+                        GioiTinh = khachHang.GioiTinh,
+                        Email = khachHang.Email,
+                        TinhTrang = khachHang.TinhTrang,
+                        NgayDangKy = khachHang.NgayDangKy
+                    };
+                    return Ok(response);
+                }
+                else
+                {
+                    if (identityResult.Errors.Any())
+                    {
+                        foreach (var error in identityResult.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }
+                }
+            }
+            else
             {
-                IdKhachHang = idKhachHang,
-                TenKhachHang = request.TenKhachHang,
-                SoDienThoai = request.SoDienThoai,
-                DiaChi = request.DiaChi,
-                CCCD = request.CCCD,
-                NgaySinh = request.NgaySinh,
-                GioiTinh = request.GioiTinh,
-                Email = request.Email,
-                TinhTrang = "Đang hoạt động",
-                NgayDangKy = DateTime.Now,
-            };
-            khachHang = await _khachHangRepositories.CreateAsync(khachHang);
-            var response = new KhachHangDto
-            {
-                IdKhachHang = khachHang.IdKhachHang,
-                TenKhachHang = khachHang.TenKhachHang,
-                SoDienThoai = khachHang.SoDienThoai,
-                DiaChi = khachHang.DiaChi,
-                CCCD = khachHang.CCCD,
-                NgaySinh = khachHang.NgaySinh,
-                GioiTinh = khachHang.GioiTinh,
-                Email = khachHang.Email,
-                TinhTrang = khachHang.TinhTrang,
-                NgayDangKy = khachHang.NgayDangKy
-            };
-            return Ok(response);
+                if (identityResult.Errors.Any())
+                {
+                    foreach (var error in identityResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return ValidationProblem(ModelState);
+            //var khachHang = new KhachHang
+            //{
+            //    IdKhachHang = idKhachHang,
+            //    TenKhachHang = request.TenKhachHang,
+            //    SoDienThoai = request.SoDienThoai,
+            //    DiaChi = request.DiaChi,
+            //    CCCD = request.CCCD,
+            //    NgaySinh = request.NgaySinh,
+            //    GioiTinh = request.GioiTinh,
+            //    Email = request.Email,
+            //    TinhTrang = "Đang hoạt động",
+            //    NgayDangKy = DateTime.Now,
+            //};
+
+            //khachHang = await _khachHangRepositories.CreateAsync(khachHang);
+            //var response = new KhachHangDto
+            //{
+            //    IdKhachHang = khachHang.IdKhachHang,
+            //    TenKhachHang = khachHang.TenKhachHang,
+            //    SoDienThoai = khachHang.SoDienThoai,
+            //    DiaChi = khachHang.DiaChi,
+            //    CCCD = khachHang.CCCD,
+            //    NgaySinh = khachHang.NgaySinh,
+            //    GioiTinh = khachHang.GioiTinh,
+            //    Email = khachHang.Email,
+            //    TinhTrang = khachHang.TinhTrang,
+            //    NgayDangKy = khachHang.NgayDangKy
+            //};
+            //return Ok(response);
         }
 
         [HttpGet]
