@@ -92,26 +92,26 @@ namespace TourDuLichASAP.API.Controllers
 
             // Tạo user
             var identityResult = await userManager.CreateAsync(user);
-            if (identityResult.Succeeded)
-            {
-                identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
-                if (!identityResult.Succeeded)
-                {
-                    foreach (var error in identityResult.Errors)
-                    {
-                        ModelState.AddModelError("", error.Description);
-                    }
-                    return ValidationProblem(ModelState);
-                }
-            }
-            else
-            {
-                foreach (var error in identityResult.Errors)
-                {
-                    ModelState.AddModelError("", error.Description);
-                }
-                return ValidationProblem(ModelState);
-            }
+            //if (identityResult.Succeeded)
+            //{
+            //    identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
+            //    if (!identityResult.Succeeded)
+            //    {
+            //        foreach (var error in identityResult.Errors)
+            //        {
+            //            ModelState.AddModelError("", error.Description);
+            //        }
+            //        return ValidationProblem(ModelState);
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (var error in identityResult.Errors)
+            //    {
+            //        ModelState.AddModelError("", error.Description);
+            //    }
+            //    //return ValidationProblem(ModelState);
+            //}
 
             // Tạo hoặc cập nhật thông tin khách hàng
             if (existKhachHang == null)
