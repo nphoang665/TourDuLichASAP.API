@@ -2,6 +2,7 @@
 using Azure.Core;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
@@ -16,12 +17,14 @@ namespace TourDuLichASAP.API.Controllers
         private readonly IDatTourRepositories _datTourRepositories;
         private readonly IDichVuChiTietRepositories _dichVuChiTietRepositories;
         private readonly IKhachHangRepositories _khachHangRepositories;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public DatTourController(IDatTourRepositories datTourRepositories,IKhachHangRepositories khachHangRepositories,IDichVuChiTietRepositories dichVuChiTietRepositories)
+        public DatTourController(IDatTourRepositories datTourRepositories,IKhachHangRepositories khachHangRepositories,IDichVuChiTietRepositories dichVuChiTietRepositories, UserManager<IdentityUser> userManager)
         {
             _datTourRepositories = datTourRepositories;
             _dichVuChiTietRepositories = dichVuChiTietRepositories;
             _khachHangRepositories = khachHangRepositories;
+            this.userManager = userManager;
         }
 
         [HttpPost]
@@ -73,31 +76,60 @@ namespace TourDuLichASAP.API.Controllers
             Random random = new Random();
             int randomValue = random.Next(1000);
             string idDatTour = "DT" + randomValue.ToString("D4");
-
-            
             int randomValue1 = random.Next(1000);
             string idKhachHang = "KH" + randomValue1.ToString("D4");
-            //đoạn check khách hàng có tồn tại trong db chưa
+
+            // Kiểm tra khách hàng có tồn tại trong DB chưa
             var getAllKhachHang = await _khachHangRepositories.GetAllAsync();
             var existKhachHang = getAllKhachHang.FirstOrDefault(s => s.IdKhachHang == request.IdKhachHang);
-            //
-            if(existKhachHang== null)
-            {
-                var khachHang = new KhachHang
-            {
-                IdKhachHang = idKhachHang,
-                TenKhachHang = request.TenKhachHang,
-                SoDienThoai = request.SoDienThoai,
-                DiaChi = request.DiaChi,
-                CCCD = request.CCCD,
-                NgaySinh = request.NgaySinh,
-                GioiTinh = request.GioiTinh,
-                Email = request.Email,
-                TinhTrang = request.TinhTrangKhachHang,
-                NgayDangKy = request.NgayDangKy,
-            };
-            khachHang =await _khachHangRepositories.CreateAsync(khachHang);
 
+            // Khởi tạo user
+            var user = new IdentityUser
+            {
+                UserName = request.Email?.Trim(),
+                Email = request.Email?.Trim(),
+            };
+
+            // Tạo user
+            var identityResult = await userManager.CreateAsync(user);
+            if (identityResult.Succeeded)
+            {
+                identityResult = await userManager.AddToRoleAsync(user, "Khách hàng");
+                if (!identityResult.Succeeded)
+                {
+                    foreach (var error in identityResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                    return ValidationProblem(ModelState);
+                }
+            }
+            else
+            {
+                foreach (var error in identityResult.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
+                return ValidationProblem(ModelState);
+            }
+
+            // Tạo hoặc cập nhật thông tin khách hàng
+            if (existKhachHang == null)
+            {
+                existKhachHang = new KhachHang
+                {
+                    IdKhachHang = idKhachHang,
+                    TenKhachHang = request.TenKhachHang,
+                    SoDienThoai = request.SoDienThoai,
+                    DiaChi = request.DiaChi,
+                    CCCD = request.CCCD,
+                    NgaySinh = request.NgaySinh,
+                    GioiTinh = request.GioiTinh,
+                    Email = request.Email,
+                    TinhTrang = request.TinhTrangKhachHang,
+                    NgayDangKy = request.NgayDangKy,
+                };
+                existKhachHang = await _khachHangRepositories.CreateAsync(existKhachHang);
             }
             else
             {
@@ -130,10 +162,11 @@ namespace TourDuLichASAP.API.Controllers
                 }
             }
 
+            // Tạo đặt tour
             var datTour = new DatTour
             {
                 IdDatTour = idDatTour,
-                IdKhachHang = existKhachHang!=null ? existKhachHang.IdKhachHang : idKhachHang,
+                IdKhachHang = existKhachHang.IdKhachHang,
                 IdTour = request.IdTour,
                 SoLuongNguoiLon = request.SoLuongNguoiLon,
                 SoLuongTreEm = request.SoLuongTreEm,
@@ -141,10 +174,11 @@ namespace TourDuLichASAP.API.Controllers
                 IdNhanVien = null,
                 ThoiGianDatTour = DateTime.Now,
                 TinhTrang = request.TinhTrangDatTour,
-                };
+            };
             datTour = await _datTourRepositories.CreateAsync(datTour);
 
-            if(request.DichVuChiTiet != null)
+            // Thêm dịch vụ chi tiết
+            if (request.DichVuChiTiet != null)
             {
                 foreach (var item in request.DichVuChiTiet)
                 {
@@ -154,19 +188,17 @@ namespace TourDuLichASAP.API.Controllers
                     {
                         IdDichVuChiTiet = idDichVuChiTiet,
                         IdDatTour = datTour.IdDatTour,
-                        IdKhachHang = existKhachHang != null ? existKhachHang.IdKhachHang : idKhachHang,
+                        IdKhachHang = existKhachHang.IdKhachHang,
                         IdDichVu = item.IdDichVu,
                         ThoiGianDichVu = request.NgayDangKy,
                         SoLuong = item.SoLuong,
-
                     };
                     dichVuChiTiet = await _dichVuChiTietRepositories.ThemDichVuChiTiet(dichVuChiTiet);
                 }
             }
 
-
-
             return Ok(request);
+
         }
 
         [HttpGet]

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
+using TourDuLichASAP.API.Repositories.Implementation;
 using TourDuLichASAP.API.Repositories.Interface;
 
 namespace TourDuLichASAP.API.Controllers
@@ -12,10 +14,12 @@ namespace TourDuLichASAP.API.Controllers
     public class NhanVienController : ControllerBase
     {
         private readonly INhanVienRepositories _nhanVienRepositories;
+        private readonly UserManager<IdentityUser> userManager;
 
-        public NhanVienController(INhanVienRepositories nhanVienRepositories)
+        public NhanVienController(INhanVienRepositories nhanVienRepositories, UserManager<IdentityUser> userManager)
         {
             _nhanVienRepositories = nhanVienRepositories;
+            this.userManager = userManager;
         }
 
         [HttpGet]
@@ -52,42 +56,111 @@ namespace TourDuLichASAP.API.Controllers
             Random random = new Random();
             int randomValue = random.Next(1000);
             string idNhanVien = "NV" + randomValue.ToString("D4");
-
-            var nhanVien = new NhanVien
+            var user = new IdentityUser
             {
-                IdNhanVien = idNhanVien,
-                TenNhanVien = requestDto.TenNhanVien,
-                SoDienThoai = requestDto.SoDienThoai,
-                DiaChi = requestDto.DiaChi,
-                CCCD = requestDto.CCCD,
-                NgaySinh = requestDto.NgaySinh,
-                Email = requestDto.Email,
-                GioiTinh = requestDto.GioiTinh,
-                NgayDangKy = DateTime.Now,
-                ChucVu = requestDto.ChucVu,
-                NgayVaoLam = requestDto.NgayVaoLam,
-                TinhTrang = "Đang hoạt động",
+                UserName = requestDto.Email?.Trim(),
+                Email = requestDto.Email?.Trim(),
             };
-
-            nhanVien = await _nhanVienRepositories.CreateAsync(nhanVien);
-
-            var response = new NhanVienDto
+            //Create User 
+            var identityResult = await userManager.CreateAsync(user);
+            if (identityResult.Succeeded)
             {
-                IdNhanVien = requestDto.IdNhanVien,
-                TenNhanVien = requestDto.TenNhanVien,
-                SoDienThoai = requestDto.SoDienThoai,
-                DiaChi = requestDto.DiaChi,
-                CCCD = requestDto.CCCD,
-                NgaySinh = requestDto.NgaySinh,
-                Email = requestDto.Email,
-                GioiTinh = requestDto.GioiTinh,
-                NgayDangKy = requestDto.NgayDangKy,
-                ChucVu = requestDto.ChucVu,
-                NgayVaoLam = requestDto.NgayVaoLam,
-                TinhTrang = requestDto.TinhTrang,
-            };
+                identityResult = await userManager.AddToRoleAsync(user, "Nhân viên");
+                if (identityResult.Succeeded)
+                {
+                    var nhanVien = new NhanVien
+                    {
+                        IdNhanVien = idNhanVien,
+                        TenNhanVien = requestDto.TenNhanVien,
+                        SoDienThoai = requestDto.SoDienThoai,
+                        DiaChi = requestDto.DiaChi,
+                        CCCD = requestDto.CCCD,
+                        NgaySinh = requestDto.NgaySinh,
+                        Email = requestDto.Email,
+                        GioiTinh = requestDto.GioiTinh,
+                        NgayDangKy = DateTime.Now,
+                        ChucVu = requestDto.ChucVu,
+                        NgayVaoLam = requestDto.NgayVaoLam,
+                        TinhTrang = "Đang hoạt động",
+                    };
 
-            return Ok(response);
+                    await _nhanVienRepositories.CreateAsync(nhanVien);
+                    var response = new NhanVienDto
+                    {
+                        IdNhanVien = requestDto.IdNhanVien,
+                        TenNhanVien = requestDto.TenNhanVien,
+                        SoDienThoai = requestDto.SoDienThoai,
+                        DiaChi = requestDto.DiaChi,
+                        CCCD = requestDto.CCCD,
+                        NgaySinh = requestDto.NgaySinh,
+                        Email = requestDto.Email,
+                        GioiTinh = requestDto.GioiTinh,
+                        NgayDangKy = requestDto.NgayDangKy,
+                        ChucVu = requestDto.ChucVu,
+                        NgayVaoLam = requestDto.NgayVaoLam,
+                        TinhTrang = requestDto.TinhTrang,
+                    };
+
+                    return Ok(response);
+                }
+                else
+                {
+                    if (identityResult.Errors.Any())
+                    {
+                        foreach (var error in identityResult.Errors)
+                        {
+                            ModelState.AddModelError("", error.Description);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                if (identityResult.Errors.Any())
+                {
+                    foreach (var error in identityResult.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }
+                }
+            }
+            return ValidationProblem(ModelState);
+
+            //var nhanVien = new NhanVien
+            //{
+            //    IdNhanVien = idNhanVien,
+            //    TenNhanVien = requestDto.TenNhanVien,
+            //    SoDienThoai = requestDto.SoDienThoai,
+            //    DiaChi = requestDto.DiaChi,
+            //    CCCD = requestDto.CCCD,
+            //    NgaySinh = requestDto.NgaySinh,
+            //    Email = requestDto.Email,
+            //    GioiTinh = requestDto.GioiTinh,
+            //    NgayDangKy = DateTime.Now,
+            //    ChucVu = requestDto.ChucVu,
+            //    NgayVaoLam = requestDto.NgayVaoLam,
+            //    TinhTrang = "Đang hoạt động",
+            //};
+
+            //nhanVien = await _nhanVienRepositories.CreateAsync(nhanVien);
+
+            //var response = new NhanVienDto
+            //{
+            //    IdNhanVien = requestDto.IdNhanVien,
+            //    TenNhanVien = requestDto.TenNhanVien,
+            //    SoDienThoai = requestDto.SoDienThoai,
+            //    DiaChi = requestDto.DiaChi,
+            //    CCCD = requestDto.CCCD,
+            //    NgaySinh = requestDto.NgaySinh,
+            //    Email = requestDto.Email,
+            //    GioiTinh = requestDto.GioiTinh,
+            //    NgayDangKy = requestDto.NgayDangKy,
+            //    ChucVu = requestDto.ChucVu,
+            //    NgayVaoLam = requestDto.NgayVaoLam,
+            //    TinhTrang = requestDto.TinhTrang,
+            //};
+
+            //return Ok(response);
         }
 
         [HttpGet]
