@@ -80,6 +80,7 @@ namespace TourDuLichASAP.API.Controllers
                 TinhTrang = khachHang.TinhTrang,
                 NgayDangKy = khachHang.NgayDangKy
             };
+
             return Ok(response);
         }
 

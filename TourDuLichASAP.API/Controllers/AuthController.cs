@@ -50,7 +50,7 @@ namespace TourDuLichASAP.API.Controllers
             _datTourRepositories = datTourRepositories;
             _dichVuChiTietRepositories = dichVuChiTietRepositories;
             _tourDuLichRepositories = tourDuLichRepositories;
-            
+
         }
 
         [HttpPost]

@@ -97,6 +97,7 @@ namespace TourDuLichASAP.API.Controllers
                 NgayDangKy = request.NgayDangKy,
             };
             khachHang =await _khachHangRepositories.CreateAsync(khachHang);
+
             }
             else
             {
