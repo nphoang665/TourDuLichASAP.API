@@ -9,6 +9,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -27,7 +28,9 @@ namespace TourDuLichASAP.API.Controllers
         public class RequestData
         {
             public string OptionOtp { get; set; }
-            public string ThongTin { get; set; }
+            public string Email { get; set; }
+            public string SoDienThoai { get; set; }
+
             public string MatKhauMoi { get; set; }
         }
 
@@ -452,7 +455,8 @@ namespace TourDuLichASAP.API.Controllers
         public async Task<IActionResult> QuenMatKhau([FromBody] RequestData data)
         {
             string optionOtp = data.OptionOtp;
-            string thongTin = data.ThongTin;
+            string email = data.Email;
+            string soDienThoai = data.SoDienThoai;
             string matKhauMoi = data.MatKhauMoi;
             //option gửi mail 
 
@@ -471,7 +475,7 @@ namespace TourDuLichASAP.API.Controllers
                     Credentials = new NetworkCredential("khachsanasap@gmail.com", "ulwg gvjl vqmb iwya")
                 };
 
-                using (var message = new MailMessage("khachsanasap@gmail.com", thongTin)
+                using (var message = new MailMessage("khachsanasap@gmail.com", email)
                 {
                     Subject = "Lấy lại mật khẩu website ASAP Tour",
                     Body = $"Mã OTP của bạn: {otp}"
@@ -490,21 +494,20 @@ namespace TourDuLichASAP.API.Controllers
             }
             else if (optionOtp == "layLaiMatKhau")
             {
-                // Tìm người dùng bằng email
-                var user = await userManager.FindByEmailAsync(thongTin);
+          
+                var user = await userManager.FindByEmailAsync(email);
                 if (user == null)
                 {
-                    // Người dùng không tồn tại
                     return NotFound("Người dùng không tồn tại.");
                 }
 
-                // Tạo mã token để đặt lại mật khẩu
+              
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-                // Mật khẩu mới
-                var newPassword = matKhauMoi; // Thay đổi này thành mật khẩu mới thực sự
+               
+                var newPassword = matKhauMoi;
 
-                // Đặt lại mật khẩu
+              
                 var result = await userManager.ResetPasswordAsync(user, token, newPassword);
                 if (result.Succeeded)
                 {
@@ -515,29 +518,48 @@ namespace TourDuLichASAP.API.Controllers
                     return BadRequest("Không thể đặt lại mật khẩu.");
                 }
             }
-
-
             else
             {
                 // Gửi OTP qua số điện thoại
-                string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
-                string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+                //soDienThoai = ConvertToInternationalFormat(soDienThoai); 
+                //gửi OTP tk còn 7 đô
+                //string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
+                //string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+                //TwilioClient.Init(accountSid, authToken);
+                //var to = new PhoneNumber(soDienThoai);
+                //var from = new PhoneNumber("+14693012499");
+                //Random random = new Random();
+                //int otp = random.Next(100000, 999999);
+                //var message = MessageResource.Create(
+                //    to: to,
+                //    from: from,
+                //    body: $"Mã OTP đặt tour của bạn là: {otp}");
+                //return Ok(otp);
+
+                //gửi OTP tk còn 15 đô
+                string accountSid = "ACac1ca531f0779b9d93f997ad9a73dd6a";
+                string authToken = "4d267f8ba51c23b38c91becc80958fa1";
                 TwilioClient.Init(accountSid, authToken);
                 var to = new PhoneNumber("+84 869 536 182");
-                var from = new PhoneNumber("+14693012499");
+                var from = new PhoneNumber("+15105505233");
                 Random random = new Random();
                 int otp = random.Next(100000, 999999);
-                //đang test vô hiệu hóa gửi otp to số điện thoại
-
-
                 //var message = MessageResource.Create(
                 //    to: to,
                 //    from: from,
                 //    body: $"Mã OTP đặt tour của bạn là: {otp}");
                 return Ok(otp);
+
             }
-            
         }
+        //public string ConvertToInternationalFormat(string localPhoneNumber)
+        //{
+        //    if (localPhoneNumber.StartsWith("0"))
+        //    {
+        //        localPhoneNumber = localPhoneNumber.Substring(1);
+        //    }
+        //    return "+84" + localPhoneNumber;
+        //}
         [HttpGet]
         [Route("GuiEmailChoKhachHang/{id}")]
 
@@ -768,8 +790,6 @@ namespace TourDuLichASAP.API.Controllers
 
             return htmlContent;
         }
-
-
 
     }
 }
