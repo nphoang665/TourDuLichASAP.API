@@ -74,5 +74,39 @@ namespace TourDuLichASAP.API.Controllers
                             };
             return Ok(tourDaDat);
         }
+        [HttpGet("TourDatNhieu")]
+        public async Task<IActionResult> TourDatNhieu()
+        {
+            var tourDatNhieuNhat = from datTour in _db.DAT_TOUR
+                                   join tour in _db.TOUR_DU_LICH on datTour.IdTour equals tour.IdTour
+                                   group datTour by new { datTour.IdTour, tour.TenTour, tour.TinhTrang } into g
+                                   where g.Count() >= 5
+                                   select new TourDatNhieuNhat
+                                   {
+                                       id = g.Key.IdTour,
+                                       tenTour = g.Key.TenTour,
+                                       tinhTrang = "Tour đặt nhiều",
+                                       soLuongDat = g.Count()
+                                   };
+            return Ok(await tourDatNhieuNhat.ToListAsync());
+        }
+        [HttpGet("TourDanhGiaNhieuNhat")]
+        public async Task<IActionResult> TourDanhGiaNhieuNhat()
+        {
+            var tourDanhGiaNhieuNhat = from danhGia in _db.DANH_GIA
+                                       join tour in _db.TOUR_DU_LICH on danhGia.IdTour equals tour.IdTour
+                                       group danhGia by new { danhGia.IdTour, tour.TenTour } into g
+                                       where g.Count() >=1
+                                       select new TourDanhGIa
+                                       {
+                                           id = g.Key.IdTour,
+                                           tenTour = g.Key.TenTour,
+                                           tinhTrang = "Đánh giá nhiều nhất",
+                                           soLuongDanhGia = g.Count()
+                                       };
+            return Ok(await tourDanhGiaNhieuNhat.ToListAsync());
+        }
+
+
     }
 }
