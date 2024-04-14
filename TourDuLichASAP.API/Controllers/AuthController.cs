@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using PuppeteerSharp;
 using PuppeteerSharp.Media;
+using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -23,7 +24,13 @@ namespace TourDuLichASAP.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-       
+        public class RequestData
+        {
+            public string OptionOtp { get; set; }
+            public string ThongTin { get; set; }
+            public string MatKhauMoi { get; set; }
+        }
+
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenReponsitory;
         private readonly IKhachHangRepositories _khachHangRepositories;
@@ -442,20 +449,94 @@ namespace TourDuLichASAP.API.Controllers
         }
         [HttpPost]
         [Route("QuenMatKhau")]
-        public async Task<IActionResult> QuenMatKhau()
+        public async Task<IActionResult> QuenMatKhau([FromBody] RequestData data)
         {
-            string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
-            string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
-            TwilioClient.Init(accountSid, authToken);
-            var to = new PhoneNumber("+84 869 536 182");
-            var from = new PhoneNumber("+14693012499");
-            Random random = new Random();
-            int otp = random.Next(100000, 999999);
-            var message = MessageResource.Create(
-                to: to,
-                from: from,
-                body: $"Mã OTP đặt tour của bạn là: {otp}");
-            return Ok();
+            string optionOtp = data.OptionOtp;
+            string thongTin = data.ThongTin;
+            string matKhauMoi = data.MatKhauMoi;
+            //option gửi mail 
+
+            if (optionOtp == "guiEmail")
+            {
+                // Gửi email
+                Random random = new Random();
+                int otp = random.Next(100000, 999999);
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential("khachsanasap@gmail.com", "ulwg gvjl vqmb iwya")
+                };
+
+                using (var message = new MailMessage("khachsanasap@gmail.com", thongTin)
+                {
+                    Subject = "Lấy lại mật khẩu website ASAP Tour",
+                    Body = $"Mã OTP của bạn: {otp}"
+                })
+                {
+                    try
+                    {
+                        await smtp.SendMailAsync(message);
+                        return Ok(otp);
+                    }
+                    catch (Exception)
+                    {
+                        return BadRequest("Error100");
+                    }
+                }
+            }
+            else if (optionOtp == "layLaiMatKhau")
+            {
+                // Tìm người dùng bằng email
+                var user = await userManager.FindByEmailAsync(thongTin);
+                if (user == null)
+                {
+                    // Người dùng không tồn tại
+                    return NotFound("Người dùng không tồn tại.");
+                }
+
+                // Tạo mã token để đặt lại mật khẩu
+                var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+                // Mật khẩu mới
+                var newPassword = matKhauMoi; // Thay đổi này thành mật khẩu mới thực sự
+
+                // Đặt lại mật khẩu
+                var result = await userManager.ResetPasswordAsync(user, token, newPassword);
+                if (result.Succeeded)
+                {
+                    return Ok("Mật khẩu đã được đặt lại thành công.");
+                }
+                else
+                {
+                    return BadRequest("Không thể đặt lại mật khẩu.");
+                }
+            }
+
+
+            else
+            {
+                // Gửi OTP qua số điện thoại
+                string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
+                string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+                TwilioClient.Init(accountSid, authToken);
+                var to = new PhoneNumber("+84 869 536 182");
+                var from = new PhoneNumber("+14693012499");
+                Random random = new Random();
+                int otp = random.Next(100000, 999999);
+                //đang test vô hiệu hóa gửi otp to số điện thoại
+
+
+                //var message = MessageResource.Create(
+                //    to: to,
+                //    from: from,
+                //    body: $"Mã OTP đặt tour của bạn là: {otp}");
+                return Ok(otp);
+            }
+            
         }
         [HttpGet]
         [Route("GuiEmailChoKhachHang/{id}")]
