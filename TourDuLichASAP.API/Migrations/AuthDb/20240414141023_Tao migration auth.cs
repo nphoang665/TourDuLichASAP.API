@@ -173,9 +173,9 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5", 0, "3aaeb858-acef-479d-b09f-f53d7fd6785f", "khachhang@gmail.com", false, false, null, "KHACHHANG@GMAIL.COM", "KHACHHANG@GMAIL.COM", "AQAAAAIAAYagAAAAEALCx9M0PpANDDznXkOL4G3vTlImcIgypvE+PYHmoVjhDDw5124qm0PJP3T5b/QKDQ==", null, false, "e5ec0211-6144-449b-9736-4380aa6033ec", false, "Khách hàng" },
-                    { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "535baf9b-9375-44b4-b2ca-97797a507923", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAENglT8kIAozozLOyDDo8xLQ0Hb4z58GPWtoGdsXXbeqZjnUcE7nTQfzY1PboulNcVw==", null, false, "96a5002a-5b8c-4ee4-815f-36b07999c375", false, "admin@gmail.com" },
-                    { "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b", 0, "46c4d955-40ee-4f95-aea7-169539997fba", "nhanvien@gmail.com", false, false, null, "NHANVIEN@GMAIL.COM", "NHANVIEN@GMAIL.COM", "AQAAAAIAAYagAAAAEOhVhK6rU5GpmKjAgmHOJV+Zfv2pJRiJm9nG3K6Kb9mFyFMnEkbvpCfGf7DXHNM4fQ==", null, false, "6d875b89-751d-4a9a-85cb-8487b618e2c4", false, "Nhân viên" }
+                    { "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5", 0, "3beeb3bd-ab10-4bed-9065-b5335f2da8da", "khachhang@gmail.com", false, false, null, "KHACHHANG@GMAIL.COM", "KHACHHANG@GMAIL.COM", "AQAAAAIAAYagAAAAEPe/UyC1GlDK5FKB2yCGgjtqvdMrNLomCzrRQtFfVU1RUMou/iA0w4jpGq8zUn+73g==", null, false, "2bd2c4a5-b347-440b-88a6-89284b29b60a", false, "Khách hàng" },
+                    { "b83cf6dd-435c-48cd-8c16-06338e726032", 0, "b65c1532-ea2c-4250-93d7-cb316d2fe33e", "admin@gmail.com", false, false, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEHtDQMoc6Yyn+yCS2IgetKmnZHyHGg5Y41Haie8x001eteJgDAOAlMqW9rUnNC22UA==", null, false, "c938a46e-88e3-4bd3-9054-f8846e3e9ba1", false, "admin@gmail.com" },
+                    { "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b", 0, "762f459f-de89-44ec-9892-c4e36472051a", "nhanvien@gmail.com", false, false, null, "NHANVIEN@GMAIL.COM", "NHANVIEN@GMAIL.COM", "AQAAAAIAAYagAAAAEB1Zy+LTAw+sn5tS7QEqSqPh3jZC/lQ4bBlYESMTkMfirthsbz9RHBtKnDpQC4V7Rg==", null, false, "fc6c09a7-7951-47df-9fe4-17d34fd30658", false, "Nhân viên" }
                 });
 
             migrationBuilder.InsertData(
@@ -184,9 +184,7 @@ namespace TourDuLichASAP.API.Migrations.AuthDb
                 values: new object[,]
                 {
                     { "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e", "90b2ba0b-c552-44f6-bf4d-cc46fa5731b5" },
-                    { "294bb644-8b4e-4d5b-8bab-e5ed8b2d864e", "b83cf6dd-435c-48cd-8c16-06338e726032" },
                     { "4304b846-6ee9-4800-a670-ccf11eabae35", "b83cf6dd-435c-48cd-8c16-06338e726032" },
-                    { "8db11b28-ce22-475f-8b1e-d23d2e100fcf", "b83cf6dd-435c-48cd-8c16-06338e726032" },
                     { "8db11b28-ce22-475f-8b1e-d23d2e100fcf", "cf1cd73a-9d5e-4a19-8e77-28c13c57f39b" }
                 });
 

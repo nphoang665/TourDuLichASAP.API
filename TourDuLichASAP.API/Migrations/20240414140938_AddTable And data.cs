@@ -314,7 +314,7 @@ namespace TourDuLichASAP.API.Migrations
             migrationBuilder.InsertData(
                 table: "DICH_VU",
                 columns: new[] { "IdDichVu", "DonViTinh", "GiaTien", "GioBatDau", "GioKetThuc", "NgayThem", "TenDichVu", "TinhTrang" },
-                values: new object[] { "DV0001", "", 500000, new TimeOnly(5, 0, 0), new TimeOnly(20, 0, 0), new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9771), "Hướng dẫn viên du lịch", "Đang hoạt động" });
+                values: new object[] { "DV0001", "", 500000, new TimeOnly(5, 0, 0), new TimeOnly(20, 0, 0), new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(8060), "Hướng dẫn viên du lịch", "Đang hoạt động" });
 
             migrationBuilder.InsertData(
                 table: "DOI_TAC",
@@ -330,8 +330,8 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdKhachHang", "CCCD", "DiaChi", "Email", "GioiTinh", "NgayDangKy", "NgaySinh", "SoDienThoai", "TenKhachHang", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "KH0001", "123456789012", "123 Đường A, Quận 1, TP. HCM", "khachhang@gmail.com", "Nữ", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9596), new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0987654321", "Nguyễn Thị C", "Đang hoạt động" },
-                    { "KH0002", "987654321098", "456 Đường S, Quận 5, TP. HCM", "tvd@example.com", "Nam", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9599), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0365478912", "Trần Văn D", "Đang hoạt động" }
+                    { "KH0001", "123456789012", "123 Đường A, Quận 1, TP. HCM", "khachhang@gmail.com", "Nữ", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7900), new DateTime(1990, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "0987654321", "Nguyễn Thị C", "Đang hoạt động" },
+                    { "KH0002", "987654321098", "456 Đường S, Quận 5, TP. HCM", "tvd@example.com", "Nam", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7904), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "0365478912", "Trần Văn D", "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
@@ -339,9 +339,9 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdNhanVien", "CCCD", "ChucVu", "DiaChi", "Email", "GioiTinh", "NgayDangKy", "NgaySinh", "NgayVaoLam", "SoDienThoai", "TenNhanVien", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "ADMIN1", "04883948532", "Nhân viên", "123 Hà Huy Tập, Buôn Ma Thuột", "admin@gmail.com", "Nam", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9579), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9579), "0123012312", "Admin", "Đang hoạt động" },
-                    { "NV0001", "987654321098", "Nhân viên", "123 Lê Thánh Tông, Buôn Ma Thuột", "nhanvien@gmail.com", "Nữ", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9563), new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9573), "0987654321", "Trần Thị Thanh", "Đang hoạt động" },
-                    { "NV0002", "456789123456", "Nhân viên", "111 Hà Huy Tập, Buôn Ma Thuột", "lvc@example.com", "Nam", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9576), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9577), "0365478912", "Lê Văn Khánh", "Đang hoạt động" }
+                    { "ADMIN1", "04883948532", "Nhân viên", "123 Hà Huy Tập, Buôn Ma Thuột", "admin@gmail.com", "Nam", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7883), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7884), "0123012312", "Admin", "Đang hoạt động" },
+                    { "NV0001", "987654321098", "Nhân viên", "123 Lê Thánh Tông, Buôn Ma Thuột", "nhanvien@gmail.com", "Nữ", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7869), new DateTime(1995, 5, 10, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7878), "0987654321", "Trần Thị Thanh", "Đang hoạt động" },
+                    { "NV0002", "456789123456", "Nhân viên", "111 Hà Huy Tập, Buôn Ma Thuột", "lvc@example.com", "Nam", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7881), new DateTime(1988, 3, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7881), "0365478912", "Lê Văn Khánh", "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
@@ -349,8 +349,8 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdTour", "DichVuDiKem", "GiaNguoiLon", "GiaTreEm", "IdDoiTac", "LoaiTour", "MoTa", "NgayThem", "NoiKhoiHanh", "PhuongTienDiChuyen", "SoChoConNhan", "SoLuongNguoiLon", "SoLuongTreEm", "TenTour", "ThoiGianBatDau", "ThoiGianKetThuc", "TinhTrang" },
                 values: new object[,]
                 {
-                    { "TDL001", "Bữa ăn trưa, vé tham quan", 1000000, 500000, "DT0002", "Tham quan thác", "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9620), "Buôn Ma Thuột", "Xe ô tô", 45, 30, 15, "Thác Dray Nur", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" },
-                    { "TDL002", "Hướng dẫn viên và nước uống", 700000, 300000, "DT0001", "Thăm quan vườn cà phê", "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9623), "Buôn Ma Thuột", "Xe máy", 30, 20, 10, "Cà phê sân vườn", new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" }
+                    { "TDL001", "Bữa ăn trưa, vé tham quan", 1000000, 500000, "DT0002", "Tham quan thác", "Thăm quan thác Dray Nur nổi tiếng với khung cảnh thiên nhiên hùng vĩ, kỳ vĩ.", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7926), "Buôn Ma Thuột", "Xe ô tô", 45, 30, 15, "Thác Dray Nur", new DateTime(2024, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 21, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" },
+                    { "TDL002", "Hướng dẫn viên và nước uống", 700000, 300000, "DT0001", "Thăm quan vườn cà phê", "Tham quan và trải nghiệm cuộc sống của người dân Buôn Ma Thuột tại các vườn cà phê sân vườn.", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7930), "Buôn Ma Thuột", "Xe máy", 30, 20, 10, "Cà phê sân vườn", new DateTime(2024, 4, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 4, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Đang hoạt động" }
                 });
 
             migrationBuilder.InsertData(
@@ -358,14 +358,9 @@ namespace TourDuLichASAP.API.Migrations
                 columns: new[] { "IdAnhTour", "IdTour", "ImgTour", "NgayThem" },
                 values: new object[,]
                 {
-                    { 1, "TDL001", "image_0_638482704013218648.jpeg", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9655) },
-                    { 2, "TDL002", "image_1_638482704145321161.gif", new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9664) }
+                    { 1, "TDL001", "image_0_638482704013218648.jpeg", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7945) },
+                    { 2, "TDL002", "image_1_638482704145321161.gif", new DateTime(2024, 4, 14, 21, 9, 37, 24, DateTimeKind.Local).AddTicks(7955) }
                 });
-
-            migrationBuilder.InsertData(
-                table: "DAT_TOUR",
-                columns: new[] { "IdDatTour", "GhiChu", "IdKhachHang", "IdNhanVien", "IdTour", "SoLuongNguoiLon", "SoLuongTreEm", "ThoiGianDatTour", "TinhTrang" },
-                values: new object[] { "TLD002", "Yêu cầu đưa đón", "KH0001", "NV0001", "TDL001", 2, 1, new DateTime(2024, 4, 9, 15, 54, 22, 574, DateTimeKind.Local).AddTicks(9638), "Chờ xác nhận" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ANH_DOI_TAC_IdDoiTac",
