@@ -9,6 +9,7 @@ using System;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Interface;
@@ -520,21 +521,45 @@ namespace TourDuLichASAP.API.Controllers
             else
             {
                 // Gửi OTP qua số điện thoại
-                string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
-                string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+                //soDienThoai = ConvertToInternationalFormat(soDienThoai); 
+                //gửi OTP tk còn 7 đô
+                //string accountSid = "ACf18c14d399f5f2e346ead9a895185608";
+                //string authToken = "8dd38e32df4d3516462e4c2d032f4c62";
+                //TwilioClient.Init(accountSid, authToken);
+                //var to = new PhoneNumber(soDienThoai);
+                //var from = new PhoneNumber("+14693012499");
+                //Random random = new Random();
+                //int otp = random.Next(100000, 999999);
+                //var message = MessageResource.Create(
+                //    to: to,
+                //    from: from,
+                //    body: $"Mã OTP đặt tour của bạn là: {otp}");
+                //return Ok(otp);
+
+                //gửi OTP tk còn 15 đô
+                string accountSid = "ACac1ca531f0779b9d93f997ad9a73dd6a";
+                string authToken = "4d267f8ba51c23b38c91becc80958fa1";
                 TwilioClient.Init(accountSid, authToken);
                 var to = new PhoneNumber("+84 869 536 182");
-                var from = new PhoneNumber("+14693012499");
+                var from = new PhoneNumber("+15105505233");
                 Random random = new Random();
                 int otp = random.Next(100000, 999999);
-                //đang test vô hiệu hóa gửi otp to số điện thoại
                 //var message = MessageResource.Create(
                 //    to: to,
                 //    from: from,
                 //    body: $"Mã OTP đặt tour của bạn là: {otp}");
                 return Ok(otp);
+
             }
         }
+        //public string ConvertToInternationalFormat(string localPhoneNumber)
+        //{
+        //    if (localPhoneNumber.StartsWith("0"))
+        //    {
+        //        localPhoneNumber = localPhoneNumber.Substring(1);
+        //    }
+        //    return "+84" + localPhoneNumber;
+        //}
         [HttpGet]
         [Route("GuiEmailChoKhachHang/{id}")]
 
