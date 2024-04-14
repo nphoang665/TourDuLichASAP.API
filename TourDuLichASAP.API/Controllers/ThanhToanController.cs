@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using TourDuLichASAP.API.Data;
 using TourDuLichASAP.API.Models.Domain;
 using TourDuLichASAP.API.Models.DTO;
 using TourDuLichASAP.API.Repositories.Implementation;
@@ -15,9 +17,12 @@ namespace TourDuLichASAP.API.Controllers
     {
         private readonly IThanhToanRepositories _thanhToanRepositories;
 
-        public ThanhToanController(IThanhToanRepositories thanhToanRepositories)
+        private readonly ApplicationDbContext _db;
+        
+        public ThanhToanController(IThanhToanRepositories thanhToanRepositories,ApplicationDbContext db)
         {
             _thanhToanRepositories = thanhToanRepositories;
+            _db=db;
         }
 
         [HttpGet]
@@ -168,6 +173,37 @@ namespace TourDuLichASAP.API.Controllers
             };
             return Ok(response);
         }
+        [HttpGet("GetThanhToanByIdDatTour/{id}")]
+        public async Task<IActionResult> GetThanhToanByIdDatTour(string id)
+        {
+            // Tìm kiếm trong bảng THANH_TOAN với IdDatTour tương ứng
+            var thanhToan = await _db.THANH_TOAN.FirstOrDefaultAsync(tt => tt.IdDatTour == id);
+
+            // Nếu không tìm thấy kết quả phù hợp, trả về NotFound
+            if (thanhToan == null)
+            {
+                return NotFound();
+            }
+
+            // Chuyển đổi đối tượng thanhToan thành DTO
+            ThanhToanDto thanhToanDto = new ThanhToanDto
+            {
+                IdThanhToan = thanhToan.IdThanhToan,
+                IdDatTour = thanhToan.IdDatTour,
+                IdKhachHang = thanhToan.IdKhachHang,
+                IdNhanVien = thanhToan.IdNhanVien,
+                TongTienTour = thanhToan.TongTienTour,
+                TongTienDichVu = thanhToan.TongTienDichVu,
+                TongTien = thanhToan.TongTien,
+                TinhTrang = thanhToan.TinhTrang,
+                NgayThanhToan = thanhToan.NgayThanhToan,
+                PhuongThucThanhToan = thanhToan.PhuongThucThanhToan
+            };
+
+            // Trả về kết quả
+            return Ok(thanhToanDto);
+        }
+
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteThanhToan(string id)
