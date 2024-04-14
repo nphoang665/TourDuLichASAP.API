@@ -27,7 +27,9 @@ namespace TourDuLichASAP.API.Controllers
         public class RequestData
         {
             public string OptionOtp { get; set; }
-            public string ThongTin { get; set; }
+            public string Email { get; set; }
+            public string SoDienThoai { get; set; }
+
             public string MatKhauMoi { get; set; }
         }
 
@@ -452,7 +454,8 @@ namespace TourDuLichASAP.API.Controllers
         public async Task<IActionResult> QuenMatKhau([FromBody] RequestData data)
         {
             string optionOtp = data.OptionOtp;
-            string thongTin = data.ThongTin;
+            string email = data.Email;
+            string soDienThoai = data.SoDienThoai;
             string matKhauMoi = data.MatKhauMoi;
             //option gửi mail 
 
@@ -471,7 +474,7 @@ namespace TourDuLichASAP.API.Controllers
                     Credentials = new NetworkCredential("khachsanasap@gmail.com", "ulwg gvjl vqmb iwya")
                 };
 
-                using (var message = new MailMessage("khachsanasap@gmail.com", thongTin)
+                using (var message = new MailMessage("khachsanasap@gmail.com", email)
                 {
                     Subject = "Lấy lại mật khẩu website ASAP Tour",
                     Body = $"Mã OTP của bạn: {otp}"
@@ -490,21 +493,20 @@ namespace TourDuLichASAP.API.Controllers
             }
             else if (optionOtp == "layLaiMatKhau")
             {
-                // Tìm người dùng bằng email
-                var user = await userManager.FindByEmailAsync(thongTin);
+          
+                var user = await userManager.FindByEmailAsync(email);
                 if (user == null)
                 {
-                    // Người dùng không tồn tại
                     return NotFound("Người dùng không tồn tại.");
                 }
 
-                // Tạo mã token để đặt lại mật khẩu
+              
                 var token = await userManager.GeneratePasswordResetTokenAsync(user);
 
-                // Mật khẩu mới
-                var newPassword = matKhauMoi; // Thay đổi này thành mật khẩu mới thực sự
+               
+                var newPassword = matKhauMoi;
 
-                // Đặt lại mật khẩu
+              
                 var result = await userManager.ResetPasswordAsync(user, token, newPassword);
                 if (result.Succeeded)
                 {
@@ -515,8 +517,6 @@ namespace TourDuLichASAP.API.Controllers
                     return BadRequest("Không thể đặt lại mật khẩu.");
                 }
             }
-
-
             else
             {
                 // Gửi OTP qua số điện thoại
@@ -528,15 +528,12 @@ namespace TourDuLichASAP.API.Controllers
                 Random random = new Random();
                 int otp = random.Next(100000, 999999);
                 //đang test vô hiệu hóa gửi otp to số điện thoại
-
-
                 //var message = MessageResource.Create(
                 //    to: to,
                 //    from: from,
                 //    body: $"Mã OTP đặt tour của bạn là: {otp}");
                 return Ok(otp);
             }
-            
         }
         [HttpGet]
         [Route("GuiEmailChoKhachHang/{id}")]
@@ -768,8 +765,6 @@ namespace TourDuLichASAP.API.Controllers
 
             return htmlContent;
         }
-
-
 
     }
 }
