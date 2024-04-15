@@ -544,10 +544,10 @@ namespace TourDuLichASAP.API.Controllers
                 var from = new PhoneNumber("+15105505233");
                 Random random = new Random();
                 int otp = random.Next(100000, 999999);
-                //var message = MessageResource.Create(
-                //    to: to,
-                //    from: from,
-                //    body: $"Mã OTP đặt tour của bạn là: {otp}");
+                var message = MessageResource.Create(
+                    to: to,
+                    from: from,
+                    body: $"Mã OTP đặt tour của bạn là: {otp}");
                 return Ok(otp);
 
             }
